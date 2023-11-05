@@ -4,5 +4,5 @@
 ### JSON file
 - [ ] Sales of product
 - [ ] Store sales/revenue
-- [ ] Currently in customer's cart
-- [ ] Fetch customer information from purchase (restructure products to have UIDs?)
+- [ ] Item currently in X customers' cart
+- [ ] Fetch customer information from item purchase (restructure products to have UIDs?)
