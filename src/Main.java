@@ -1,19 +1,52 @@
+import com.fasterxml.jackson.core.exc.StreamReadException;
+import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Map;
+
 public class Main {
     public static void main(String[] args) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        // Press Opt+Enter with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
 
-        // Press Ctrl+R or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
+        File jsonFile = new File("data.json");
 
-            // Press Ctrl+D to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Cmd+F8.
-            System.out.println("i = " + i);
+        if (!jsonFile.exists()) {
+            System.out.println("JSON file does not exist.");
+            return;
         }
+
+        try (FileReader fileReader = new FileReader(jsonFile)) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            Marketplace marketplace = objectMapper.readValue(fileReader, Marketplace.class);
+
+            // Access Sellers and Buyers
+            Map<String, Seller> sellers = marketplace.getSellers();
+            Map<String, Buyer> buyers = marketplace.getBuyers();
+
+            for (Map.Entry<String, Seller> sellerEntry : sellers.entrySet()) {
+                String sellerUsername = sellerEntry.getKey();
+                Seller seller = sellerEntry.getValue();
+
+            }
+
+            for (Map.Entry<String, Buyer> buyerEntry : buyers.entrySet()) {
+                String buyerUsername = buyerEntry.getKey();
+                Buyer buyer = buyerEntry.getValue();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Sign in or sign up..."); //START FLOW HERE
+
+        // USER STARTS BY SIGNING IN
+
+        //CHECK JSON FOR USER
+
+        //IF USER IS A SELLER, INSTANTIATE SELLER CLASS WITH SELLER OBJECT FROM JSON
+
+        //ELSE IF USER IS A BUYER, INSTANTIATE BUYER CLASS WITH BUYER OBJECT FROM JSON
+
     }
 }
