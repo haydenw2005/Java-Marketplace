@@ -27,12 +27,14 @@ public class Main {
             for (Map.Entry<String, Seller> sellerEntry : sellers.entrySet()) {
                 String sellerUsername = sellerEntry.getKey();
                 Seller seller = sellerEntry.getValue();
+                System.out.println(sellerUsername);
 
             }
 
             for (Map.Entry<String, Buyer> buyerEntry : buyers.entrySet()) {
                 String buyerUsername = buyerEntry.getKey();
                 Buyer buyer = buyerEntry.getValue();
+                System.out.println(buyerUsername);
             }
         } catch (Exception e) {
             e.printStackTrace();
