@@ -16,4 +16,12 @@ public class Buyer extends Person {
         this.cart = cart;
         this.purchaseHistory = purchaseHistory;
     }
+    
+    public void addItemToCart(Item item) {
+        cart.put(item.getName(), item);
+    }
+
+    public void buyCart(Item[] items) {
+        //TODO
+    }
 }

@@ -2,7 +2,7 @@
 
 ## TODO
 ### JSON file
-- [ ] Sales of product
-- [ ] Store sales/revenue
-- [ ] Item currently in X customers' cart
-- [ ] Fetch customer information from item purchase (restructure products to have UIDs?)
+- [X] Sales of product
+- [X] Store sales/revenue
+- [X] Item currently in X customers' cart
+- [X] Fetch customer information from item purchase (restructure products to have UIDs?)
