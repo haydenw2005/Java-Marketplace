@@ -27,11 +27,29 @@ public class Item {
         return name;
     }
 
-    public int getPrice() {
-        return price;
+    public String getDescription() {
+        return description;
     }
 
     public int getCount() {
         return count;
     }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public int getTotalPrice() {
+        return price*count;
+    }
+
+    public int totalBoughtByBuyer(String username) {
+        return buyersObject.get(username);
+    }
+
+    public int totalSoldBySeller(String username) {
+        return sellersObject.get(username);
+    }
+
+
 }

@@ -12,4 +12,5 @@ public class Seller extends Person {
         super(username, password, firstName, lastName);
         this.stores = stores;
     }
+    
 }
