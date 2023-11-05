@@ -1,0 +1,36 @@
+{
+  "Sellers": {
+    "seller_1_username": {
+      "password": "password123!",
+      "name": "John Doe",
+      "datapoint2": "blah blah",
+
+      "stores": {
+        "store_1_name": {
+          "items": {
+            "cheese": {
+              "stock": 5,
+              "description": "yummy",
+              "price": 123
+            },
+            "microwaves": {
+              "stock": 2,
+              "description": "makes waves",
+              "price": 10000
+            }
+          },
+          "sales": {
+            "sale_1": {
+              "item_name": "cheese",
+              "buyer": "bobby",
+              "revenue": 123
+            }
+          }
+        }
+      }
+    }
+  },
+  "Buyers": {
+
+  }
+}
