@@ -4,7 +4,6 @@
       "password": "password123!",
       "name": "John Doe",
       "datapoint2": "blah blah",
-
       "stores": {
         "store_1_name": {
           "items": {
@@ -31,6 +30,36 @@
     }
   },
   "Buyers": {
+    "buyer_1_username": {
+      "name": "John Doe",
+      "password": "password123!",
 
+      "cart": {
+          "cheese": {
+            "seller": "seller_username",
+            "description": "yummy",
+            "price": 123
+          },
+          "microwaves": {
+            "seller": "seller_username",
+            "description": "makes waves",
+            "price": 10000
+          }
+      },
+      
+      "purchase_history": {
+        "cheese": {
+          "seller": "seller_username",
+          "description": "yummy",
+          "price": 123
+        },
+        "microwaves": {
+          "seller": "seller_username",
+          "description": "makes waves",
+          "price": 10000
+        }
+      }
+      
+    }
   }
 }
