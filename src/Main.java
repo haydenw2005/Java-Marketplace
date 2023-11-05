@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class Main {
@@ -19,23 +20,8 @@ public class Main {
         try (FileReader fileReader = new FileReader(jsonFile)) {
             ObjectMapper objectMapper = new ObjectMapper();
             Marketplace marketplace = objectMapper.readValue(fileReader, Marketplace.class);
+            ArrayList<Item> itemsList = marketplace.getAllMarketPlaceItems(); //RYAN USE THIS, (PRINTS OUT ALL ITEM NAMES )
 
-            // Access Sellers and Buyers
-            Map<String, Seller> sellers = marketplace.getSellers();
-            Map<String, Buyer> buyers = marketplace.getBuyers();
-
-            for (Map.Entry<String, Seller> sellerEntry : sellers.entrySet()) {
-                String sellerUsername = sellerEntry.getKey();
-                Seller seller = sellerEntry.getValue();
-                System.out.println(sellerUsername);
-
-            }
-
-            for (Map.Entry<String, Buyer> buyerEntry : buyers.entrySet()) {
-                String buyerUsername = buyerEntry.getKey();
-                Buyer buyer = buyerEntry.getValue();
-                System.out.println(buyerUsername);
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }
