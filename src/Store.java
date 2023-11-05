@@ -14,4 +14,22 @@ public class Store {
         this.stockItems = stockItems;
         this.soldItems = soldItems;
     }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public Map<String, Item> getStockItems() {
+        return stockItems;
+    }
+    public void setStockItems(Map<String, Item> stockItems) {
+        this.stockItems = stockItems;
+    }
+    public Map<String, Item> getSoldItems() {
+        return soldItems;
+    }
+    public void setSoldItems(Map<String, Item> soldItems) {
+        this.soldItems = soldItems;
+    }
 }
