@@ -43,5 +43,4 @@ public class Seller extends Person {
     public String[] getListOfStoresNames() {
         return stores.keySet().toArray(new String[0]);
     }
-    
 }

@@ -28,6 +28,36 @@
               "sellersObject" : {
                 "seller_1_username": 2
               }
+            },
+            "bread": {
+              "name": "bread",
+              "description": "tastes good",
+              "count": 4,
+              "price": 10,
+              "buyersObject": null,
+              "sellersObject" : {
+                "seller_1_username": 2
+              }
+            },
+            "computer": {
+              "name": "computer",
+              "description": "is a computer",
+              "count": 1,
+              "price": 500,
+              "buyersObject": null,
+              "sellersObject" : {
+                "seller_1_username": 2
+              }
+            },
+            "soccer ball": {
+              "name": "soccer ball",
+              "description": "kick it",
+              "count": 2,
+              "price": 20,
+              "buyersObject": null,
+              "sellersObject" : {
+                "seller_1_username": 2
+              }
             }
           },
           "soldItems": {
