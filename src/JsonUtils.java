@@ -12,23 +12,24 @@ public class JsonUtils {
     static final String FILE_PATH = "data.json";
 
     //IMPORTANT - ADDS OBJECT TO ANY PLACE IN JSON !!!!!!!!!!
-    //nodeString = name of object to add in JSON
-    //key - key of object being added
+    //nodeDir = name of object to add in JSON
+    //newObjectKey - key of object being added
     //object - object being added
     //objectMapper - utlity
-    public static void addObjectToJson(String nodeString, String key, Object object, ObjectMapper objectMapper) throws IOException {
+    public static void addObjectToJson(String nodeDir, String newObjectKey, Object object, ObjectMapper objectMapper) throws IOException {
         JsonNode rootNode = JsonUtils.readJsonFile(objectMapper);
-        JsonNode nestedObject = rootNode.path(nodeString);
+        JsonNode nestedObject = rootNode.path(nodeDir);
         JsonNode objectNode = objectMapper.valueToTree(object);
-        ((ObjectNode) nestedObject).put(key, (JsonNode) objectNode);
+        ((ObjectNode) nestedObject).put(newObjectKey, (JsonNode) objectNode);
         String updatedJsonString = JsonUtils.serializeToJson(rootNode);
         JsonUtils.writeJsonToFile(updatedJsonString, FILE_PATH);
     }
 
     //IMPORTANT - CAN GET ANY OBJECT FROM KEY IN JSON !!!!!!!!!!
-    public static <T> T getObject(ObjectMapper objectMapper, Class<T> targetClass) throws IOException {
+    public static <T> T getObjectByKey(ObjectMapper objectMapper, String nodeDir, Class<T> targetClass) throws IOException {
         JsonNode rootNode = JsonUtils.readJsonFile(objectMapper);
-        return objectMapper.treeToValue(rootNode, targetClass);
+        JsonNode nestedObject = rootNode.at(nodeDir);
+        return objectMapper.treeToValue(nestedObject, targetClass);
     }
 
     public static JsonNode readJsonFile(ObjectMapper objectMapper) throws IOException {

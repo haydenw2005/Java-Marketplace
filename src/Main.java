@@ -22,11 +22,16 @@ public class Main {
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
+            //Example of getObjectByKey
+            Buyer buyer = JsonUtils.getObjectByKey(objectMapper, "/Buyers/buyer_1_username", Buyer.class);
+            System.out.println(buyer);
+
+            //
 
             //START OF USER FLOW
-            String sessionUsername = enterCredentials(scanner, objectMapper);
+            //String sessionUsername = enterCredentials(scanner, objectMapper);
             //by tracking sessionUsername we know who is using the system
-            System.out.println(sessionUsername);
+            //System.out.println(sessionUsername);
             //CONTINUE USER FLOW HERE
 
         } catch (Exception e) {
@@ -35,7 +40,7 @@ public class Main {
     }
 
     public static String enterCredentials(Scanner scanner, ObjectMapper objectMapper) throws IOException {
-        Marketplace marketplace = JsonUtils.getObject(objectMapper, Marketplace.class);
+        Marketplace marketplace = JsonUtils.getObjectByKey(objectMapper, "", Marketplace.class);
         System.out.println("Welcome. Would you like to sign in (1) or sign up (2)?");
         String response = scanner.nextLine();
         String sessionUsername = null;
