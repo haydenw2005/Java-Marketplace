@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.util.*;
 
 public class Marketplace {
-    @JsonProperty("Buyers")
+    @JsonProperty("buyers")
     private Map<String, Buyer> buyers;
-    @JsonProperty("Sellers")
+    @JsonProperty("sellers")
     private Map<String, Seller> sellers;
 
     public Map<String, Buyer> getBuyers() {
@@ -18,27 +18,27 @@ public class Marketplace {
     }
 
 
-    public void addBuyerAccount(String username, Buyer buyer) {
+    public void addBuyerAccount(String username, Buyer buyer, ObjectMapper objectMapper) throws IOException {
         buyers.put(username, buyer);
+        JsonUtils.addObjectToJson("buyers", username, buyer, objectMapper);
     }
 
-    public void addSellerAccount(String username, Seller seller) {
+    public void addSellerAccount(String username, Seller seller, ObjectMapper objectMapper) throws IOException{
         sellers.put(username, seller);
+        JsonUtils.addObjectToJson("sellers", username, seller, objectMapper);
     }
 
     //METHOD TO SIGN IN, RETURN USER OBJECT
-    public String signIn(Scanner scanner) {
+    public Person signIn(Scanner scanner) {
         while(true) {
             System.out.println("Please enter your username:");
             String username = scanner.nextLine();
             System.out.println("Please enter your password:");
             String password = scanner.nextLine();
             if (buyers.containsKey(username) && buyers.get(username).getPassword().equals(password)) {
-                System.out.println("Successfully signed into buyer account...");
-                return username;
+                return getBuyers().get(username);
             } else if (sellers.containsKey(username) && sellers.get(username).getPassword().equals(password)) {
-                System.out.println("Successfully signed into seller account...");
-                return username;
+                return getSellers().get(username);
             } else {
                 System.out.println("Sorry, your credentials are invalid. Please try again");
             }
@@ -46,7 +46,7 @@ public class Marketplace {
     }
 
     //METHOD TO SIGN UP, RETURN USER OBJECT
-    public String signUp(Scanner scanner, ObjectMapper objectMapper) throws IOException {
+    public Person signUp(Scanner scanner, ObjectMapper objectMapper) throws IOException {
         System.out.println("Please enter your username:");
         String username = scanner.nextLine();
         while (buyers.containsKey(username) || sellers.containsKey(username)) {
@@ -68,14 +68,13 @@ public class Marketplace {
         }
         if (accountType.equals("1")) {
             Buyer buyer = new Buyer(username, password, firstName, lastName, new HashMap<>(), new HashMap<>());
-            addBuyerAccount(username, buyer);
-            JsonUtils.addObjectToJson("Buyers", username, buyer, objectMapper);
+            addBuyerAccount(username, buyer, objectMapper);
+            return buyer;
         } else {
             Seller seller = new Seller(username, password, firstName, lastName, new HashMap<>());
-            addSellerAccount(username, seller);
-            JsonUtils.addObjectToJson("Sellers", username, seller, objectMapper);
+            addSellerAccount(username, seller, objectMapper);
+            return seller;
         }
-        return username;
     }
 
     public ArrayList<Item> getAllMarketPlaceItems() {

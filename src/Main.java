@@ -23,13 +23,19 @@ public class Main {
 
         try {
             //Example of getObjectByKey
-            Buyer buyer = JsonUtils.getObjectByKey(objectMapper, "/Buyers/buyer_1_username", Buyer.class);
-            System.out.println(buyer);
+            Marketplace marketplace = JsonUtils.getObjectByKey(objectMapper, "", Marketplace.class);
+            //System.out.println(buyer);
 
             //
 
             //START OF USER FLOW
-            //String sessionUsername = enterCredentials(scanner, objectMapper);
+            Person user = enterCredentials(scanner, objectMapper);
+            if (user instanceof Buyer){
+                //startBuyerFlow()
+
+            } else if (user instanceof Seller) {
+                startSellerFlow((Seller) user, scanner, objectMapper);
+            }
             //by tracking sessionUsername we know who is using the system
             //System.out.println(sessionUsername);
             //CONTINUE USER FLOW HERE
@@ -39,24 +45,91 @@ public class Main {
         }
     }
 
-    public static String enterCredentials(Scanner scanner, ObjectMapper objectMapper) throws IOException {
+    public static Person enterCredentials(Scanner scanner, ObjectMapper objectMapper) throws IOException {
         Marketplace marketplace = JsonUtils.getObjectByKey(objectMapper, "", Marketplace.class);
         System.out.println("Welcome. Would you like to sign in (1) or sign up (2)?");
         String response = scanner.nextLine();
-        String sessionUsername = null;
+        Person user = null;
         while (!(response.equals("1") || response.equals("2"))) {
-            System.out.println("Invalid. Please enter 1 (buyer) or 2 (seller).");
+            System.out.println("Invalid. Please enter 1 (sign in ) or 2 (sign up).");
             response = scanner.nextLine();
         }
         if (response.equals("1")) {
-            sessionUsername = marketplace.signIn(scanner);
+            user = marketplace.signIn(scanner);
         } else {
-            sessionUsername = marketplace.signUp(scanner, objectMapper);
+            user = marketplace.signUp(scanner, objectMapper);
         }
-        return sessionUsername;
+        return user;
     }
 
+    public static void startSellerFlow(Seller user, Scanner scanner, ObjectMapper objectMapper) {
+        System.out.println("Welcome " + user.getFirstName() + " " + user.getLastName() + "!");
+        printSellerMenu();
+        String option = getMenuInput(1, 5, scanner);
+        switch (option) {
+            case "1":
+                break;
+            case "2":
+                printSellerStoreMenu();
+                getStoreMenuInput(scanner, user, objectMapper);
+                break;
+            case "3":
+                break;
+            case "4":
+                break;
+            case "5":
+                break;
+        }
+    }
 
+    public static String getMenuInput(int start, int end, Scanner scanner) {
+        System.out.println("Please enter a number " + start + " through " + end + ":");
+        String option = scanner.nextLine();
+        while (true) {
+            try {
+                int input = Integer.parseInt(option);
+                if (input >= start && input <= end) {
+                    return option;
+                } else System.out.println("Invalid input. Please enter a number from " + start + " to " + end + ":");
+            } catch (Exception e) {
+                System.out.println("Invalid input. Please enter a valid number:");
+            }
+        }
+    }
+
+    public static void getStoreMenuInput(Scanner scanner, Seller user, ObjectMapper objectMapper) {
+        String option = getMenuInput(1, 4, scanner);
+        switch (option) {
+            case "1":
+                System.out.println("What would you like the name of the store to be?");
+                String name = scanner.nextLine();
+                if (!user.getStores().containsKey(name)) user.createNewStore(name, objectMapper);
+                else System.out.println("Sorry, you already have a store with this name.");
+
+
+            case "2":
+
+            case "3":
+
+            case "4":
+
+        }
+    }
+    public static void printSellerStoreMenu() {
+        System.out.println("What would you like to do?");
+        System.out.println("\t(1) Create a store ~");
+        System.out.println("\t(2) Edit a store ~");
+        System.out.println("\t(3) Delete a store ~");
+        System.out.println("\t(4) Back");
+    }
+    public static void printSellerMenu() {
+        System.out.println("What would you like to do?");
+        System.out.println("\t(1) List, edit, or delete items ~");
+        System.out.println("\t(2) Create, edit, or delete stores ~");
+        System.out.println("\t(3) View all listed products ~");
+        System.out.println("\t(4) View all sold products ~");
+        System.out.println("\t(5) Signout");
+    }
 
 }
 
