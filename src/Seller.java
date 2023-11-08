@@ -1,5 +1,8 @@
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Seller extends Person {
@@ -11,6 +14,17 @@ public class Seller extends Person {
                   @JsonProperty("stores") Map<String, Store> stores) {
         super(username, password, firstName, lastName);
         this.stores = stores;
+    }
+
+    public void createNewStore(String name, ObjectMapper objectMapper) {
+       try {
+           Store newStore = new Store(name, new HashMap<>(), new HashMap<>());
+           String dir = "/sellers/" + this.getUsername() + "/stores";
+           JsonUtils.addObjectToJson(dir, name, newStore, objectMapper);
+       } catch (Exception e) {
+           e.printStackTrace();
+           System.out.println("Error creating store.");
+       }
     }
 
     @Override

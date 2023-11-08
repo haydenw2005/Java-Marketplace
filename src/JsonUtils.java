@@ -18,7 +18,7 @@ public class JsonUtils {
     //objectMapper - utlity
     public static void addObjectToJson(String nodeDir, String newObjectKey, Object object, ObjectMapper objectMapper) throws IOException {
         JsonNode rootNode = JsonUtils.readJsonFile(objectMapper);
-        JsonNode nestedObject = rootNode.path(nodeDir);
+        JsonNode nestedObject = rootNode.at(nodeDir);
         JsonNode objectNode = objectMapper.valueToTree(object);
         ((ObjectNode) nestedObject).put(newObjectKey, (JsonNode) objectNode);
         String updatedJsonString = JsonUtils.serializeToJson(rootNode);

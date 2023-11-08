@@ -1,5 +1,5 @@
 {
-  "Sellers" : {
+  "sellers" : {
     "seller_1_username" : {
       "username" : "seller_1_username",
       "password" : "password123!",
@@ -74,11 +74,16 @@
               }
             }
           }
+        },
+        "store1" : {
+          "name" : "store1",
+          "stockItems" : { },
+          "soldItems" : { }
         }
       }
     }
   },
-  "Buyers" : {
+  "buyers" : {
     "buyer_1_username" : {
       "username" : "buyer_1_username",
       "password" : "password123!",
