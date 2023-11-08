@@ -33,6 +33,25 @@ public class Main {
             if (user instanceof Buyer){
                 //startBuyerFlow()
 
+                ArrayList<Item> itemsList = marketplace.getAllMarketPlaceItems();
+                marketplace.listProducts(itemsList);
+                System.out.println("Search for a product: enter 'search'");
+                System.out.println("Sort products by price: enter 'sort price'");
+                System.out.println("Sort products by quantity in stock: enter 'sort quantity'");
+
+                String input = scanner.nextLine();
+
+                if (input.equals("search")) {
+                    marketplace.listProducts(marketplace.searchProducts(scanner, itemsList));
+                    input = scanner.nextLine();
+                } else if (input.equals("sort price")) {
+                    marketplace.listProducts(marketplace.sortByPrice(itemsList));
+                    input = scanner.nextLine();
+                } else if (input.equals("sort quantity")) {
+                    marketplace.listProducts(marketplace.sortByQuantity(itemsList));
+                    input = scanner.nextLine();
+                }
+
             } else if (user instanceof Seller) {
                 startSellerFlow((Seller) user, scanner, objectMapper);
             }
@@ -132,47 +151,3 @@ public class Main {
     }
 
 }
-
-
-
-//Good code, lets turn this into functions, probably in Marketplace class
-
-/* User can search for product by name or description:
-ArrayList<Item> itemsList = marketplace.getAllMarketPlaceItems();
-System.out.println("Search for a product: ");
-String search = scanner.nextLine();
-search = search.toUpperCase();
-
-for (int i = 0; i < itemsList.size(); i++) {
-    if (itemsList.get(i).getName().toUpperCase().contains(search) ||
-            itemsList.get(i).getDescription().toUpperCase().contains(search)) {
-        System.out.println(itemsList.get(i).getName());
-    }
-}
-*/
-
-/* Sort products by price:
-for (int i = 0; i < itemsList.size(); i++) {
-    for (int j = i; j < itemsList.size() - 1; j++) {
-        if (itemsList.get(i).getPrice() < itemsList.get(j + 1).getPrice()) {
-            Item temp = itemsList.get(i);
-            itemsList.set(i, itemsList.get(j + 1));
-            itemsList.set(j + 1, temp);
-        }
-    }
-    System.out.println(i + 1 + ". " + itemsList.get(i).getName());
-}
-*/
-
-/* Sort products by quantity in stock:
-for (int i = 0; i < itemsList.size(); i++) {
-    for (int j = i; j < itemsList.size() - 1; j++) {
-        if (itemsList.get(i).getCount() < itemsList.get(j + 1).getCount()) {
-            Item temp = itemsList.get(i);
-            itemsList.set(i, itemsList.get(j + 1));
-            itemsList.set(j + 1, temp);
-        }
-    }
-    System.out.println(i + 1 + ". " + itemsList.get(i).getName());
-}
-*/

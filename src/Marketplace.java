@@ -87,7 +87,6 @@ public class Marketplace {
                 Map<String, Item> items = store.getStockItems();
                 for (Map.Entry<String, Item> itemEntry : items.entrySet()) {
                     itemsArray.add(itemEntry.getValue());
-                    System.out.println(itemEntry.getValue().getName());
                 }
             }
         }
@@ -109,5 +108,59 @@ public class Marketplace {
             }
         }
         return null;
+    }
+
+    public void listProducts(ArrayList<Item> items) {
+        System.out.println("Enter the product's number to view its information:");
+
+        for (int i = 0; i < items.size(); i++) {
+            System.out.println(i + 1 + ". Product: " + items.get(i).getName() + "; Store: " +
+                    this.getStore(items.get(i)).getName() + "; Price: " +
+                    items.get(i).getPrice());
+        }
+    }
+
+    public ArrayList<Item> searchProducts(Scanner scanner, ArrayList<Item> items) {
+        ArrayList<Item> searchResults = new ArrayList<Item>();
+
+        System.out.println("Search for a product: ");
+        String search = scanner.nextLine();
+        search = search.toUpperCase();
+
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getName().toUpperCase().contains(search) ||
+                    items.get(i).getDescription().toUpperCase().contains(search) ||
+            this.getStore(items.get(i)).getName().toUpperCase().contains(search)) {
+                searchResults.add(items.get(i));
+            }
+        }
+
+        return searchResults;
+    }
+
+    public ArrayList<Item> sortByPrice(ArrayList<Item> items) {
+        for (int i = 0; i < items.size(); i++) {
+            for (int j = i; j < items.size() - 1; j++) {
+                if (items.get(i).getPrice() < items.get(j + 1).getPrice()) {
+                    Item temp = items.get(i);
+                    items.set(i, items.get(j + 1));
+                    items.set(j + 1, temp);
+                }
+            }
+        }
+        return items;
+    }
+
+    public ArrayList<Item> sortByQuantity(ArrayList<Item> items) {
+        for (int i = 0; i < items.size(); i++) {
+            for (int j = i; j < items.size() - 1; j++) {
+                if (items.get(i).getCount() < items.get(j + 1).getCount()) {
+                    Item temp = items.get(i);
+                    items.set(i, items.get(j + 1));
+                    items.set(j + 1, temp);
+                }
+            }
+        }
+        return items;
     }
 }
