@@ -32,25 +32,7 @@ public class Main {
             Person user = enterCredentials(scanner, objectMapper);
             if (user instanceof Buyer){
                 //startBuyerFlow()
-
-                ArrayList<Item> itemsList = marketplace.getAllMarketPlaceItems();
-                marketplace.listProducts(itemsList);
-                System.out.println("Search for a product: enter 'search'");
-                System.out.println("Sort products by price: enter 'sort price'");
-                System.out.println("Sort products by quantity in stock: enter 'sort quantity'");
-
-                String input = scanner.nextLine();
-
-                if (input.equals("search")) {
-                    marketplace.listProducts(marketplace.searchProducts(scanner, itemsList));
-                    input = scanner.nextLine();
-                } else if (input.equals("sort price")) {
-                    marketplace.listProducts(marketplace.sortByPrice(itemsList));
-                    input = scanner.nextLine();
-                } else if (input.equals("sort quantity")) {
-                    marketplace.listProducts(marketplace.sortByQuantity(itemsList));
-                    input = scanner.nextLine();
-                }
+                int productNumber = marketplace.getBuyerInput(scanner);
 
             } else if (user instanceof Seller) {
                 startSellerFlow((Seller) user, scanner, objectMapper);
@@ -149,5 +131,4 @@ public class Main {
         System.out.println("\t(4) View all sold products ~");
         System.out.println("\t(5) Signout");
     }
-
 }

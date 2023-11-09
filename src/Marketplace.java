@@ -163,4 +163,38 @@ public class Marketplace {
         }
         return items;
     }
+
+    public int getBuyerInput (Scanner scanner) {
+        ArrayList<Item> itemsList = this.getAllMarketPlaceItems();
+        this.listProducts(itemsList);
+        System.out.println("Search for a product: enter 'search'");
+        System.out.println("Sort products by price: enter 'sort price'");
+        System.out.println("Sort products by quantity in stock: enter 'sort quantity'");
+
+        String input = scanner.nextLine();
+
+        if (input.equals("search")) {
+            this.listProducts(this.searchProducts(scanner, itemsList));
+            input = scanner.nextLine();
+        } else if (input.equals("sort price")) {
+            this.listProducts(this.sortByPrice(itemsList));
+            input = scanner.nextLine();
+        } else if (input.equals("sort quantity")) {
+            this.listProducts(this.sortByQuantity(itemsList));
+            input = scanner.nextLine();
+        }
+
+        try {
+            int inputNum = Integer.parseInt(input);
+            if (inputNum >= 1 && inputNum <= itemsList.size()) {
+                return inputNum;
+            } else {
+                System.out.println("Invalid input");
+                return this.getBuyerInput(scanner);
+            }
+        } catch (Exception e) {
+            System.out.println("Invalid input");
+            return this.getBuyerInput(scanner);
+        }
+    }
 }
