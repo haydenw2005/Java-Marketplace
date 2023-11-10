@@ -245,7 +245,10 @@ public class Marketplace {
             } while (!validInput);
 
             item.setCount(item.getCount() - numItems);
-            System.out.println(numItems + " purchased!");
+            if (numItems == 1)
+                System.out.println(numItems + " item purchased!");
+            else
+                System.out.println(numItems + " items purchased!");
 
             if (item.getCount() == 0) {
                 //remove item from json
@@ -257,5 +260,9 @@ public class Marketplace {
         }
 
         return item;
+    }
+
+    public void viewStoreInfo(Scanner scanner) {
+
     }
 }

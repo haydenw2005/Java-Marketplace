@@ -33,7 +33,19 @@ public class Main {
             if (user instanceof Buyer){
                 //startBuyerFlow()
                 System.out.println("Welcome " + user.getFirstName() + " " + user.getLastName() + "!");
-                marketplace.buyerFlow(scanner, (Buyer) user);
+                System.out.println("View store information: enter '1'");
+                System.out.println("View marketplace: enter '2'");
+
+                String input = scanner.nextLine();
+                while (!(input.equals("1") || input.equals("2"))) {
+                    System.out.println("Invalid input");
+                    input = scanner.nextLine();
+                }
+                if (input.equals("1")) {
+                    marketplace.viewStoreInfo(scanner);
+                } else {
+                    marketplace.buyerFlow(scanner, (Buyer) user);
+                }
 
             } else if (user instanceof Seller) {
                 startSellerFlow((Seller) user, scanner, objectMapper);
