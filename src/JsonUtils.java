@@ -26,10 +26,15 @@ public class JsonUtils {
     }
 
     // IMPORTANT - REMOVES ANY FIELD FROM JSON
-    public static void removeObjectFromJson(String nodeDir, String newObjectKey, ObjectMapper objectMapper) throws IOException {
+    /**
+     * @param nodeDir - String JSON path of object to be removed  
+     * @param objectKey - key of the object to be removed
+     * @param objectMapper - objectMapper utility
+     */
+    public static void removeObjectFromJson(String nodeDir, String objectKey, ObjectMapper objectMapper) throws IOException {
         JsonNode rootNode = JsonUtils.readJsonFile(objectMapper);
         JsonNode nestedObject = rootNode.at(nodeDir);
-        ((ObjectNode) nestedObject).remove(newObjectKey);
+        ((ObjectNode) nestedObject).remove(objectKey);
         String updatedJsonString = JsonUtils.serializeToJson(rootNode);
         JsonUtils.writeJsonToFile(updatedJsonString, FILE_PATH);
     }
