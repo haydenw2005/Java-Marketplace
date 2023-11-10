@@ -70,7 +70,7 @@ public class Buyer extends Person {
         }
     }
 
-    public void buyItem(Item item) {
+    public void buyItem(Item item, ObjectMapper objectMapper) {
         
     }
 
