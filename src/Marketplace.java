@@ -112,16 +112,13 @@ public class Marketplace {
 
     public void listProducts(ArrayList<Item> items) {
         System.out.println("Enter the product's number to view its information:");
-
         for (int i = 0; i < items.size(); i++) {
-            System.out.println(i + 1 + ". Product: " + items.get(i).getName() + "; Store: " +
-                    this.getStore(items.get(i)).getName() + "; Price: " +
-                    items.get(i).getPrice());
+            System.out.println(i + 1 + items.get(i).toString() + " \nStore: " + this.getStore(items.get(i)).getName());
         }
     }
 
     public ArrayList<Item> searchProducts(Scanner scanner, ArrayList<Item> items) {
-        ArrayList<Item> searchResults = new ArrayList<Item>();
+        ArrayList<Item> searchResults = new ArrayList<>();
 
         System.out.println("Search for a product: ");
         String search = scanner.nextLine();

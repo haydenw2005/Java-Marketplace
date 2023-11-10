@@ -56,5 +56,11 @@ public class Item {
         return sellersObject.get(username);
     }
 
+    public String toString() {
+        return "Product: " + this.getName() + " | Price: " +
+                this.getPrice() + " | Stock: " + this.getCount() + "\n Description: "
+                + this.getDescription();
+    }
+
 
 }
