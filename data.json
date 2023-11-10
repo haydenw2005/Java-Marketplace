@@ -12,7 +12,8 @@
             "cheese" : {
               "name" : "cheese",
               "description" : "yummy",
-              "count" : 5,
+              "stock" : 5,
+              "count" : -1,
               "price" : 123,
               "buyersObject" : null,
               "sellersObject" : {
@@ -22,7 +23,8 @@
             "microwaves" : {
               "name" : "microwaves",
               "description" : "makes waves",
-              "count" : 2,
+              "stock" : 2,
+              "count" : -1,
               "price" : 1000,
               "buyersObject" : null,
               "sellersObject" : {
@@ -32,7 +34,8 @@
             "bread" : {
               "name" : "bread",
               "description" : "tastes good",
-              "count" : 4,
+              "stock" : 4,
+              "count" : -1,
               "price" : 10,
               "buyersObject" : null,
               "sellersObject" : {
@@ -42,7 +45,8 @@
             "computer" : {
               "name" : "computer",
               "description" : "is a computer",
-              "count" : 1,
+              "stock" : 1,
+              "count" : -1,
               "price" : 500,
               "buyersObject" : null,
               "sellersObject" : {
@@ -52,7 +56,8 @@
             "soccer ball" : {
               "name" : "soccer ball",
               "description" : "kick it",
-              "count" : 2,
+              "stock" : 2,
+              "count" : -1,
               "price" : 20,
               "buyersObject" : null,
               "sellersObject" : {
@@ -64,7 +69,8 @@
             "microwaves" : {
               "name" : "microwaves",
               "description" : "makes waves",
-              "count" : 1,
+              "stock" : 1,
+              "count" : -1,
               "price" : 1000,
               "buyersObject" : {
                 "buyer_1_username" : 2
@@ -93,7 +99,8 @@
         "cheese" : {
           "name" : "cheese",
           "description" : "yummy",
-          "count" : 3,
+          "stock" : 3,
+          "count" : 1,
           "price" : 123,
           "buyersObject" : {
             "buyer_1_username" : 3
@@ -103,7 +110,8 @@
         "microwaves" : {
           "name" : "microwaves",
           "description" : "makes waves",
-          "count" : 6,
+          "stock" : 6,
+          "count" : 1,
           "price" : 1000,
           "buyersObject" : {
             "buyer_1_username" : 2
@@ -115,6 +123,7 @@
         "cheese" : {
           "name" : "cheese",
           "description" : "yummy",
+          "stock" : 12,
           "count" : 2,
           "price" : 123,
           "buyersObject" : {
@@ -127,6 +136,7 @@
         "microwaves" : {
           "name" : "microwaves",
           "description" : "makes waves",
+          "stock" : 10,
           "count" : 4,
           "price" : 1000,
           "buyersObject" : {

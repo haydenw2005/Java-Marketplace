@@ -61,25 +61,49 @@ public class Buyer extends Person {
 
     // other functions
     public void addItemToCart(Item item, ObjectMapper objectMapper) {
-        try {
-            String dir = "/buyers/" + this.getUsername() + "/cart";
-            JsonUtils.addObjectToJson(dir, item.getName(), item, objectMapper);
-        } catch (IOException e) {
-            System.out.println("Error adding item to cart.");
-            e.printStackTrace();
+        if (item.getCount() < item.getStock()) {
+            try {
+                String dir = "/buyers/" + this.getUsername() + "/cart";
+                JsonUtils.addObjectToJson(dir, item.getName(), item, objectMapper);
+            } catch (IOException e) {
+                System.out.println("Error adding item to cart.");
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Error, not enough stock.");
         }
     }
 
     public void buyItem(Item item, ObjectMapper objectMapper) {
-        
+        if(item.getCount() < item.getStock()) {
+            try {
+                String dir = "";
+                JsonUtils.removeObjectFromJson(dir, item.getName(), objectMapper);
+                updateStock(item);
+            } catch (IOException e) {
+                System.out.println("Error buying item.");
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Error, not enough stock.");
+        }
     }
 
     public void buyCart(Item[] items) {
         // TODO: Remove Objects + update stock
         
     }
-
-    public void updateStock(Item item, int boughtItems) {
+    
+    public void addToPurchaseHistory(Item item, ObjectMapper objectMapper) {
+        try {
+            String dir = "/buyers/" + this.getUsername() + "/purchaseHistory";
+            JsonUtils.addObjectToJson(dir, item.getName(), item, objectMapper);
+        } catch (IOException e) {
+            System.out.println("Error adding item to cart.");
+            e.printStackTrace();
+        }
+    }
+    public void updateStock(Item item) {
         //TODO
     }
 }
