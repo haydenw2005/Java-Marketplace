@@ -54,9 +54,5 @@ public class Seller extends Person {
     public Store getStoreByName(String name) {
         return stores.get(name);
     }
-
-    //for some reason this is causing wierd behvior, commented out for now.
-    /*public String[] getListOfStoresNames() {
-        return stores.keySet().toArray(new String[0]);
-    }*/
+    x
 }
