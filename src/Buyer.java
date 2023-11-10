@@ -37,22 +37,44 @@ public class Buyer extends Person {
     public void setPurchaseHistory(Map<String, Item> purchaseHistory) {
         this.purchaseHistory = purchaseHistory;
     }
+
+    @Override
+    public String getUsername() {
+        return super.getUsername();
+    }
+
+    @Override
+    public String getPassword() {
+        return super.getPassword();
+    }
+    
+    @Override
+    public String getFirstName() {
+        return super.getFirstName();
+    }
+    
+    @Override
+    public String getLastName() {
+        return super.getLastName();
+    }
     // --- getters and setters ---
 
     // other functions
-        
-    public void addItemToCart(Item item) {
-        cart.put(item.getName(), item);
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
+    public void addItemToCart(Item item, ObjectMapper objectMapper) {
         try {
-            writer.writeValue(new File("test.json"), cart);
+            String dir = "/buyers/" + this.getUsername() + "/cart";
+            JsonUtils.addObjectToJson(dir, item.getName(), item, objectMapper);
         } catch (IOException e) {
+            System.out.println("Error adding item to cart.");
             e.printStackTrace();
         }
     }
 
     public void buyCart(Item[] items) {
-        // TODO
+        // TODO: Remove Objects plsu update stock
+    }
+
+    public void updateStock(Item item, int boughtItems) {
+        //TODO
     }
 }

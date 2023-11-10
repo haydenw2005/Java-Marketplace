@@ -25,6 +25,15 @@ public class JsonUtils {
         JsonUtils.writeJsonToFile(updatedJsonString, FILE_PATH);
     }
 
+    // IMPORTANT - REMOVES ANY FIELD FROM JSON
+    public static void removeObjectFromJson(String nodeDir, String newObjectKey, ObjectMapper objectMapper) throws IOException {
+        JsonNode rootNode = JsonUtils.readJsonFile(objectMapper);
+        JsonNode nestedObject = rootNode.at(nodeDir);
+        ((ObjectNode) nestedObject).remove(newObjectKey);
+        String updatedJsonString = JsonUtils.serializeToJson(rootNode);
+        JsonUtils.writeJsonToFile(updatedJsonString, FILE_PATH);
+    }
+
     //IMPORTANT - CAN GET ANY OBJECT FROM KEY IN JSON !!!!!!!!!!
     public static <T> T getObjectByKey(ObjectMapper objectMapper, String nodeDir, Class<T> targetClass) throws IOException {
         JsonNode rootNode = JsonUtils.readJsonFile(objectMapper);

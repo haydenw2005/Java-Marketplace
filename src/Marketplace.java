@@ -251,7 +251,7 @@ public class Marketplace {
                 //remove item from json
             }
         } else if (input.equals("2")) {
-            buyer.addItemToCart(item);
+            buyer.addItemToCart(item, new ObjectMapper());
         } else {
             this.buyerFlow(scanner, buyer);
         }
