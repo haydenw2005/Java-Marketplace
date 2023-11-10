@@ -1,8 +1,16 @@
 # CS4_PROJECT
 
-## TODO
-### JSON file
-- [X] Sales of product
-- [X] Store sales/revenue
-- [X] Item currently in X customers' cart
-- [X] Fetch customer information from item purchase (restructure products to have UIDs?)
+# TODO
+## Buyer
+[ ] Buy an item
+[ ] Buy entire cart
+[ ] Purchase History
+[ ] List of stores by number of products bought by customer
+[ ] List stores by total number of sales
+
+## Seller
+[ ] Add items to store
+[ ] Delete items from store
+[ ] Edit store item
+[ ] List of customers who purchased seller's products
+[ ] Number of products currently in buyers' carts

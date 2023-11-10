@@ -70,8 +70,13 @@ public class Buyer extends Person {
         }
     }
 
+    public void buyItem(Item item) {
+        
+    }
+
     public void buyCart(Item[] items) {
-        // TODO: Remove Objects plsu update stock
+        // TODO: Remove Objects + update stock
+        
     }
 
     public void updateStock(Item item, int boughtItems) {
