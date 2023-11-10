@@ -35,6 +35,11 @@ public class Item {
         return count;
     }
 
+    public void setCount(int count) {
+        this.count = count;
+        //change json
+    }
+
     public int getPrice() {
         return price;
     }

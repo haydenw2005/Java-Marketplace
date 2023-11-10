@@ -32,7 +32,8 @@ public class Main {
             Person user = enterCredentials(scanner, objectMapper);
             if (user instanceof Buyer){
                 //startBuyerFlow()
-                int productNumber = marketplace.getBuyerInput(scanner);
+                System.out.println("Welcome " + user.getFirstName() + " " + user.getLastName() + "!");
+                marketplace.buyerFlow(scanner, (Buyer) user);
 
             } else if (user instanceof Seller) {
                 startSellerFlow((Seller) user, scanner, objectMapper);

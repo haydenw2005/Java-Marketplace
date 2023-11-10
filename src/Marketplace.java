@@ -164,7 +164,7 @@ public class Marketplace {
         return items;
     }
 
-    public int getBuyerInput (Scanner scanner) {
+    public Item buyerFlow (Scanner scanner, Buyer buyer) {
         ArrayList<Item> itemsList = this.getAllMarketPlaceItems();
         this.listProducts(itemsList);
         System.out.println("Search for a product: enter 'search'");
@@ -174,7 +174,8 @@ public class Marketplace {
         String input = scanner.nextLine();
 
         if (input.equals("search")) {
-            this.listProducts(this.searchProducts(scanner, itemsList));
+            itemsList = this.searchProducts(scanner, itemsList);
+            this.listProducts(itemsList);
             input = scanner.nextLine();
         } else if (input.equals("sort price")) {
             this.listProducts(this.sortByPrice(itemsList));
@@ -187,14 +188,74 @@ public class Marketplace {
         try {
             int inputNum = Integer.parseInt(input);
             if (inputNum >= 1 && inputNum <= itemsList.size()) {
-                return inputNum;
+                return this.showProductPage(itemsList.get(inputNum - 1), scanner, buyer);
             } else {
                 System.out.println("Invalid input");
-                return this.getBuyerInput(scanner);
+                return this.showProductPage(this.buyerFlow(scanner, buyer), scanner, buyer);
             }
         } catch (Exception e) {
             System.out.println("Invalid input");
-            return this.getBuyerInput(scanner);
+            return this.showProductPage(this.buyerFlow(scanner, buyer), scanner, buyer);
         }
+    }
+
+    public Item showProductPage(Item item, Scanner scanner, Buyer buyer) {
+        System.out.println("Product: " + item.getName());
+        System.out.println(item.getDescription());
+        System.out.println("Quantity available: " + item.getCount());
+        System.out.println("Purchase: enter '1'");
+        System.out.println("Add to cart: enter '2'");
+        System.out.println("Back: enter '3'");
+        String input = scanner.nextLine();
+
+        while (!(input.equals("1") || input.equals("2") || input.equals("3"))) {
+            System.out.println("invalid input");
+            input = scanner.nextLine();
+        }
+
+        if (input.equals("1")) {
+            System.out.println("How many items would you like to purchase?");
+            String s = scanner.nextLine();
+            int numItems = 0;
+            boolean validInput;
+            do {
+                validInput = true;
+                try {
+                    numItems = Integer.parseInt(s);
+
+                    if (numItems <= 0) {
+                        System.out.println("Invalid input");
+                        System.out.println("How many items would you like to purchase?");
+                        s = scanner.nextLine();
+                        validInput = false;
+                    }
+
+                    if (numItems > item.getCount()) {
+                        System.out.println("Not enough items in stock");
+                        System.out.println("How many items would you like to purchase?");
+                        s = scanner.nextLine();
+                        validInput = false;
+                    }
+                } catch (Exception e) {
+                    System.out.println("Invalid input");
+                    System.out.println("How many items would you like to purchase?");
+                    s = scanner.nextLine();
+                    validInput = false;
+                }
+            } while (!validInput);
+
+            item.setCount(item.getCount() - numItems);
+            System.out.println(numItems + " purchased!");
+
+            if (item.getCount() == 0) {
+                //remove item from json
+            }
+        } else if (input.equals("2")) {
+            buyer.addItemToCart(item);
+        } else {
+            this.buyerFlow(scanner, buyer);
+        }
+
+        return item;
     }
 }
