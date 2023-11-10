@@ -175,8 +175,13 @@ public class Marketplace {
 
         if (input.equals("search")) {
             itemsList = this.searchProducts(scanner, itemsList);
-            this.listProducts(itemsList);
-            input = scanner.nextLine();
+            if (itemsList.size() == 0) {
+                System.out.println("No matches");
+                this.buyerFlow(scanner, buyer);
+            } else {
+                this.listProducts(itemsList);
+                input = scanner.nextLine();
+            }
         } else if (input.equals("sort price")) {
             this.listProducts(this.sortByPrice(itemsList));
             input = scanner.nextLine();
