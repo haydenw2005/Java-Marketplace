@@ -113,7 +113,8 @@ public class Marketplace {
     public void listProducts(ArrayList<Item> items) {
         System.out.println("Enter the product's number to view its information:");
         for (int i = 0; i < items.size(); i++) {
-            System.out.println(i + 1 + items.get(i).toString() + " \nStore: " + this.getStore(items.get(i)).getName());
+            System.out.println((i + 1) + " - " + items.get(i).toString() + " \nStore: "
+                    + this.getStore(items.get(i)).getName() + "\n");
         }
     }
 
@@ -151,7 +152,7 @@ public class Marketplace {
     public ArrayList<Item> sortByQuantity(ArrayList<Item> items) {
         for (int i = 0; i < items.size(); i++) {
             for (int j = i; j < items.size() - 1; j++) {
-                if (items.get(i).getCount() < items.get(j + 1).getCount()) {
+                if (items.get(i).getStock() < items.get(j + 1).getStock()) {
                     Item temp = items.get(i);
                     items.set(i, items.get(j + 1));
                     items.set(j + 1, temp);
@@ -204,7 +205,7 @@ public class Marketplace {
     public Item showProductPage(Item item, Scanner scanner, Buyer buyer) {
         System.out.println("Product: " + item.getName());
         System.out.println(item.getDescription());
-        System.out.println("Quantity available: " + item.getCount());
+        System.out.println("Quantity available: " + item.getStock());
         System.out.println("Purchase: enter '1'");
         System.out.println("Add to cart: enter '2'");
         System.out.println("Back: enter '3'");
@@ -232,7 +233,7 @@ public class Marketplace {
                         validInput = false;
                     }
 
-                    if (numItems > item.getCount()) {
+                    if (numItems > item.getStock()) {
                         System.out.println("Not enough items in stock");
                         System.out.println("How many items would you like to purchase?");
                         s = scanner.nextLine();
@@ -246,14 +247,20 @@ public class Marketplace {
                 }
             } while (!validInput);
 
-            item.setCount(item.getCount() - numItems);
+            item.setStock(item.getStock() - numItems);
             if (numItems == 1)
                 System.out.println(numItems + " item purchased!");
             else
                 System.out.println(numItems + " items purchased!");
 
-            if (item.getCount() == 0) {
+            // still need to add code to purchase
+            
+            if (item.getStock() == 0) {
                 //remove item from json
+                //Need to get seller of
+                /*String dir = "/sellers/" + this.getUsername() + "/stores/" + ;
+                Store store = JsonUtils.getObjectByKey(objectMapper, dir + "/" + name, Store.class);
+                JsonUtils.removeObjectFromJson(dir, name, objectMapper);*/
             }
         } else if (input.equals("2")) {
             buyer.addItemToCart(item, new ObjectMapper());

@@ -97,9 +97,14 @@ public class Item {
     }
 
     public String toString() {
-        return "Product: " + this.getName() + " | Price: " +
-                this.getPrice() + " | Stock: " + this.getCount() + "\n Description: "
-                + this.getDescription();
+        if (stock >= 0) {
+            return "Product: " + this.getName() + " | Price: " +
+                    this.getPrice() + " | Stock: " + this.getStock();
+        } else if (count >= 0) {
+            return "Product: " + this.getName() + " | Price: " +
+                    this.getPrice() + " | Count: " + this.getCount();
+        }
+        return null;
     }
 
 
