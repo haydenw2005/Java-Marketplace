@@ -80,11 +80,6 @@
               }
             }
           }
-        },
-        "store1" : {
-          "name" : "store1",
-          "stockItems" : { },
-          "soldItems" : { }
         }
       }
     }

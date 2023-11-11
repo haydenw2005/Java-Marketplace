@@ -78,26 +78,40 @@ public class Main {
 
     public static void startSellerFlow(Seller user, Scanner scanner, ObjectMapper objectMapper) {
         System.out.println("Welcome " + user.getFirstName() + " " + user.getLastName() + "!");
-        printSellerMenu();
-        String option = getMenuInput(1, 5, scanner);
-        switch (option) {
-            case "1":
-                break;
-            case "2":
-                printSellerStoreMenu();
-                getStoreMenuInput(scanner, user, objectMapper);
-                break;
-            case "3":
-                break;
-            case "4":
-                break;
-            case "5":
-                break;
+        while (true) {
+            printSellerMenu();
+            String option = getMenuInput(1, 5, scanner);
+            switch (option) {
+                case "1":
+                    break;
+                case "2":
+                    boolean inStoreMenu = true;
+                    while (inStoreMenu) {
+                        printSellerStoreMenu();
+                        try {
+                            inStoreMenu = getStoreMenuInput(scanner, user, objectMapper);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    break;
+                case "3":
+                    System.out.println("All listed products");
+                    user.getAllStockItems("stock");
+                    break;
+                case "4":
+                    System.out.println("All sold products");
+                    user.getAllStockItems("sold");
+                    break;
+                case "5":
+                    System.out.println("Signing out...");
+                    return;
+            }
         }
     }
 
     public static String getMenuInput(int start, int end, Scanner scanner) {
-        System.out.println("Please enter a number " + start + " through " + end + ":");
+        System.out.println("What would you like to do next? Please enter a number " + start + " through " + end + ":");
         String option = scanner.nextLine();
         while (true) {
             try {
@@ -111,7 +125,7 @@ public class Main {
         }
     }
 
-    public static void getStoreMenuInput(Scanner scanner, Seller user, ObjectMapper objectMapper) {
+    public static boolean getStoreMenuInput(Scanner scanner, Seller user, ObjectMapper objectMapper) throws IOException {
         String option = getMenuInput(1, 4, scanner);
         switch (option) {
             case "1":
@@ -119,15 +133,33 @@ public class Main {
                 String name = scanner.nextLine();
                 if (!user.getStores().containsKey(name)) user.createNewStore(name, objectMapper);
                 else System.out.println("Sorry, you already have a store with this name.");
-
-
+                break;
             case "2":
-
+                System.out.println("What is the name of the store you would like to edit?");
+                String storeName = scanner.nextLine();
+                if (user.getStores().containsKey(storeName)) {
+                    System.out.println("What will the new name of your store be?");
+                    String newStoreName = scanner.nextLine();
+                    user.editStore(storeName, newStoreName, objectMapper);
+                }
+                else System.out.println("Sorry, we can't find a store with name " + storeName);
+                break;
             case "3":
-
+                System.out.println("What store would you like to delete");
+                String deletedStoreName = scanner.nextLine();
+                if (user.getStores().containsKey(deletedStoreName)){
+                    String dir = "/sellers/" + user.getUsername() + "/stores";
+                    JsonUtils.removeObjectFromJson(dir, deletedStoreName, objectMapper);
+                }
+                else System.out.println("Sorry, we can't find a store with name " + deletedStoreName);
+                break;
             case "4":
-
+                return false;
         }
+        return true;
+    }
+    public static void printSellerItemMenu() {
+
     }
     public static void printSellerStoreMenu() {
         System.out.println("What would you like to do?");

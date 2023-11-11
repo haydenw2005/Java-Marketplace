@@ -96,5 +96,11 @@ public class Item {
         this.sellersObject = sellersObject;
     }
 
+    public String toString() {
+        return "Product: " + this.getName() + " | Price: " +
+                this.getPrice() + " | Stock: " + this.getCount() + "\n Description: "
+                + this.getDescription();
+    }
+
 
 }
