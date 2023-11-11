@@ -73,8 +73,8 @@ public class Buyer extends Person {
             System.out.println("Error, not enough stock.");
         }
     }
-
     public void buyItem(Item item, ObjectMapper objectMapper) {
+        // TODO: Add to sold items
         if(item.getCount() <= item.getStock()) {
             try {
                 String buyerCartDir = "/buyers/" + this.getUsername() + "/cart/" + item.getName();
@@ -107,6 +107,7 @@ public class Buyer extends Person {
     }
     
     public void addToPurchaseHistory(Item item, ObjectMapper objectMapper) {
+        // TODO: Update item object
         try {
             String dir = "/buyers/" + this.getUsername() + "/purchaseHistory";
             JsonUtils.addObjectToJson(dir, item.getName(), item, objectMapper);
