@@ -2,9 +2,9 @@
 
 # TODO
 ## Buyer
-[ ] Buy an item
-[ ] Buy entire cart
-[ ] Purchase History
+[X] Buy an item
+[X] Buy entire cart
+[X] Purchase History
 ### Stats
 [ ] List of stores by number of products bought by customer
 [ ] List stores by total number of sales

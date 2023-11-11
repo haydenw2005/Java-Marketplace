@@ -75,11 +75,22 @@ public class Buyer extends Person {
     }
 
     public void buyItem(Item item, ObjectMapper objectMapper) {
-        if(item.getCount() < item.getStock()) {
+        if(item.getCount() <= item.getStock()) {
             try {
-                String dir = "";
-                JsonUtils.removeObjectFromJson(dir, item.getName(), objectMapper);
+                String buyerCartDir = "/buyers/" + this.getUsername() + "/cart/" + item.getName();
+                item.setTotalBoughtByBuyer(this.getUsername(), item.totalBoughtByBuyer(this.getUsername()) + item.getCount());
+                item.setTotalSoldBySeller(item.totalSoldBySeller() +  item.getCount());
+                JsonUtils.removeObjectFromJson(buyerCartDir, item.getName(), objectMapper);
                 updateStock(item);
+                addToPurchaseHistory(item, objectMapper);
+                String buyerHistoryDir = "/buyers/" + this.getUsername() + "/purchaseHistory";
+                Marketplace marketplace = new Marketplace();
+                String sellerDir = "/sellers/" + item.getSeller() + "/" + marketplace.getStore(item).getName() + "/stockItems/";
+                JsonUtils.addObjectToJson(buyerHistoryDir, item.getName(), item, objectMapper);
+                JsonUtils.addObjectToJson(sellerDir, item.getName(), item, objectMapper);
+                if(item.getStock() == 0) {
+                    JsonUtils.removeObjectFromJson(sellerDir, item.getName(), objectMapper);
+                }
             } catch (IOException e) {
                 System.out.println("Error buying item.");
                 e.printStackTrace();
@@ -89,9 +100,10 @@ public class Buyer extends Person {
         }
     }
 
-    public void buyCart(Item[] items) {
-        // TODO: Remove Objects + update stock
-        
+    public void buyCart(Item[] items, ObjectMapper objectMapper) {
+        for(int i = 0; i < items.length; i++) {
+            buyItem(items[i], objectMapper);
+        } 
     }
     
     public void addToPurchaseHistory(Item item, ObjectMapper objectMapper) {
@@ -104,6 +116,7 @@ public class Buyer extends Person {
         }
     }
     public void updateStock(Item item) {
-        //TODO
+        item.setStock(item.getStock() - item.getCount());
+        item.setCount(0);
     }
 }
