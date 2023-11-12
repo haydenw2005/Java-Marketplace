@@ -49,8 +49,19 @@ public class Item {
         return buyersObject.get(username);
     }
 
-    public int totalSoldBySeller(String username) {
-        return sellersObject.get(username);
+    public int totalSoldBySeller() {
+        return sellersObject.get(this.getSeller());
+    }
+    public String getSeller() {
+        return sellersObject.entrySet().iterator().next().getKey();
+    }
+    public void setTotalBoughtByBuyer(String username, int quantity) {
+        // changes quantity bought by a buyer in buyers object 
+        buyersObject.put(username, quantity);
+    }
+    public void setTotalSoldBySeller(int quantity) {
+        // changes quantity sold by a seller in sellers object 
+        sellersObject.put(this.getSeller(), quantity);
     }
     public void setName(String name) {
         this.name = name;
@@ -78,6 +89,17 @@ public class Item {
     }
     public void setSellersObject(Map<String, Integer> sellersObject) {
         this.sellersObject = sellersObject;
+    }
+
+    public String toString() {
+        if (stock >= 0) {
+            return "Product: " + this.getName() + " | Price: " +
+                    this.getPrice() + " | Stock: " + this.getStock();
+        } else if (count >= 0) {
+            return "Product: " + this.getName() + " | Price: " +
+                    this.getPrice() + " | Count: " + this.getCount();
+        }
+        return null;
     }
 
 

@@ -1,7 +1,6 @@
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +24,32 @@ public class Seller extends Person {
            e.printStackTrace();
            System.out.println("Error creating store.");
        }
+    }
+
+    public void editStore(String name, String newName, ObjectMapper objectMapper) {
+        try {
+            String dir = "/sellers/" + this.getUsername() + "/stores";
+            Store store = JsonUtils.getObjectByKey(objectMapper, dir + "/" + name, Store.class);
+            JsonUtils.removeObjectFromJson(dir, name, objectMapper);
+            store.setName(newName);
+            JsonUtils.addObjectToJson(dir, newName, store, objectMapper);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error editing store.");
+        }
+    }
+
+    public void getAllStockItems(String type) {
+        for (Map.Entry<String, Store> storeEntry : stores.entrySet()) {
+            Store store = storeEntry.getValue();
+            Map<String, Item> items;
+            if (type.equals("stock")) items = store.getStockItems();
+            else if (type.equals("sold")) items = store.getSoldItems();
+            else return;
+            for (Map.Entry<String, Item> itemEntry : items.entrySet()) {
+                System.out.println(itemEntry.getValue().toString());
+            }
+        }
     }
 
     @Override
@@ -55,8 +80,4 @@ public class Seller extends Person {
         return stores.get(name);
     }
 
-    //for some reason this is causing wierd behvior, commented out for now.
-    /*public String[] getListOfStoresNames() {
-        return stores.keySet().toArray(new String[0]);
-    }*/
 }
