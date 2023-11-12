@@ -74,23 +74,32 @@ public class Buyer extends Person {
         }
     }
     public void buyItem(Item item, ObjectMapper objectMapper) {
-        // TODO: Add to sold items
         if(item.getCount() <= item.getStock()) {
             try {
                 String buyerCartDir = "/buyers/" + this.getUsername() + "/cart/" + item.getName();
+                
+                // Update buyers and sellers objects
                 item.setTotalBoughtByBuyer(this.getUsername(), item.totalBoughtByBuyer(this.getUsername()) + item.getCount());
-                item.setTotalSoldBySeller(item.totalSoldBySeller() +  item.getCount());
+                item.setTotalSoldBySeller(item.totalSoldBySeller() +  item.getCount()); 
                 JsonUtils.removeObjectFromJson(buyerCartDir, item.getName(), objectMapper);
-                updateStock(item);
-                addToPurchaseHistory(item, objectMapper);
-                String buyerHistoryDir = "/buyers/" + this.getUsername() + "/purchaseHistory";
+                
+                // Add to sold items in seller object
                 Marketplace marketplace = new Marketplace();
-                String sellerDir = "/sellers/" + item.getSeller() + "/" + marketplace.getStore(item).getName() + "/stockItems/";
-                JsonUtils.addObjectToJson(buyerHistoryDir, item.getName(), item, objectMapper);
-                JsonUtils.addObjectToJson(sellerDir, item.getName(), item, objectMapper);
-                if(item.getStock() == 0) {
-                    JsonUtils.removeObjectFromJson(sellerDir, item.getName(), objectMapper);
+                String sellerSoldDir = "/sellers/" + item.getSeller() + "/" + marketplace.getStore(item).getName() + "/soldItems";
+                JsonUtils.addObjectToJson(sellerSoldDir, item.getName(), item, objectMapper);
+
+                updateStock(item); // Changes the stock after buying
+                addToPurchaseHistory(item, objectMapper); 
+
+                // Update Stock JSON
+                String sellerStockDir = "/sellers/" + item.getSeller() + "/" + marketplace.getStore(item).getName() + "/stockItems";
+                JsonUtils.addObjectToJson(sellerStockDir, item.getName(), item, objectMapper);
+               
+                if(item.getStock() <= 0) {
+                    // Remove from stockItems if stock is over
+                    JsonUtils.removeObjectFromJson(sellerStockDir, item.getName(), objectMapper);
                 }
+
             } catch (IOException e) {
                 System.out.println("Error buying item.");
                 e.printStackTrace();
@@ -107,7 +116,6 @@ public class Buyer extends Person {
     }
     
     public void addToPurchaseHistory(Item item, ObjectMapper objectMapper) {
-        // TODO: Update item object
         try {
             String dir = "/buyers/" + this.getUsername() + "/purchaseHistory";
             JsonUtils.addObjectToJson(dir, item.getName(), item, objectMapper);
