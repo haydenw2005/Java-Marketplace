@@ -26,8 +26,6 @@ public class Main {
             Marketplace marketplace = JsonUtils.getObjectByKey(objectMapper, "", Marketplace.class);
             //System.out.println(buyer);
 
-            //
-
             //START OF USER FLOW
             Person user = enterCredentials(scanner, objectMapper);
             if (user instanceof Buyer){
@@ -112,8 +110,8 @@ public class Main {
 
     public static String getMenuInput(int start, int end, Scanner scanner) {
         System.out.println("What would you like to do next? Please enter a number " + start + " through " + end + ":");
-        String option = scanner.nextLine();
         while (true) {
+            String option = scanner.nextLine();
             try {
                 int input = Integer.parseInt(option);
                 if (input >= start && input <= end) {
@@ -158,9 +156,7 @@ public class Main {
         }
         return true;
     }
-    public static void printSellerItemMenu() {
 
-    }
     public static void printSellerStoreMenu() {
         System.out.println("What would you like to do?");
         System.out.println("\t(1) Create a store ~");

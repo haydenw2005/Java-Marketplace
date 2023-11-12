@@ -6,8 +6,13 @@
       "firstName" : "John",
       "lastName" : "Doe",
       "stores" : {
-        "store_1_name" : {
-          "name" : "store_1_name",
+        "mystore2" : {
+          "name" : "mystore2",
+          "stockItems" : { },
+          "soldItems" : { }
+        },
+        "store_1_name_edited" : {
+          "name" : "store_1_name_edited",
           "stockItems" : {
             "cheese" : {
               "name" : "cheese",
@@ -80,11 +85,6 @@
               }
             }
           }
-        },
-        "store1" : {
-          "name" : "store1",
-          "stockItems" : { },
-          "soldItems" : { }
         }
       }
     }
