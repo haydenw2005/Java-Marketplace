@@ -9,17 +9,6 @@
         "store_1_name" : {
           "name" : "store_1_name",
           "stockItems" : {
-            "cheese" : {
-              "name" : "cheese",
-              "description" : "yummy",
-              "stock" : 5,
-              "count" : -1,
-              "price" : 123,
-              "buyersObject" : null,
-              "sellersObject" : {
-                "seller_1_username" : 5
-              }
-            },
             "microwaves" : {
               "name" : "microwaves",
               "description" : "makes waves",
@@ -77,6 +66,19 @@
               },
               "sellersObject" : {
                 "seller_1_username" : 2
+              }
+            },
+            "cheese" : {
+              "name" : "cheese",
+              "description" : "yummy",
+              "stock" : 2,
+              "count" : 2,
+              "price" : 123,
+              "buyersObject" : {
+                "test_buyer" : 2
+              },
+              "sellersObject" : {
+                "seller_1_username" : 7
               }
             }
           }
@@ -154,7 +156,21 @@
       "firstName" : "bob",
       "lastName" : "dylan",
       "cart" : { },
-      "purchaseHistory" : { }
+      "purchaseHistory" : {
+        "cheese" : {
+          "name" : "cheese",
+          "description" : "yummy",
+          "stock" : 2,
+          "count" : 2,
+          "price" : 123,
+          "buyersObject" : {
+            "test_buyer" : 2
+          },
+          "sellersObject" : {
+            "seller_1_username" : 7
+          }
+        }
+      }
     },
     "testingbuyer" : {
       "username" : "testingbuyer",

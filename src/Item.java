@@ -46,27 +46,28 @@ public class Item {
         return price;
     }
 
-    public int getTotalPrice() {
-        return price*count;
-    }
+    // public int getTotalPrice() {
+    //     return price*count;
+    // }
 
     public int totalBoughtByBuyer(String username) {
         return buyersObject.get(username);
     }
 
     public int totalSoldBySeller() {
-        return sellersObject.get(this.getSeller());
+        return sellersObject.get(this.findSeller());
     }
-    public String getSeller() {
+    public String findSeller() {
         return sellersObject.entrySet().iterator().next().getKey();
     }
+
     public void setTotalBoughtByBuyer(String username, int quantity) {
         // changes quantity bought by a buyer in buyers object 
         buyersObject.put(username, quantity);
     }
     public void setTotalSoldBySeller(int quantity) {
         // changes quantity sold by a seller in sellers object 
-        sellersObject.put(this.getSeller(), quantity);
+        sellersObject.put(this.findSeller(), quantity);
     }
     public void setName(String name) {
         this.name = name;

@@ -3,6 +3,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Buyer extends Person {
@@ -61,14 +62,14 @@ public class Buyer extends Person {
             try {
                 String cartDir = "/buyers/" + this.getUsername() + "/cart";
                 String itemDir = cartDir + "/" + item.getName();
-                if(JsonUtils.JSONhas(itemDir, item.getName(), objectMapper)) {
+                if(JsonUtils.hasKey(cartDir, item.getName(), objectMapper)) {
                     // iterate item count if item already exists in cart
                     Item cartItem = JsonUtils.getObjectByKey(objectMapper, itemDir, Item.class);
                     item.setCount(cartItem.getCount() + item.getCount()); 
                 } 
                 JsonUtils.addObjectToJson(cartDir, item.getName(), item, objectMapper);
                 System.out.println("Item added to cart successfully.");
-            } catch (IOException e) {
+            } catch (Exception e) {
                 System.out.println("Error adding item to cart.");
                 e.printStackTrace();
             }
@@ -76,39 +77,47 @@ public class Buyer extends Person {
             System.out.println("Error, not enough stock.");
         }
     }
-    public void buyItem(Item item, ObjectMapper objectMapper) {
+    public void buyItem(Item item, Marketplace marketplace, ObjectMapper objectMapper) {
         if(item.getCount() <= item.getStock()) {
             try {
-                String buyerCartDir = "/buyers/" + this.getUsername() + "/cart/" + item.getName();
+                String buyerCartDir = "/buyers/" + this.getUsername() + "/cart";
                 
                 // Update buyers and sellers objects
-                item.setTotalBoughtByBuyer(this.getUsername(), item.totalBoughtByBuyer(this.getUsername()) + item.getCount());
-                item.setTotalSoldBySeller(item.totalSoldBySeller() +  item.getCount()); 
-                JsonUtils.removeObjectFromJson(buyerCartDir, item.getName(), objectMapper);
+                if (item.getBuyersObject() != null && item.getBuyersObject().containsKey(this.getUsername())) {
+                    item.setTotalBoughtByBuyer(this.getUsername(), item.totalBoughtByBuyer(this.getUsername()) + item.getCount());
+                } else {
+                    item.setBuyersObject(new HashMap<String,Integer>());
+                    item.setTotalBoughtByBuyer(this.getUsername(), item.getCount());
+                }
+                item.setTotalSoldBySeller(item.totalSoldBySeller() +  item.getCount());
+                
+                if (JsonUtils.hasKey(buyerCartDir, item.getName(), objectMapper)) {
+                    // Remove from cart if exists
+                    JsonUtils.removeObjectFromJson(buyerCartDir, item.getName(), objectMapper);
+                }
                 
                 // Add to sold items in seller object
-                Marketplace marketplace = new Marketplace();
-                String sellerSoldDir = "/sellers/" + item.getSeller() + "/" + marketplace.getStore(item).getName() + "/soldItems";
-                if(JsonUtils.JSONhas(sellerSoldDir, item.getName(), objectMapper)) {
+                String sellerSoldDir = "/sellers/" + item.findSeller() + "/stores/" + marketplace.getStore(item).getName() + "/soldItems";
+                if(marketplace.getStore(item).getSoldItems().containsKey(item.getName())) {
                     // Item already exists, update count first
-                    Item cartItem = JsonUtils.getObjectByKey(objectMapper, sellerSoldDir, Item.class);
+                    Item cartItem = JsonUtils.getObjectByKey(objectMapper, sellerSoldDir + "/" + item.getName(), Item.class);
                     item.setCount(cartItem.getCount() + item.getCount()); 
                 } 
                 JsonUtils.addObjectToJson(sellerSoldDir, item.getName(), item, objectMapper);
-
-                updateStock(item); // Changes the stock after buying
+                
                 addToPurchaseHistory(item, objectMapper); 
+                updateStock(item); // Changes the stock after buying
+                
 
                 // Update Stock JSON
-                String sellerStockDir = "/sellers/" + item.getSeller() + "/" + marketplace.getStore(item).getName() + "/stockItems";
+                String sellerStockDir = "/sellers/" + item.findSeller() + "/stores/" + marketplace.getStore(item).getName() + "/stockItems";
                 JsonUtils.addObjectToJson(sellerStockDir, item.getName(), item, objectMapper);
                
                 if(item.getStock() <= 0) {
                     // Remove from stockItems if stock is over
                     JsonUtils.removeObjectFromJson(sellerStockDir, item.getName(), objectMapper);
                 }
-
-            } catch (IOException e) {
+            } catch (Exception e) {
                 System.out.println("Error buying item.");
                 e.printStackTrace();
             }
@@ -117,13 +126,13 @@ public class Buyer extends Person {
         }
     }
 
-    public void buyCart(ObjectMapper objectMapper) {
+    public void buyCart(Marketplace marketplace, ObjectMapper objectMapper) {
         Collection<Item> values = cart.values();
         Item[] items = values.toArray(new Item[0]);
 
         try {
             for(int i = 0; i < items.length; i++) {
-                buyItem(items[i], objectMapper);
+                buyItem(items[i], marketplace, objectMapper);
             } 
             System.out.println("Successfully purchased all items in cart!");
         } catch (Exception e) {
@@ -146,13 +155,18 @@ public class Buyer extends Person {
     }
     
     /**
-     *  Prints out String of all cart items for current buyer
+     *  Prints out String of all cart items for current buyer.
      */
     public void showAllCartItems() {
-        for (Map.Entry<String, Item> cartEntry : cart.entrySet()) {
-            Item item = cartEntry.getValue();
-            System.out.println(item.toString());
+        if(!(cart.isEmpty())) {
+            for (Map.Entry<String, Item> cartEntry : cart.entrySet()) {
+                Item item = cartEntry.getValue();
+                System.out.println(item.toString());
+            } 
+        } else {
+            System.out.println("Cart is empty! Add items to cart from the Marketplace.");
         }
+        
     }
 
 }

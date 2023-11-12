@@ -168,7 +168,7 @@ public class Marketplace {
         System.out.println("Search for a product: enter 'search'");
         System.out.println("Sort products by price: enter 'sort price'");
         System.out.println("Sort products by quantity in stock: enter 'sort quantity'");
-        System.out.println("Show cart: enter 'cart'");
+        System.out.println("(4) Back");
 
         String input = scanner.nextLine();
 
@@ -187,9 +187,8 @@ public class Marketplace {
         } else if (input.equals("sort quantity")) {
             this.listProducts(this.sortByQuantity(itemsList));
             input = scanner.nextLine();
-        } else if (input.equals("cart")) {
-            this.cartFlow(scanner, buyer, objectMapper);
-            input = scanner.nextLine();
+        } else if (input.equals("4")) {
+            return null;
         }
 
         try {
@@ -210,9 +209,9 @@ public class Marketplace {
         System.out.println("Product: " + item.getName());
         System.out.println(item.getDescription());
         System.out.println("Quantity available: " + item.getStock());
-        System.out.println("Purchase: enter '1'");
-        System.out.println("Add to cart: enter '2'");
-        System.out.println("Back: enter '3'");
+        System.out.println("(1) Purchase");
+        System.out.println("(2) Add to Cart");
+        System.out.println("(3) Back");
         String input = scanner.nextLine();
 
         while (!(input.equals("1") || input.equals("2") || input.equals("3"))) {
@@ -251,16 +250,17 @@ public class Marketplace {
                 }
             } while (!validInput);
 
-            // item.setStock(item.getStock() - numItems);
+            item.setCount(numItems);
             if (numItems == 1)
                 System.out.println(numItems + " item purchased!");
             else
                 System.out.println(numItems + " items purchased!");
-
-            // still need to add code to purchase
-            buyer.buyItem(item, objectMapper); // handles stock updating/cart removing etc.
+            
+                buyer.buyItem(item, this, objectMapper); // handles stock updating/cart removing etc.
+            this.buyerFlow(scanner, buyer, objectMapper);
         } else if (input.equals("2")) {
             buyer.addItemToCart(item, objectMapper);
+            this.buyerFlow(scanner, buyer, objectMapper);
         } else {
             this.buyerFlow(scanner, buyer, objectMapper);
         }
@@ -270,8 +270,8 @@ public class Marketplace {
 
     public void cartFlow(Scanner scanner, Buyer buyer, ObjectMapper objectMapper) {
         buyer.showAllCartItems();
-        System.out.println("\nBuy Cart: enter '1'");
-        System.out.println("Back: enter '2'");
+        System.out.println("\n(1) Buy Cart");
+        System.out.println("(2) Back");
         String input = scanner.nextLine();
         while (!(input.equals("1") || input.equals("2"))) {
             System.out.println("Invalid input. Try again.");
@@ -279,10 +279,11 @@ public class Marketplace {
         }
 
         if (input.equals("1")) {
-            buyer.buyCart(objectMapper);
-        } else if (input.equals("2")) {
+            buyer.buyCart(this, objectMapper);
             this.buyerFlow(scanner, buyer, objectMapper);
-        }
+        } else if (input.equals("2")) {
+            return;
+        } 
 
     }
 
