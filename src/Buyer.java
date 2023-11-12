@@ -60,11 +60,22 @@ public class Buyer extends Person {
     // --- getters and setters ---
 
     // other functions
+
     public void addItemToCart(Item item, ObjectMapper objectMapper) {
         if (item.getCount() < item.getStock()) {
             try {
-                String dir = "/buyers/" + this.getUsername() + "/cart";
-                JsonUtils.addObjectToJson(dir, item.getName(), item, objectMapper);
+                String cartDir = "/buyers/" + this.getUsername() + "/cart";
+                String itemDir = cartDir + "/" + item.getName();
+                if(JsonUtils.JSONhas(itemDir, item.getName(), objectMapper)) {
+                    // iterate item count if item already exists in cart
+                    Item cartItem = JsonUtils.getObjectByKey(objectMapper, itemDir, Item.class);
+                    item.setCount(cartItem.getCount() + item.getCount()); 
+                    // add updated item to cart
+                    JsonUtils.addObjectToJson(cartDir, item.getName(), item, objectMapper);
+                } else {
+                    // item not already in cart
+                    JsonUtils.addObjectToJson(cartDir, item.getName(), item, objectMapper);
+                }
             } catch (IOException e) {
                 System.out.println("Error adding item to cart.");
                 e.printStackTrace();

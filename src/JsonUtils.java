@@ -25,8 +25,8 @@ public class JsonUtils {
         JsonUtils.writeJsonToFile(updatedJsonString, FILE_PATH);
     }
 
-    // IMPORTANT - REMOVES ANY FIELD FROM JSON
     /**
+     * REMOVES ANY OBJECT FROM JSON
      * @param nodeDir - String JSON path of object to be removed  
      * @param objectKey - key of the object to be removed
      * @param objectMapper - objectMapper utility
@@ -39,11 +39,25 @@ public class JsonUtils {
         JsonUtils.writeJsonToFile(updatedJsonString, FILE_PATH);
     }
 
-    //IMPORTANT - CAN GET ANY OBJECT FROM KEY IN JSON !!!!!!!!!!
+    // IMPORTANT - CAN GET ANY OBJECT FROM KEY IN JSON !!!!!!!!!!
     public static <T> T getObjectByKey(ObjectMapper objectMapper, String nodeDir, Class<T> targetClass) throws IOException {
         JsonNode rootNode = JsonUtils.readJsonFile(objectMapper);
         JsonNode nestedObject = rootNode.at(nodeDir);
         return objectMapper.treeToValue(nestedObject, targetClass);
+    }
+    /**
+     * Check if JSON object contains a particular key.
+     * @param nodeDir - JSON path of object.
+     * @param objectKey - key to check if exists.
+     * @param objectMapper - utility.
+     * @return
+     * @throws IOException
+     */
+    public static boolean JSONhas(String nodeDir, String objectKey, ObjectMapper objectMapper) throws IOException {
+        JsonNode rootNode = JsonUtils.readJsonFile(objectMapper);
+        JsonNode nestedObject = rootNode.at(nodeDir);
+        if(((ObjectNode) nestedObject).has(objectKey)) return true;
+        return false;
     }
 
     public static JsonNode readJsonFile(ObjectMapper objectMapper) throws IOException {
