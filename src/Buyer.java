@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class Buyer extends Person {
@@ -38,6 +39,14 @@ public class Buyer extends Person {
         this.purchaseHistory = purchaseHistory;
     }
 
+    public ArrayList<Item> getPurchasedItems() {
+        ArrayList<Item> purchasedItems = new ArrayList<Item>();
+        for (Map.Entry<String, Item> itemEntry : purchaseHistory.entrySet()) {
+            purchasedItems.add(itemEntry.getValue());
+        }
+
+        return purchasedItems;
+    }
     @Override
     public String getUsername() {
         return super.getUsername();

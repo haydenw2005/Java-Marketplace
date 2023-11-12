@@ -93,6 +93,18 @@ public class Marketplace {
         return itemsArray;
     }
 
+    public ArrayList<Store> getAllStores() {
+        ArrayList<Store> storesArray = new ArrayList<>();;
+        for (Map.Entry<String, Seller> sellerEntry : sellers.entrySet()) {
+            Seller seller = sellerEntry.getValue();
+            Map<String, Store> stores = seller.getStores();
+            for (Map.Entry<String, Store> storeEntry : stores.entrySet()) {
+                storesArray.add(storeEntry.getValue());
+            }
+        }
+        return storesArray;
+    }
+
     public Store getStore(Item item) {
         for (Map.Entry<String, Seller> sellerEntry : sellers.entrySet()) {
             Seller seller = sellerEntry.getValue();
@@ -130,7 +142,7 @@ public class Marketplace {
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).getName().toUpperCase().contains(search) ||
                     items.get(i).getDescription().toUpperCase().contains(search) ||
-            this.getStore(items.get(i)).getName().toUpperCase().contains(search)) {
+                    this.getStore(items.get(i)).getName().toUpperCase().contains(search)) {
                 searchResults.add(items.get(i));
             }
         }
@@ -164,12 +176,40 @@ public class Marketplace {
         return items;
     }
 
-    public Item buyerFlow (Scanner scanner, Buyer buyer) {
+    public ArrayList<Store> sortByProductsSold(ArrayList<Store> stores) {
+        for (int i = 0; i < stores.size(); i++) {
+            for (int j = i; j < stores.size() - 1; j++) {
+                if (stores.get(i).getNumProductsSold() < stores.get(j + 1).getNumProductsSold()) {
+                    Store temp = stores.get(i);
+                    stores.set(i, stores.get(j + 1));
+                    stores.set(j + 1, temp);
+                }
+            }
+        }
+        return stores;
+    }
+
+    public ArrayList<Store> sortByProductsBought(ArrayList<Store> stores, Buyer buyer) {
+        for (int i = 0; i < stores.size(); i++) {
+            for (int j = i; j < stores.size() - 1; j++) {
+                if (stores.get(i).getTotalItemsPurchased(this, buyer) >
+                        stores.get(j + 1).getTotalItemsPurchased(this, buyer)) {
+                    Store temp = stores.get(i);
+                    stores.set(i, stores.get(j + 1));
+                    stores.set(j + 1, temp);
+                }
+            }
+        }
+        return stores;
+    }
+
+    public Item showMarketplace (Scanner scanner, Buyer buyer) {
         ArrayList<Item> itemsList = this.getAllMarketPlaceItems();
         this.listProducts(itemsList);
         System.out.println("Search for a product: enter 'search'");
         System.out.println("Sort products by price: enter 'sort price'");
         System.out.println("Sort products by quantity in stock: enter 'sort quantity'");
+        System.out.println("Go back: enter 'back'");
 
         String input = scanner.nextLine();
 
@@ -177,7 +217,7 @@ public class Marketplace {
             itemsList = this.searchProducts(scanner, itemsList);
             if (itemsList.size() == 0) {
                 System.out.println("No matches");
-                this.buyerFlow(scanner, buyer);
+                this.showMarketplace(scanner, buyer);
             } else {
                 this.listProducts(itemsList);
                 input = scanner.nextLine();
@@ -188,6 +228,8 @@ public class Marketplace {
         } else if (input.equals("sort quantity")) {
             this.listProducts(this.sortByQuantity(itemsList));
             input = scanner.nextLine();
+        } else if (input.equals("back")) {
+            this.buyerFlow(scanner, buyer);
         }
 
         try {
@@ -196,18 +238,18 @@ public class Marketplace {
                 return this.showProductPage(itemsList.get(inputNum - 1), scanner, buyer);
             } else {
                 System.out.println("Invalid input");
-                return this.showProductPage(this.buyerFlow(scanner, buyer), scanner, buyer);
+                return this.showProductPage(this.showMarketplace(scanner, buyer), scanner, buyer);
             }
         } catch (Exception e) {
             System.out.println("Invalid input");
-            return this.showProductPage(this.buyerFlow(scanner, buyer), scanner, buyer);
+            return this.showProductPage(this.showMarketplace(scanner, buyer), scanner, buyer);
         }
     }
 
     public Item showProductPage(Item item, Scanner scanner, Buyer buyer) {
         System.out.println("Product: " + item.getName());
-        System.out.println(item.getDescription());
-        System.out.println("Quantity available: " + item.getCount());
+        System.out.println("Description: " + item.getDescription());
+        System.out.println("Quantity available: " + item.getStock());
         System.out.println("Purchase: enter '1'");
         System.out.println("Add to cart: enter '2'");
         System.out.println("Back: enter '3'");
@@ -235,7 +277,7 @@ public class Marketplace {
                         validInput = false;
                     }
 
-                    if (numItems > item.getCount()) {
+                    if (numItems > item.getStock()) {
                         System.out.println("Not enough items in stock");
                         System.out.println("How many items would you like to purchase?");
                         s = scanner.nextLine();
@@ -249,25 +291,114 @@ public class Marketplace {
                 }
             } while (!validInput);
 
-            item.setCount(item.getCount() - numItems);
+            // buy items
+
             if (numItems == 1)
                 System.out.println(numItems + " item purchased!");
             else
                 System.out.println(numItems + " items purchased!");
 
-            if (item.getCount() == 0) {
-                //remove item from json
-            }
         } else if (input.equals("2")) {
             buyer.addItemToCart(item, new ObjectMapper());
         } else {
-            this.buyerFlow(scanner, buyer);
+            this.showMarketplace(scanner, buyer);
         }
 
         return item;
     }
 
-    public void viewStoreInfo(Scanner scanner) {
+    public void viewStoreInfo(Scanner scanner, Buyer buyer) {
+        ArrayList<Store> allStores = this.getAllStores();
 
+        System.out.println("(1) View stores by number of products sold");
+        System.out.println("(2) View stores by products you purchased");
+        System.out.println("(3) Back");
+
+        String input = scanner.nextLine();
+        while (!(input.equals("1") || input.equals("2") || input.equals("3"))) {
+            System.out.println("Invalid input");
+            input = scanner.nextLine();
+        }
+
+        if (input.equals("1")) {
+            this.listStores1(scanner, allStores, buyer);
+        } else if (input.equals("2")) {
+            this.listStores2(scanner, allStores, buyer);
+        } else {
+            this.buyerFlow(scanner, buyer);
+        }
+
+    }
+
+    public void listStores1(Scanner scanner, ArrayList<Store> allStores, Buyer buyer) {
+        for (int i = 0; i < allStores.size(); i++) {
+            System.out.println(allStores.get(i).getName() + "; Products sold: " +
+                    allStores.get(i).getNumProductsSold());
+        }
+
+        System.out.println("(1) Sort stores by number of products sold");
+        System.out.println("(2) Back");
+
+        String input = scanner.nextLine();
+        while (!(input.equals("1") || input.equals("2"))) {
+            System.out.println("Invalid input");
+            input = scanner.nextLine();
+        }
+
+        if (input.equals("1")) {
+            listStores1(scanner, this.sortByProductsSold(allStores), buyer);
+        } else {
+            this.viewStoreInfo(scanner, buyer);
+        }
+    }
+
+
+    public void listStores2(Scanner scanner, ArrayList<Store> allStores, Buyer buyer) {
+        ArrayList<ArrayList<Item>> list = new ArrayList<ArrayList<Item>>();
+        for (int i = 0; i < allStores.size(); i++) {
+            list.add(allStores.get(i).getProductsPurchasedFromStore(this, buyer));
+        }
+
+        for (int i = 0; i < allStores.size(); i++) {
+            if (list.get(i).size() > 0) {
+                System.out.println("From " + allStores.get(i).getName() + ", you purchased:");
+                for (int j = 0; j < list.get(i).size(); j++) {
+                    System.out.println("\t" + list.get(i).get(j).getCount() + " " + list.get(i).get(j).getName());
+                }
+            }
+        }
+
+        System.out.println("(1) Sort stores by number of products bought");
+        System.out.println("(2) Back");
+
+        String input = scanner.nextLine();
+        while (!(input.equals("1") || input.equals("2"))) {
+            System.out.println("Invalid input");
+            input = scanner.nextLine();
+        }
+
+        if (input.equals("1")) {
+            listStores2(scanner, this.sortByProductsBought(allStores, buyer), buyer);
+
+        } else {
+            this.viewStoreInfo(scanner, buyer);
+        }
+    }
+
+    public void buyerFlow(Scanner scanner, Buyer buyer) {
+        System.out.println("Welcome " + buyer.getFirstName() + " " + buyer.getLastName() + "!");
+        System.out.println("View store information: enter '1'");
+        System.out.println("View marketplace: enter '2'");
+
+        String input = scanner.nextLine();
+        while (!(input.equals("1") || input.equals("2"))) {
+            System.out.println("Invalid input");
+            input = scanner.nextLine();
+        }
+        if (input.equals("1")) {
+            this.viewStoreInfo(scanner, buyer);
+        } else {
+            this.showMarketplace(scanner, buyer);
+        }
     }
 }
