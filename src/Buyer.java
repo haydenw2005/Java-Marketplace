@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
+import java.util.ArrayList;
 
 public class Buyer extends Person {
 
@@ -53,6 +54,17 @@ public class Buyer extends Person {
     public String getLastName() {
         return super.getLastName();
     }
+
+    public ArrayList<Item> getPurchasedItems() {
+        ArrayList<Item> purchasedItems = new ArrayList<Item>();
+        for (Map.Entry<String, Item> itemEntry : purchaseHistory.entrySet()) {
+            purchasedItems.add(itemEntry.getValue());
+        }
+
+
+        return purchasedItems;
+    }
+
     // --- getters and setters ---
 
     // other functions
