@@ -75,7 +75,7 @@
               "name" : "microwaves",
               "description" : "makes waves",
               "stock" : 1,
-              "count" : -1,
+              "count" : 2,
               "price" : 1000,
               "buyersObject" : {
                 "buyer_1_username" : 2
@@ -153,6 +153,14 @@
       "password" : "123test",
       "firstName" : "bob",
       "lastName" : "dylan",
+      "cart" : { },
+      "purchaseHistory" : { }
+    },
+    "testingbuyer" : {
+      "username" : "testingbuyer",
+      "password" : "test",
+      "firstName" : "john",
+      "lastName" : "doe",
       "cart" : { },
       "purchaseHistory" : { }
     }

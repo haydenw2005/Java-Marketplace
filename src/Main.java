@@ -1,17 +1,6 @@
-import com.fasterxml.jackson.core.exc.StreamReadException;
-import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 
@@ -42,7 +31,7 @@ public class Main {
                 if (input.equals("1")) {
                     marketplace.viewStoreInfo(scanner);
                 } else {
-                    marketplace.buyerFlow(scanner, (Buyer) user);
+                    marketplace.buyerFlow(scanner, (Buyer) user, objectMapper);
                 }
 
             } else if (user instanceof Seller) {
