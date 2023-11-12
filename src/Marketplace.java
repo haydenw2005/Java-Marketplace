@@ -20,12 +20,12 @@ public class Marketplace {
 
     public void addBuyerAccount(String username, Buyer buyer, ObjectMapper objectMapper) throws IOException {
         buyers.put(username, buyer);
-        JsonUtils.addObjectToJson("buyers", username, buyer, objectMapper);
+        JsonUtils.addObjectToJson("/buyers", username, buyer, objectMapper);
     }
 
     public void addSellerAccount(String username, Seller seller, ObjectMapper objectMapper) throws IOException{
         sellers.put(username, seller);
-        JsonUtils.addObjectToJson("sellers", username, seller, objectMapper);
+        JsonUtils.addObjectToJson("/sellers", username, seller, objectMapper);
     }
 
     //METHOD TO SIGN IN, RETURN USER OBJECT
@@ -162,12 +162,13 @@ public class Marketplace {
         return items;
     }
 
-    public Item buyerFlow (Scanner scanner, Buyer buyer) {
+    public Item buyerFlow (Scanner scanner, Buyer buyer, ObjectMapper objectMapper) {
         ArrayList<Item> itemsList = this.getAllMarketPlaceItems();
         this.listProducts(itemsList);
         System.out.println("Search for a product: enter 'search'");
         System.out.println("Sort products by price: enter 'sort price'");
         System.out.println("Sort products by quantity in stock: enter 'sort quantity'");
+        System.out.println("Show cart: enter 'cart'");
 
         String input = scanner.nextLine();
 
@@ -175,7 +176,7 @@ public class Marketplace {
             itemsList = this.searchProducts(scanner, itemsList);
             if (itemsList.size() == 0) {
                 System.out.println("No matches");
-                this.buyerFlow(scanner, buyer);
+                this.buyerFlow(scanner, buyer, objectMapper);
             } else {
                 this.listProducts(itemsList);
                 input = scanner.nextLine();
@@ -186,23 +187,26 @@ public class Marketplace {
         } else if (input.equals("sort quantity")) {
             this.listProducts(this.sortByQuantity(itemsList));
             input = scanner.nextLine();
+        } else if (input.equals("cart")) {
+            this.cartFlow(scanner, buyer, objectMapper);
+            input = scanner.nextLine();
         }
 
         try {
             int inputNum = Integer.parseInt(input);
             if (inputNum >= 1 && inputNum <= itemsList.size()) {
-                return this.showProductPage(itemsList.get(inputNum - 1), scanner, buyer);
+                return this.showProductPage(itemsList.get(inputNum - 1), scanner, buyer, objectMapper);
             } else {
                 System.out.println("Invalid input");
-                return this.showProductPage(this.buyerFlow(scanner, buyer), scanner, buyer);
+                return this.showProductPage(this.buyerFlow(scanner, buyer, objectMapper), scanner, buyer, objectMapper);
             }
         } catch (Exception e) {
             System.out.println("Invalid input");
-            return this.showProductPage(this.buyerFlow(scanner, buyer), scanner, buyer);
+            return this.showProductPage(this.buyerFlow(scanner, buyer, objectMapper), scanner, buyer, objectMapper);
         }
     }
 
-    public Item showProductPage(Item item, Scanner scanner, Buyer buyer) {
+    public Item showProductPage(Item item, Scanner scanner, Buyer buyer, ObjectMapper objectMapper) {
         System.out.println("Product: " + item.getName());
         System.out.println(item.getDescription());
         System.out.println("Quantity available: " + item.getStock());
@@ -247,31 +251,42 @@ public class Marketplace {
                 }
             } while (!validInput);
 
-            item.setStock(item.getStock() - numItems);
+            // item.setStock(item.getStock() - numItems);
             if (numItems == 1)
                 System.out.println(numItems + " item purchased!");
             else
                 System.out.println(numItems + " items purchased!");
 
             // still need to add code to purchase
-            
-            if (item.getStock() == 0) {
-                //remove item from json
-                //Need to get seller of
-                /*String dir = "/sellers/" + this.getUsername() + "/stores/" + ;
-                Store store = JsonUtils.getObjectByKey(objectMapper, dir + "/" + name, Store.class);
-                JsonUtils.removeObjectFromJson(dir, name, objectMapper);*/
-            }
+            buyer.buyItem(item, objectMapper); // handles stock updating/cart removing etc.
         } else if (input.equals("2")) {
-            buyer.addItemToCart(item, new ObjectMapper());
+            buyer.addItemToCart(item, objectMapper);
         } else {
-            this.buyerFlow(scanner, buyer);
+            this.buyerFlow(scanner, buyer, objectMapper);
         }
 
         return item;
     }
 
-    public void viewStoreInfo(Scanner scanner) {
+    public void cartFlow(Scanner scanner, Buyer buyer, ObjectMapper objectMapper) {
+        buyer.showAllCartItems();
+        System.out.println("\nBuy Cart: enter '1'");
+        System.out.println("Back: enter '2'");
+        String input = scanner.nextLine();
+        while (!(input.equals("1") || input.equals("2"))) {
+            System.out.println("Invalid input. Try again.");
+            input = scanner.nextLine();
+        }
 
+        if (input.equals("1")) {
+            buyer.buyCart(objectMapper);
+        } else if (input.equals("2")) {
+            this.buyerFlow(scanner, buyer, objectMapper);
+        }
+
+    }
+
+    public void viewStoreInfo(Scanner scanner) {
+        // TODO
     }
 }

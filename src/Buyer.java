@@ -1,12 +1,8 @@
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.exc.StreamWriteException;
-import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
-import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 
-import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Map;
 
 public class Buyer extends Person {
@@ -60,7 +56,6 @@ public class Buyer extends Person {
     // --- getters and setters ---
 
     // other functions
-
     public void addItemToCart(Item item, ObjectMapper objectMapper) {
         if (item.getCount() < item.getStock()) {
             try {
@@ -70,12 +65,9 @@ public class Buyer extends Person {
                     // iterate item count if item already exists in cart
                     Item cartItem = JsonUtils.getObjectByKey(objectMapper, itemDir, Item.class);
                     item.setCount(cartItem.getCount() + item.getCount()); 
-                    // add updated item to cart
-                    JsonUtils.addObjectToJson(cartDir, item.getName(), item, objectMapper);
-                } else {
-                    // item not already in cart
-                    JsonUtils.addObjectToJson(cartDir, item.getName(), item, objectMapper);
-                }
+                } 
+                JsonUtils.addObjectToJson(cartDir, item.getName(), item, objectMapper);
+                System.out.println("Item added to cart successfully.");
             } catch (IOException e) {
                 System.out.println("Error adding item to cart.");
                 e.printStackTrace();
@@ -97,6 +89,11 @@ public class Buyer extends Person {
                 // Add to sold items in seller object
                 Marketplace marketplace = new Marketplace();
                 String sellerSoldDir = "/sellers/" + item.getSeller() + "/" + marketplace.getStore(item).getName() + "/soldItems";
+                if(JsonUtils.JSONhas(sellerSoldDir, item.getName(), objectMapper)) {
+                    // Item already exists, update count first
+                    Item cartItem = JsonUtils.getObjectByKey(objectMapper, sellerSoldDir, Item.class);
+                    item.setCount(cartItem.getCount() + item.getCount()); 
+                } 
                 JsonUtils.addObjectToJson(sellerSoldDir, item.getName(), item, objectMapper);
 
                 updateStock(item); // Changes the stock after buying
@@ -120,10 +117,18 @@ public class Buyer extends Person {
         }
     }
 
-    public void buyCart(Item[] items, ObjectMapper objectMapper) {
-        for(int i = 0; i < items.length; i++) {
-            buyItem(items[i], objectMapper);
-        } 
+    public void buyCart(ObjectMapper objectMapper) {
+        Collection<Item> values = cart.values();
+        Item[] items = values.toArray(new Item[0]);
+
+        try {
+            for(int i = 0; i < items.length; i++) {
+                buyItem(items[i], objectMapper);
+            } 
+            System.out.println("Successfully purchased all items in cart!");
+        } catch (Exception e) {
+            System.out.println("Error buying cart.");
+        }
     }
     
     public void addToPurchaseHistory(Item item, ObjectMapper objectMapper) {
@@ -139,4 +144,15 @@ public class Buyer extends Person {
         item.setStock(item.getStock() - item.getCount());
         item.setCount(0);
     }
+    
+    /**
+     *  Prints out String of all cart items for current buyer
+     */
+    public void showAllCartItems() {
+        for (Map.Entry<String, Item> cartEntry : cart.entrySet()) {
+            Item item = cartEntry.getValue();
+            System.out.println(item.toString());
+        }
+    }
+
 }
