@@ -1,3 +1,4 @@
 Product, Description, Price, Stock, Store
 bread, tastes good, 10.0, 2147483647, store_1_name_edited
-soccer ball, kick it, 20.0, 2, store_1_name_edited
+soccer ball, kick it, 20.0, 2, store_2_name_edited
+bread 2, tastes better, .0, 2147483647, store_1_name_edited
