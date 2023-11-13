@@ -74,9 +74,7 @@ public class JsonUtils {
     public static boolean hasKey(String nodeDir, String objectKey, ObjectMapper objectMapper) throws IOException {
         JsonNode rootNode = JsonUtils.readJsonFile(objectMapper);
         JsonNode nestedObject = rootNode.at(nodeDir);
-        if (((ObjectNode) nestedObject).has(objectKey))
-            return true;
-        return false;
+        return ((ObjectNode) nestedObject).has(objectKey);
     }
 
     public static JsonNode readJsonFile(ObjectMapper objectMapper) throws IOException {

@@ -54,7 +54,7 @@ public class BuyerTest {
     }
 
     @Test
-    public void testAddItemToCart_NotEnoughStock() {
+    public void testAddItemToCartNotEnoughStock() {
         Item item = new Item("Bread", "Delicious bread.", 2, 10, 1000,
                 null, new HashMap<String, Integer>() {
                     {
@@ -129,7 +129,7 @@ public class BuyerTest {
     }
 
     @Test
-    public void showAllCartItems_NotEmpty() {
+    public void showAllCartItemsNotEmpty() {
         Item item1 = new Item("toaster", "High-performance toaster", 5, 1, 1200.0,
                 new HashMap<>(), new HashMap<String, Integer>() {
                     {
@@ -154,14 +154,14 @@ public class BuyerTest {
     }
 
     @Test
-    public void showAllCartItems_Empty() {
+    public void showAllCartItemsEmpty() {
         buyer.showAllCartItems();
 
         assertEquals("Cart is empty! Add items to cart from the Marketplace.\n", outContent.toString());
     }
 
     @Test
-    public void showPurchaseHistory_NotEmpty() {
+    public void showPurchaseHistoryNotEmpty() {
         Item item1 = new Item("toaster", "High-performance toaster", 5, 1, 1200.0,
                 new HashMap<>(), new HashMap<>());
         Item item2 = new Item("earphones", "Noise-canceling earphones", 2, 2, 150.0,
@@ -180,7 +180,7 @@ public class BuyerTest {
     }
 
     @Test
-    public void showPurchaseHistory_Empty() {
+    public void showPurchaseHistoryEmpty() {
         Buyer buyerNoHist = new Buyer("testingbuyer2", "test", "john", "doe", "john.doe@example.com",
                 new HashMap<>(), new HashMap<>());
         buyerNoHist.showPurchaseHistory();

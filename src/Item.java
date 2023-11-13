@@ -134,7 +134,8 @@ public class Item {
         return null;
     }
 
-    public boolean equals(Item item) {
+    @Override
+    public boolean equalsItem(Item item) {
         if (this.name.equals(item.getName())) {
             if (this.description.equals(item.getDescription())) {
                 if (this.price == item.getPrice()) {
