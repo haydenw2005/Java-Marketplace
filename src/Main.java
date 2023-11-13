@@ -109,7 +109,7 @@ public class Main {
         System.out.println("Welcome " + user.getFirstName() + " " + user.getLastName() + "!");
         while (true) {
             printSellerMenu();
-            String option = getMenuInput(1, 9, scanner);
+            String option = getMenuInput(1, 10, scanner);
             switch (option) {
                 case "1":
                     boolean inItemMenu = true;
@@ -179,6 +179,15 @@ public class Main {
                     }
                     break;
                 case "9":
+                    System.out.println("Enter filename to read from (excluding .csv extension)");
+                    String filename = scanner.nextLine();
+                    try {
+                        CsvUtils.importFromCSV(filename, (Seller) user, objectMapper);
+                    } catch (Exception e) {
+                        System.out.println("Error writing to file.");;
+                    }
+                    break;
+                case "10":
                     System.out.println("Signing out...");
                     return;
             }
@@ -351,6 +360,7 @@ public class Main {
         System.out.println("\t(6) Edit account");
         System.out.println("\t(7) Delete account");
         System.out.println("\t(8) Export store items to CSV ~");
-        System.out.println("\t(9) Sign-out ~");
+        System.out.println("\t(9) Import store items from CSV ~");
+        System.out.println("\t(10) Sign-out ~");
     }
 }

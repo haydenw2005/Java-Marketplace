@@ -58,7 +58,7 @@ public class Store {
     }
 
 
-    public int getNumProductsSold() {
+    public int numProductsSold() {
         int count = 0;
         for (Map.Entry<String, Item> itemEntry : soldItems.entrySet()) {
             count += itemEntry.getValue().getStock();

@@ -72,27 +72,33 @@ public class CsvUtils {
         }
         InputStreamReader streamReader = new InputStreamReader(System.in);
         BufferedReader buffer = new BufferedReader(streamReader);
+        ArrayList<String> lines = new ArrayList<String>();
         String line;
+        
         try {
             buffer.readLine(); // ignore first line, column names
             while ((line = buffer.readLine()) != null) {
                 if (line.isEmpty()) {
                     break;
                 }
-                String[] data = line.split(", ");
+                lines.add(line);
+            }
+            for (int i = 0; i < lines.size(); i++) {
+                String[] data = lines.get(i).split(", ");
+
                 // 0 - Name, 1 - Description, 2 - Price, 3 - Stock, 4 - Store
-                
                 Store currentStore = seller.getStoreByName(data[4]);
                 Map<String, Integer> sellerObject = new HashMap<String, Integer>();
                 sellerObject.put(seller.getUsername(), Integer.parseInt(data[3]));
                 currentStore.addToStockItems(new Item(data[0], data[1], Integer.parseInt(data[3]), -1, Integer.parseInt(data[2]), 
                     null, sellerObject), seller.getUsername(), objectMapper);
+                String dir = "/sellers/" + seller.getUsername() + "/stores";
+                JsonUtils.addObjectToJson(dir, currentStore.getName(), currentStore, objectMapper);
             }
         } catch (IOException e) {
             System.out.println("An error occured while importing.");
             return;
         }
-        
 
     }
 }
