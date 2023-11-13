@@ -1,9 +1,14 @@
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class CsvUtils {
     public static void writePurchaseHistoryToCSV(String filename, Buyer buyer) throws IOException {
@@ -57,5 +62,37 @@ public class CsvUtils {
         }
 
         writer.close();
+    }
+
+    public static void importFromCSV(String filename, Seller seller, ObjectMapper objectMapper) {
+        File csvOutputFile = new File(filename + ".csv");
+        if (!csvOutputFile.exists()) {
+            System.out.println("File does not exist.");
+            return;
+        }
+        InputStreamReader streamReader = new InputStreamReader(System.in);
+        BufferedReader buffer = new BufferedReader(streamReader);
+        String line;
+        try {
+            buffer.readLine(); // ignore first line, column names
+            while ((line = buffer.readLine()) != null) {
+                if (line.isEmpty()) {
+                    break;
+                }
+                String[] data = line.split(", ");
+                // 0 - Name, 1 - Description, 2 - Price, 3 - Stock, 4 - Store
+                
+                Store currentStore = seller.getStoreByName(data[4]);
+                Map<String, Integer> sellerObject = new HashMap<String, Integer>();
+                sellerObject.put(seller.getUsername(), Integer.parseInt(data[3]));
+                currentStore.addToStockItems(new Item(data[0], data[1], Integer.parseInt(data[3]), -1, Integer.parseInt(data[2]), 
+                    null, sellerObject), seller.getUsername(), objectMapper);
+            }
+        } catch (IOException e) {
+            System.out.println("An error occured while importing.");
+            return;
+        }
+        
+
     }
 }
