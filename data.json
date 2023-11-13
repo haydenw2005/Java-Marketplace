@@ -115,20 +115,23 @@
               "sellersObject" : {
                 "testseller" : 2147483647
               }
-            },
+            }
+          },
+          "soldItems" : {
             "bread 2" : {
               "name" : "bread 2",
               "description" : "tastes better",
               "stock" : 2147483647,
-              "count" : -1,
+              "count" : 3456,
               "price" : 0.0,
-              "buyersObject" : null,
+              "buyersObject" : {
+                "buyer_1_username" : 3456
+              },
               "sellersObject" : {
-                "testseller" : 2147483647
+                "testseller" : -2147480193
               }
             }
-          },
-          "soldItems" : { }
+          }
         },
         "store_2_name_edited" : {
           "name" : "store_2_name_edited",
@@ -219,6 +222,19 @@
           },
           "sellersObject" : {
             "seller_1_username" : 4
+          }
+        },
+        "bread 2" : {
+          "name" : "bread 2",
+          "description" : "tastes better",
+          "stock" : -1,
+          "count" : 3456,
+          "price" : 0.0,
+          "buyersObject" : {
+            "buyer_1_username" : 3456
+          },
+          "sellersObject" : {
+            "testseller" : -2147480193
           }
         }
       }

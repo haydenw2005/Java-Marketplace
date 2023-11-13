@@ -223,10 +223,10 @@ public class Marketplace {
     public Item showMarketplace (Scanner scanner, Buyer buyer, ObjectMapper objectMapper) {
         ArrayList<Item> itemsList = this.getAllMarketPlaceItems();
         this.listProducts(itemsList);
-        System.out.println("\t(a) Search for a product ~");
-        System.out.println("\t(b)Sort products by price ~");
-        System.out.println("\t(c)Sort products by quantity in stock ~");
-        System.out.println("\t(d)Go back ~");
+        System.out.println("\t (a) Search for a product ~");
+        System.out.println("\t (b)Sort products by price ~");
+        System.out.println("\t (c)Sort products by quantity in stock ~");
+        System.out.println("\t (d)Go back ~");
 
         String input = scanner.nextLine();
 

@@ -359,9 +359,9 @@ public class Main {
         System.out.println("What would you like to do?");
         System.out.println("\t(1) List, edit, or delete items ~");
         System.out.println("\t(2) Create, edit, or delete stores ~");
-        System.out.println("\t(3) View all listed products ~");
-        System.out.println("\t(4) View all sold products ~");
-        System.out.println("\t(5) View all product buyers ~");
+        System.out.println("\t(3) View listed products dashboard ~");
+        System.out.println("\t(4) View all sold products dashboard ~");
+        System.out.println("\t(5) View all product buyers dashboard ~");
         System.out.println("\t(6) Edit account");
         System.out.println("\t(7) Delete account");
         System.out.println("\t(8) Export store items to CSV ~");
