@@ -189,10 +189,12 @@ public class Buyer extends Person {
 
     public void showPurchaseHistory() {
         if(!(purchaseHistory.isEmpty())) {
+            System.out.println("\nPurchase history:\n");
             for (Map.Entry<String, Item> purchaseEntry : purchaseHistory.entrySet()) {
                 Item item = purchaseEntry.getValue();
                 System.out.println(item.toString());
-            } 
+            }
+            System.out.println("\n"); 
         } else {
             System.out.println("No items purchased yet.");
         }   

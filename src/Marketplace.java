@@ -112,11 +112,17 @@ public class Marketplace {
             Map<String, Store> stores = seller.getStores();
             for (Map.Entry<String, Store> storeEntry : stores.entrySet()) {
                 Store store = storeEntry.getValue();
-                Map<String, Item> items = store.getStockItems();
-                for (Map.Entry<String, Item> itemEntry : items.entrySet()) {
-                    if (itemEntry.getValue().getName().equals(item.getName())) {
+                Map<String, Item> stockItems = store.getStockItems();
+                for (Map.Entry<String, Item> stockItemEntry : stockItems.entrySet()) {
+                    if (stockItemEntry.getValue().getName().equals(item.getName())) {
                         return store;
                     }
+                Map<String, Item> soldItems = store.getSoldItems();
+                for (Map.Entry<String, Item> soldItemEntry : soldItems.entrySet()) {
+                    if (soldItemEntry.getValue().getName().equals(item.getName())) {
+                        return store;
+                    }
+                }
                 }
             }
         }
@@ -336,9 +342,9 @@ public class Marketplace {
 
 
         if (input.equals("1")) {
-            this.listStores1(scanner, allStores, buyer, objectMapper);
+            this.listStoresBySales(scanner, allStores, buyer, objectMapper);
         } else if (input.equals("2")) {
-            this.listStores2(scanner, allStores, buyer, objectMapper);
+            this.listStoresByProductsBought(scanner, allStores, buyer, objectMapper);
         } else {
             return;
         }
@@ -347,9 +353,9 @@ public class Marketplace {
     }
 
 
-    public void listStores1(Scanner scanner, ArrayList<Store> allStores, Buyer buyer, ObjectMapper objectMapper) {
+    public void listStoresBySales(Scanner scanner, ArrayList<Store> allStores, Buyer buyer, ObjectMapper objectMapper) {
         for (int i = 0; i < allStores.size(); i++) {
-            System.out.println(allStores.get(i).getName() + "; Products sold: " +
+            System.out.println(allStores.get(i).getName() + " | Products sold: " +
                     allStores.get(i).getNumProductsSold());
         }
 
@@ -366,7 +372,7 @@ public class Marketplace {
 
 
         if (input.equals("1")) {
-            listStores1(scanner, this.sortByProductsSold(allStores), buyer, objectMapper);
+            listStoresBySales(scanner, this.sortByProductsSold(allStores), buyer, objectMapper);
         } else {
             this.viewStoreInfo(scanner, buyer, objectMapper);
         }
@@ -375,13 +381,12 @@ public class Marketplace {
 
 
 
-    public void listStores2(Scanner scanner, ArrayList<Store> allStores, Buyer buyer, ObjectMapper objectMapper) {
+    public void listStoresByProductsBought(Scanner scanner, ArrayList<Store> allStores, Buyer buyer, ObjectMapper objectMapper) {
         ArrayList<ArrayList<Item>> list = new ArrayList<ArrayList<Item>>();
         for (int i = 0; i < allStores.size(); i++) {
             list.add(allStores.get(i).getProductsPurchasedFromStore(this, buyer));
         }
-
-
+        
         for (int i = 0; i < allStores.size(); i++) {
             if (list.get(i).size() > 0) {
                 System.out.println("From " + allStores.get(i).getName() + ", you purchased:");
@@ -404,7 +409,7 @@ public class Marketplace {
 
 
         if (input.equals("1")) {
-            listStores2(scanner, this.sortByProductsBought(allStores, buyer), buyer, objectMapper);
+            listStoresByProductsBought(scanner, this.sortByProductsBought(allStores, buyer), buyer, objectMapper);
 
 
         } else {
