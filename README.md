@@ -23,6 +23,15 @@ All classes have test cases, in the format <Class_Name>Test.java. The JUnit test
    - Make sure you have already compiled all the classes with the command listed above: `java -cp bin:"jar_files/*" Main`
 2. Execution:
    - Run this command for each test case you want to run: `java -cp "bin:jar_files/*" org.junit.runner.JUnitCore <YourClassHere>`
+   - Replace `<YourClassHere>` with any of the following Test Classes:
+      - BuyerTest
+      - CsvUtilsTest
+      - ItemTest
+      - JsonUtilsTest
+      - MarketplaceTest
+      - PersonTest
+      - SellerTest
+      - StoreTest  
  
 ## Classes
 
@@ -76,5 +85,5 @@ All classes have test cases, in the format <Class_Name>Test.java. The JUnit test
 - **Functionality:** Provides utility methods for writing purchase history and product information to CSV files.
 - **Testing:** JUnit tests cover methods related to writing purchase history and product information to CSV files.
 - **Relationships:** Used by the `Marketplace` class to export data to CSV.
-
+- **Importing CSV files:** When importing CSV files, make sure the file follows the correct format. A sample format is shown in stock.csv.
 
