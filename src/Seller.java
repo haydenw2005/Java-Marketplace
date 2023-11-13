@@ -8,6 +8,7 @@ import java.util.Map;
 public class Seller extends Person {
 
     private Map<String, Store> stores;
+
     public Seller() {}
     public Seller(@JsonProperty("username") String username, @JsonProperty("password") String password,
                   @JsonProperty("firstName") String firstName, @JsonProperty("lastName") String lastName,
@@ -118,5 +119,7 @@ public class Seller extends Person {
         return stores.get(name);
     }
 
-
+    public void setStores(Map<String, Store> stores) {
+        this.stores = stores;
+    }
 }

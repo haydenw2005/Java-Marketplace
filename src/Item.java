@@ -11,11 +11,22 @@ public class Item {
     private Map<String, Integer> buyersObject;
     private Map<String, Integer> sellersObject;
 
-    public Item() {}
-    public Item(@JsonProperty("name") String name, @JsonProperty("description") String description, 
-                 @JsonProperty("stock") int stock, @JsonProperty("count") int count, @JsonProperty("price") double price,
-                 @JsonProperty("buyersObject") Map<String, Integer> buyersObject,
-                 @JsonProperty("sellersObject") Map<String, Integer> sellersObject) {
+    public Item() {
+    }
+
+    /**
+     * @param name
+     * @param description
+     * @param stock
+     * @param count
+     * @param price
+     * @param buyersObject
+     * @param sellersObject
+     */
+    public Item(@JsonProperty("name") String name, @JsonProperty("description") String description,
+            @JsonProperty("stock") int stock, @JsonProperty("count") int count, @JsonProperty("price") double price,
+            @JsonProperty("buyersObject") Map<String, Integer> buyersObject,
+            @JsonProperty("sellersObject") Map<String, Integer> sellersObject) {
         this.name = name;
         this.description = description;
         this.stock = stock;
@@ -36,9 +47,11 @@ public class Item {
     public int getCount() {
         return count;
     }
+
     public void setCount(int count) {
         this.count = count;
     }
+
     public double getPrice() {
         return price;
     }
@@ -50,42 +63,53 @@ public class Item {
     public int totalSoldBySeller() {
         return sellersObject.get(this.findSeller());
     }
+
     public String findSeller() {
         return sellersObject.entrySet().iterator().next().getKey();
     }
 
     public void setTotalBoughtByBuyer(String username, int quantity) {
-        // changes quantity bought by a buyer in buyers object 
+        // changes quantity bought by a buyer in buyers object
         buyersObject.put(username, quantity);
     }
+
     public void setTotalSoldBySeller(int quantity) {
-        // changes quantity sold by a seller in sellers object 
+        // changes quantity sold by a seller in sellers object
         sellersObject.put(this.findSeller(), quantity);
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public void setDescription(String description) {
         this.description = description;
     }
+
     public int getStock() {
         return stock;
     }
+
     public void setStock(int stock) {
         this.stock = stock;
     }
+
     public void setPrice(double price) {
         this.price = price;
     }
+
     public Map<String, Integer> getBuyersObject() {
         return buyersObject;
     }
+
     public void setBuyersObject(Map<String, Integer> buyersObject) {
         this.buyersObject = buyersObject;
     }
+
     public Map<String, Integer> getSellersObject() {
         return sellersObject;
     }
+
     public void setSellersObject(Map<String, Integer> sellersObject) {
         this.sellersObject = sellersObject;
     }
@@ -100,6 +124,5 @@ public class Item {
         }
         return null;
     }
-
 
 }

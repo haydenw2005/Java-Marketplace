@@ -31,7 +31,7 @@ public class Buyer extends Person {
         this.cart = cart;
     }
     public Map<String, Item> getPurchaseHistory() {
-        return purchaseHistory;
+        return this.purchaseHistory;
     }
     public void setPurchaseHistory(Map<String, Item> purchaseHistory) {
         this.purchaseHistory = purchaseHistory;
@@ -69,7 +69,7 @@ public class Buyer extends Person {
 
     // other functions
     public void addItemToCart(Item item, ObjectMapper objectMapper) {
-        if (item.getCount() < item.getStock()) {
+        if (item.getCount() <= item.getStock()) {
             try {
                 String cartDir = "/buyers/" + this.getUsername() + "/cart";
                 String itemDir = cartDir + "/" + item.getName();
@@ -80,7 +80,7 @@ public class Buyer extends Person {
                 } 
                 JsonUtils.addObjectToJson(cartDir, item.getName(), item, objectMapper);
                 cart.put(item.getName(), item);
-                System.out.println("Item added to cart successfully.");
+                // System.out.println("Item added to cart successfully.");
             } catch (Exception e) {
                 System.out.println("Error adding item to cart.");
                 e.printStackTrace();
@@ -160,10 +160,10 @@ public class Buyer extends Person {
     public void addToPurchaseHistory(Item item, ObjectMapper objectMapper) {
         Item purchasedItem = item;
         purchasedItem.setStock(-1);
+        this.purchaseHistory.put(purchasedItem.getName(), purchasedItem);
         try {
             String dir = "/buyers/" + this.getUsername() + "/purchaseHistory";
             JsonUtils.addObjectToJson(dir, purchasedItem.getName(), purchasedItem, objectMapper);
-            purchaseHistory.put(purchasedItem.getName(), purchasedItem);
         } catch (IOException e) {
             System.out.println("Error adding item to cart.");
             e.printStackTrace();
@@ -196,7 +196,6 @@ public class Buyer extends Person {
                 Item item = purchaseEntry.getValue();
                 System.out.println(item.toString());
             }
-            System.out.println("\n"); 
         } else {
             System.out.println("No items purchased yet.");
         }   

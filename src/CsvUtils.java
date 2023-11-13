@@ -102,6 +102,10 @@ public class CsvUtils {
                 } else {
                     JsonUtils.addObjectToJson(dir, currentStore.getName(), currentStore, objectMapper);
                 }
+                Map<String, Store> updatedStores = seller.getStores();
+                updatedStores.put(currentStore.getName(), currentStore);
+                seller.setStores(updatedStores);
+
             }
             buffer.close();
         } catch (IOException e) {

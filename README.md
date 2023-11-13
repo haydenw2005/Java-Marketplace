@@ -19,4 +19,4 @@
 - [ ] List of customers who purchased seller's products
 - [ ] Number of products currently in buyers' carts
 ### CSV
-- [ ] Import/Export csv file with product details
+- [X] ~~Import/Export csv file with product details~~
