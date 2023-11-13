@@ -47,7 +47,7 @@ public class Marketplace {
 
     //METHOD TO SIGN UP, RETURN USER OBJECT
     public Person signUp(Scanner scanner, ObjectMapper objectMapper) throws IOException {
-        System.out.println("Please enter your username:");
+        System.out.println("Please enter your permanent username:");
         String username = scanner.nextLine();
         while (buyers.containsKey(username) || sellers.containsKey(username)) {
             System.out.println("Username taken. Please try again:");
@@ -217,15 +217,15 @@ public class Marketplace {
     public Item showMarketplace (Scanner scanner, Buyer buyer, ObjectMapper objectMapper) {
         ArrayList<Item> itemsList = this.getAllMarketPlaceItems();
         this.listProducts(itemsList);
-        System.out.println("Search for a product: enter 'search'");
-        System.out.println("Sort products by price: enter 'sort price'");
-        System.out.println("Sort products by quantity in stock: enter 'sort quantity'");
-        System.out.println("Go back: enter 'back'");
+        System.out.println("\t(a) Search for a product ~");
+        System.out.println("\t(b)Sort products by price ~");
+        System.out.println("\t(c)Sort products by quantity in stock ~");
+        System.out.println("\t(d)Go back ~");
 
         String input = scanner.nextLine();
 
 
-        if (input.toLowerCase().equals("search")) {
+        if (input.toLowerCase().equals("a")) {
             itemsList = this.searchProducts(scanner, itemsList);
             if (itemsList.size() == 0) {
                 System.out.println("No matches");
@@ -234,21 +234,21 @@ public class Marketplace {
                 this.listProducts(itemsList);
                 input = scanner.nextLine();
             }
-        } else if (input.toLowerCase().equals("sort price")) {
+        } else if (input.toLowerCase().equals("b")) {
             this.listProducts(this.sortByPrice(itemsList));
             System.out.println("Go back: enter 'back'");
             input = scanner.nextLine();
             if (input.equals("back")) {
                 this.showMarketplace(scanner, buyer, objectMapper);
             }
-        } else if (input.toLowerCase().equals("sort quantity")) {
+        } else if (input.toLowerCase().equals("c")) {
             this.listProducts(this.sortByQuantity(itemsList));
             System.out.println("Go back: enter 'back'");
             input = scanner.nextLine();
             if (input.equals("back")) {
                 this.showMarketplace(scanner, buyer, objectMapper);
             }
-        } else if (input.toLowerCase().equals("back")) {
+        } else if (input.toLowerCase().equals("d")) {
             return null;
         }
 
@@ -271,9 +271,9 @@ public class Marketplace {
         System.out.println("Product: " + item.getName());
         System.out.println("Description: " + item.getDescription());
         System.out.println("Quantity available: " + item.getStock());
-        System.out.println("(1) Purchase");
-        System.out.println("(2) Add to Cart");
-        System.out.println("(3) Back");
+        System.out.println("\t(1) Purchase");
+        System.out.println("\t(2) Add to Cart");
+        System.out.println("\t(3) Back");
         String input = scanner.nextLine();
 
 
@@ -339,9 +339,9 @@ public class Marketplace {
         ArrayList<Store> allStores = this.getAllStores();
 
 
-        System.out.println("(1) View stores by number of products sold");
-        System.out.println("(2) View stores by products you purchased");
-        System.out.println("(3) Back");
+        System.out.println("\t(1) View stores by number of products sold");
+        System.out.println("\t(2) View stores by products you purchased");
+        System.out.println("\t(3) Back");
 
 
         String input = scanner.nextLine();
@@ -370,8 +370,8 @@ public class Marketplace {
         }
 
 
-        System.out.println("(1) Sort stores by number of products sold");
-        System.out.println("(2) Back");
+        System.out.println("\t(1) Sort stores by number of products sold");
+        System.out.println("\t(2) Back");
 
 
         String input = scanner.nextLine();
@@ -407,8 +407,8 @@ public class Marketplace {
         }
 
 
-        System.out.println("(1) Sort stores by number of products bought");
-        System.out.println("(2) Back");
+        System.out.println("\t(1) Sort stores by number of products bought");
+        System.out.println("\t(2) Back");
 
 
         String input = scanner.nextLine();
@@ -430,8 +430,8 @@ public class Marketplace {
 
     public void cartFlow(Scanner scanner, Buyer buyer, ObjectMapper objectMapper) {
         buyer.showAllCartItems();
-        System.out.println("\n(1) Buy Cart");
-        System.out.println("(2) Back");
+        System.out.println("\n\t(1) Buy Cart");
+        System.out.println("\t(2) Back");
         String input = scanner.nextLine();
         while (!(input.equals("1") || input.equals("2"))) {
             System.out.println("Invalid input. Try again.");
@@ -444,6 +444,31 @@ public class Marketplace {
         } else if (input.equals("2")) {
             return;
         } 
+
+    }
+
+    public void editUser(Scanner scanner, Person user, ObjectMapper objectMapper) {
+        System.out.println("Please enter your new password:");
+        String password = scanner.nextLine();
+        System.out.println("Please enter your new first name:");
+        String firstName = scanner.nextLine();
+        System.out.println("Please enter your new last name:");
+        String lastName = scanner.nextLine();
+        System.out.println("Please enter your new email:");
+        String email = scanner.nextLine();
+        user.setPassword(password);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setEmail(email);
+        try {
+            if (user instanceof Buyer) {
+                addBuyerAccount(user.getUsername(), (Buyer) user, objectMapper);
+            } else {
+                addSellerAccount(user.getUsername(), (Seller) user, objectMapper);
+            }
+        } catch (Exception e) {
+            System.out.println("There was an error updating your account.");
+        }
 
     }
 }
