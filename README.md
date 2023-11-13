@@ -7,8 +7,7 @@ The Marketplace project is a Java implementation of an online marketplace system
 ## How to run
 1. Compilation:
    - Open a terminal.
-   - Navigate to the root project directory.
-   - Run the following command `javac -d bin -cp jar_files/jackson-annotations-2.16.0-rc1.jar:jar_files/jackson-databind-2.16.0-rc1.jar:jar_files/jackson-core-2.16.0-rc1.jar src/*.java`
+   - While in root directory, run the following command `javac -d bin -cp jar_files/jackson-annotations-2.16.0-rc1.jar:jar_files/jackson-databind-2.16.0-rc1.jar:jar_files/jackson-core-2.16.0-rc1.jar src/*.java`
 
 2. Execution:
    - Run the now compiled Main.java with the command `java -cp bin:jar_files/jackson-annotations-2.16.0-rc1.jar:jar_files/jackson-databind-2.16.0-rc1.jar:jar_files/jackson-core-2.16.0-rc1.jar Main`
