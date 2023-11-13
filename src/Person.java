@@ -1,4 +1,5 @@
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Scanner;
 
 public class Person {
     private String username;
@@ -44,7 +45,15 @@ public class Person {
         return lastName;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public void deleteUser() {
+
     }
 }

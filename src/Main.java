@@ -27,7 +27,7 @@ public class Main {
                 startBuyerFlow((Buyer) user, marketplace, scanner, objectMapper);
 
             } else if (user instanceof Seller) {
-                startSellerFlow((Seller) user, scanner, objectMapper);
+                startSellerFlow((Seller) user, marketplace, scanner, objectMapper);
             }
             //by tracking sessionUsername we know who is using the system
             //System.out.println(sessionUsername);
@@ -56,14 +56,17 @@ public class Main {
     }
     
     public static void startBuyerFlow(Buyer user, Marketplace marketplace, Scanner scanner, ObjectMapper objectMapper) {
+        System.out.println("Welcome " + user.getFirstName() + " " + user.getLastName() + "!");
         while (true) {
-            System.out.println("Welcome " + user.getFirstName() + " " + user.getLastName() + "!");
-            System.out.println("(1) View store information");
-            System.out.println("(2) View marketplace");
-            System.out.println("(3) View cart");
-            System.out.println("(4) View purchase history");
-            System.out.println("(5) Export purchase history to CSV");
-            System.out.println("(6) Signout");
+            System.out.println("What would you like to do?");
+            System.out.println("\t(1) View store information");
+            System.out.println("\t(2) View marketplace");
+            System.out.println("\t(3) View cart");
+            System.out.println("\t(4) View purchase history");
+            System.out.println("\t(5) Export purchase history to CSV");
+            System.out.println("\t(6) Edit account");
+            System.out.println("\t(7) Delete account");
+            System.out.println("\t(8) Signout");
 
             String input = scanner.nextLine();
             while (!(input.equals("1") || input.equals("2") || input.equals("3") 
@@ -87,19 +90,26 @@ public class Main {
                     CsvUtils.writePurchaseHistoryToCSV(file, (Buyer) user);
                 } catch (IOException e) {
                     System.out.println("An error occured while writing to file.");
-                };
-                continue;
+                }
             } else if (input.equals("6")) {
+                System.out.println("Edit account");
+                marketplace.editUser(scanner, user, objectMapper);
+                System.out.println();
+                break;
+            } else if (input.equals("7")) {
+                System.out.println("Deleting account...");
+                break;
+            } else if (input.equals("8")) {
                 System.out.println("Signing out...");
                 break;
             }
         }
     }
-    public static void startSellerFlow(Seller user, Scanner scanner, ObjectMapper objectMapper) {
+    public static void startSellerFlow(Seller user, Marketplace marketplace, Scanner scanner, ObjectMapper objectMapper) {
         System.out.println("Welcome " + user.getFirstName() + " " + user.getLastName() + "!");
         while (true) {
             printSellerMenu();
-            String option = getMenuInput(1, 7, scanner);
+            String option = getMenuInput(1, 9, scanner);
             switch (option) {
                 case "1":
                     boolean inItemMenu = true;
@@ -111,6 +121,7 @@ public class Main {
                             e.printStackTrace();
                         }
                     }
+                    System.out.println();
                     break;
                 case "2":
                     boolean inStoreMenu = true;
@@ -122,6 +133,7 @@ public class Main {
                             e.printStackTrace();
                         }
                     }
+                    System.out.println();
                     break;
                 case "3":
                     System.out.println("All listed products");
@@ -129,6 +141,7 @@ public class Main {
                     for (Item item : stockItems) {
                         System.out.println(item.toString());
                     }
+                    System.out.println();
                     break;
                 case "4":
                     System.out.println("All sold products");
@@ -136,6 +149,7 @@ public class Main {
                     for (Item item : soldItems) {
                         System.out.println(item.toString());
                     }
+                    System.out.println();
                     break;
                 case "5":
                     System.out.println("All product buyers");
@@ -145,8 +159,17 @@ public class Main {
                         Integer value = entry.getValue();
                         System.out.println("\tUser " + key + " has bought " + value + "products ~");
                     }
+                    System.out.println();
                     break;
                 case "6":
+                    System.out.println("Edit account");
+                    marketplace.editUser(scanner, user, objectMapper);
+                    System.out.println();
+                    return;
+                case "7":
+                    System.out.println("Deleting account...");
+                    return;
+                case "8":
                     System.out.println("Enter filename to write to (excluding .csv extension)");
                     String file = scanner.nextLine();
                     try {
@@ -155,7 +178,7 @@ public class Main {
                         System.out.println("Error writing to file.");;
                     }
                     break;
-                case "7":
+                case "9":
                     System.out.println("Signing out...");
                     return;
             }
@@ -301,8 +324,8 @@ public class Main {
         HashMap<String, Integer> sellerHashmap = new HashMap<String, Integer>();
         sellerHashmap.put(user.getUsername(), stock);
         return new Item(name, description, stock, -1, price, null, sellerHashmap);
-
     }
+
 
     public static void printSellerItemMenu() {
         System.out.println("What would you like to do?");
@@ -325,7 +348,9 @@ public class Main {
         System.out.println("\t(3) View all listed products ~");
         System.out.println("\t(4) View all sold products ~");
         System.out.println("\t(5) View all product buyers ~");
-        System.out.println("\t(6) Export store items to CSV ~");
-        System.out.println("\t(7) Sign-out ~");
+        System.out.println("\t(6) Edit account");
+        System.out.println("\t(7) Delete account");
+        System.out.println("\t(8) Export store items to CSV ~");
+        System.out.println("\t(9) Sign-out ~");
     }
 }
