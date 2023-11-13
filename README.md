@@ -5,10 +5,16 @@
 The Marketplace project is a Java implementation of an online marketplace system. It consists of several classes representing different entities such as buyers, sellers, stores, items, and utilities for handling JSON operations.
 
 ## How to run
-INSERT HERE
+1. Compilation:
+   - Open a terminal.
+   - Navigate to the project directory.
+   - Run the compilation command (e.g., `javac MainClass.java`).
+
+2. Execution:
+   - Run the compiled program (e.g., `java MainClass`).
 
 ## Submissions
-Hayden White - Submitted Report on Brightspace. 
+Suhani Rana - Submitted Report on Brightspace. 
 Hayden White - Submitted Vocareum workspace.
 
 ## Classes
