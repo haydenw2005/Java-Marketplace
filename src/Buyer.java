@@ -62,8 +62,6 @@ public class Buyer extends Person {
         for (Map.Entry<String, Item> itemEntry : purchaseHistory.entrySet()) {
             purchasedItems.add(itemEntry.getValue());
         }
-
-
         return purchasedItems;
     }
 
@@ -81,6 +79,7 @@ public class Buyer extends Person {
                     item.setCount(cartItem.getCount() + item.getCount()); 
                 } 
                 JsonUtils.addObjectToJson(cartDir, item.getName(), item, objectMapper);
+                cart.put(item.getName(), item);
                 System.out.println("Item added to cart successfully.");
             } catch (Exception e) {
                 System.out.println("Error adding item to cart.");

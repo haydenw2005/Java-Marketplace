@@ -26,12 +26,12 @@
                 "seller_1_username" : 2
               }
             },
-            "computer" : {
-              "name" : "computer",
-              "description" : "is a computer",
-              "stock" : 1,
+            "soccer ball" : {
+              "name" : "soccer ball",
+              "description" : "kick it",
+              "stock" : 2,
               "count" : -1,
-              "price" : 500,
+              "price" : 20,
               "buyersObject" : null,
               "sellersObject" : {
                 "seller_1_username" : 2
@@ -66,16 +66,29 @@
               }
             },
             "soccer ball" : {
-              "name" : "soccer ball",
-              "description" : "kick it",
-              "stock" : 2,
-              "count" : 2,
-              "price" : 20.0,
+              "name": "soccer ball",
+              "description": "kick it",
+              "stock": 2,
+              "count": 2,
+              "price": 20.0,
+              "buyersObject": {
+                "buyer_1_username": 2
+              },
+              "sellersObject": {
+                "seller_1_username": 4
+              }
+            },
+            "computer" : {
+              "name" : "computer",
+              "description" : "is a computer",
+              "stock" : 1,
+              "count" : -1,
+              "price" : 500,
               "buyersObject" : {
-                "buyer_1_username" : 2
+                "test_buyer" : -1
               },
               "sellersObject" : {
-                "seller_1_username" : 4
+                "seller_1_username" : 1
               }
             }
           }
@@ -188,6 +201,19 @@
           },
           "sellersObject" : {
             "seller_1_username" : 3
+          }
+        },
+        "computer" : {
+          "name" : "computer",
+          "description" : "is a computer",
+          "stock" : -1,
+          "count" : -1,
+          "price" : 500,
+          "buyersObject" : {
+            "test_buyer" : -1
+          },
+          "sellersObject" : {
+            "seller_1_username" : 1
           }
         }
       }
