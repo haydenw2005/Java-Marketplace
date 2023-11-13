@@ -94,7 +94,7 @@ public class Main {
                     String file = scanner.nextLine();
                     CsvUtils.writePurchaseHistoryToCSV(file, (Buyer) user);
                 } catch (Exception e) {
-                    System.out.println("An error occured while writing to file.");
+                    System.out.println("An error occurred while writing to file.");
                 }
             } else if (input.equals("6")) {
                 System.out.println("Edit account ~");
