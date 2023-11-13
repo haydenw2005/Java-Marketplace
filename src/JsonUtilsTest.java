@@ -13,6 +13,17 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
+/**
+ * Class to test JsonUtils Class.
+ *
+ * <p>
+ * Purdue University -- CS18000 -- Fall 2023
+ * </p>
+ *
+ * @author Soham
+ * @version November 13, 2023
+ */
+
 public class JsonUtilsTest {
     private Item item;
     private Seller seller;
@@ -52,7 +63,7 @@ public class JsonUtilsTest {
 
     @Test
     public void removeObjectFromJson_ValidInput() throws IOException {
-        
+
         ObjectMapper objectMapper = new ObjectMapper();
         String nodeDir = "/sellers";
         String objectKey = seller.getUsername();

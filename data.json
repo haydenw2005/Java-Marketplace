@@ -187,23 +187,6 @@
             }
           },
           "soldItems" : { }
-        },
-        "Electronics" : {
-          "name" : "Electronics",
-          "stockItems" : {
-            "Laptop" : {
-              "name" : "Laptop",
-              "description" : "High-performance laptop",
-              "stock" : 5,
-              "count" : -1,
-              "price" : 1200.0,
-              "buyersObject" : null,
-              "sellersObject" : {
-                "testseller" : 5
-              }
-            }
-          },
-          "soldItems" : { }
         }
       }
     },
@@ -221,7 +204,18 @@
       "firstName" : "Test",
       "lastName" : "Seller",
       "email" : "test.seller@example.com",
-      "stores" : { }
+      "stores" : {
+        "EditedStore" : {
+          "name" : "EditedStore",
+          "stockItems" : { },
+          "soldItems" : { }
+        },
+        "TestStore" : {
+          "name" : "TestStore",
+          "stockItems" : { },
+          "soldItems" : { }
+        }
+      }
     },
     "new_seller" : {
       "username" : "new_seller",
@@ -334,136 +328,8 @@
       "firstName" : "john",
       "lastName" : "doe",
       "email" : "john.doe@example.com",
-      "cart" : {
-        "Laptop" : {
-          "name" : "Laptop",
-          "description" : "High-performance laptop",
-          "stock" : 5,
-          "count" : 3,
-          "price" : 1200.0,
-          "buyersObject" : { },
-          "sellersObject" : {
-            "seller" : 5
-          }
-        },
-        "Headphones" : {
-          "name" : "Headphones",
-          "description" : "Noise-canceling headphones",
-          "stock" : 2,
-          "count" : 2,
-          "price" : 150.0,
-          "buyersObject" : { },
-          "sellersObject" : {
-            "seller" : 2
-          }
-        },
-        "Cheese" : {
-          "name" : "Cheese",
-          "description" : "Indiana Cheese.",
-          "stock" : 5,
-          "count" : 2,
-          "price" : 1000.0,
-          "buyersObject" : null,
-          "sellersObject" : {
-            "seller" : 5
-          }
-        },
-        "toaster" : {
-          "name" : "toaster",
-          "description" : "High-performance toaster",
-          "stock" : 5,
-          "count" : 3,
-          "price" : 1200.0,
-          "buyersObject" : { },
-          "sellersObject" : {
-            "seller" : 5
-          }
-        },
-        "earphones" : {
-          "name" : "earphones",
-          "description" : "Noise-canceling earphones",
-          "stock" : 2,
-          "count" : 6,
-          "price" : 150.0,
-          "buyersObject" : { },
-          "sellersObject" : {
-            "seller" : 2
-          }
-        }
-      },
-      "purchaseHistory" : {
-        "Keyboard" : {
-          "name" : "Keyboard",
-          "description" : "Mechanical keyboard.",
-          "stock" : -1,
-          "count" : 2,
-          "price" : 80.0,
-          "buyersObject" : { },
-          "sellersObject" : { }
-        },
-        "Laptop" : {
-          "name" : "Laptop",
-          "description" : "High-performance laptop",
-          "stock" : -1,
-          "count" : 1,
-          "price" : 1200.0,
-          "buyersObject" : { },
-          "sellersObject" : { }
-        },
-        "Headphones" : {
-          "name" : "Headphones",
-          "description" : "Noise-canceling headphones",
-          "stock" : -1,
-          "count" : 2,
-          "price" : 150.0,
-          "buyersObject" : { },
-          "sellersObject" : { }
-        },
-        "Monitor" : {
-          "name" : "Monitor",
-          "description" : "High-resolution computer monitor",
-          "stock" : -1,
-          "count" : 1,
-          "price" : 300.0,
-          "buyersObject" : {
-            "testingbuyer" : 1
-          },
-          "sellersObject" : {
-            "seller" : 2
-          }
-        },
-        "Tablet" : {
-          "name" : "Tablet",
-          "description" : "Portable tablet device",
-          "stock" : -1,
-          "count" : -1,
-          "price" : 300.0,
-          "buyersObject" : {
-            "testingbuyer" : 2
-          },
-          "sellersObject" : {
-            "seller" : 5
-          }
-        },
-        "toaster" : {
-          "name" : "toaster",
-          "description" : "High-performance toaster",
-          "stock" : -1,
-          "count" : 1,
-          "price" : 1200.0,
-          "buyersObject" : { },
-          "sellersObject" : { }
-        },
-        "earphones" : {
-          "name" : "earphones",
-          "description" : "Noise-canceling earphones",
-          "stock" : -1,
-          "count" : 2,
-          "price" : 150.0,
-          "buyersObject" : { },
-          "sellersObject" : { }
-        }
-      }
+      "cart" : { },
+      "purchaseHistory" : { }
     },
     "john_doe" : {
       "username" : "john_doe",

@@ -11,6 +11,17 @@ import org.junit.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * Class to test Buyer Class.
+ *
+ * <p>
+ * Purdue University -- CS18000 -- Fall 2023
+ * </p>
+ *
+ * @author Soham
+ * @version November 13, 2023
+ */
+
 public class BuyerTest {
     private Buyer buyer;
     private Marketplace marketplace;
