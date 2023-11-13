@@ -8,7 +8,9 @@ import java.util.Map;
 /**
  * Represents a Seller in the marketplace, extending the Person class.
  *
- * <p>Purdue University -- CS18000 -- Fall 2023</p>
+ * <p>
+ * Purdue University -- CS18000 -- Fall 2023
+ * </p>
  *
  * @author Hayden, Vishal
  * @version November 13, 2023
@@ -17,24 +19,26 @@ public class Seller extends Person {
 
     private Map<String, Store> stores;
 
-    public Seller() {}
+    public Seller() {
+    }
+
     public Seller(@JsonProperty("username") String username, @JsonProperty("password") String password,
-                  @JsonProperty("firstName") String firstName, @JsonProperty("lastName") String lastName,
-                  @JsonProperty("email") String email,
-                  @JsonProperty("stores") Map<String, Store> stores) {
+            @JsonProperty("firstName") String firstName, @JsonProperty("lastName") String lastName,
+            @JsonProperty("email") String email,
+            @JsonProperty("stores") Map<String, Store> stores) {
         super(username, password, firstName, lastName, email);
         this.stores = stores;
     }
 
     public void createNewStore(String name, ObjectMapper objectMapper) {
-       try {
-           Store newStore = new Store(name, new HashMap<>(), new HashMap<>());
-           String dir = "/sellers/" + this.getUsername() + "/stores";
-           JsonUtils.addObjectToJson(dir, name, newStore, objectMapper);
-       } catch (Exception e) {
-           e.printStackTrace();
-           System.out.println("Error creating store.");
-       }
+        try {
+            Store newStore = new Store(name, new HashMap<>(), new HashMap<>());
+            String dir = "/sellers/" + this.getUsername() + "/stores";
+            JsonUtils.addObjectToJson(dir, name, newStore, objectMapper);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error creating store.");
+        }
     }
 
     public void editStore(String name, String newName, ObjectMapper objectMapper) {
@@ -55,9 +59,12 @@ public class Seller extends Person {
         for (Map.Entry<String, Store> storeEntry : stores.entrySet()) {
             Store store = storeEntry.getValue();
             Map<String, Item> items;
-            if (type.equals("stock")) items = store.getStockItems();
-            else if (type.equals("sold")) items = store.getSoldItems();
-            else return null;
+            if (type.equals("stock"))
+                items = store.getStockItems();
+            else if (type.equals("sold"))
+                items = store.getSoldItems();
+            else
+                return null;
             for (Map.Entry<String, Item> itemEntry : items.entrySet()) {
                 storeItems.add(itemEntry.getValue());
             }
@@ -65,7 +72,7 @@ public class Seller extends Person {
         return storeItems;
     }
 
-    public HashMap<String, Integer> allBuyers()  {
+    public HashMap<String, Integer> allBuyers() {
         HashMap<String, Integer> personCount = new HashMap<>();
         for (Map.Entry<String, Store> storeEntry : stores.entrySet()) {
             Store store = storeEntry.getValue();

@@ -43,7 +43,7 @@ public class ProductManager {
     }
 
     private static List<String[]> readCSV(String filePath) {
-        List<String[]> data = new ArrayList();
+        List<String[]> data = new ArrayList<String[]>();
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(filePath));
