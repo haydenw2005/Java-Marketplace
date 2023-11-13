@@ -1,8 +1,7 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -14,6 +13,16 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * Class to test CsvUtilsClass.
+ *
+ * <p>
+ * Purdue University -- CS18000 -- Fall 2023
+ * </p>
+ *
+ * @author Soham
+ * @version November 13, 2023
+ */
 public class CsvUtilsTest {
 
     private Buyer buyer;

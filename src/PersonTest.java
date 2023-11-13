@@ -3,6 +3,17 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Class to test Person Class.
+ *
+ * <p>
+ * Purdue University -- CS18000 -- Fall 2023
+ * </p>
+ *
+ * @author Soham
+ * @version November 13, 2023
+ */
+
 public class PersonTest {
 
     private Person person;
