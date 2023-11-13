@@ -207,13 +207,26 @@
           "name" : "computer",
           "description" : "is a computer",
           "stock" : -1,
-          "count" : -1,
+          "count" : 1,
           "price" : 500,
           "buyersObject" : {
             "test_buyer" : -1
           },
           "sellersObject" : {
             "seller_1_username" : 1
+          }
+        },
+        "bread" : {
+          "name" : "bread",
+          "description" : "tastes good",
+          "stock" : -1,
+          "count" : 1,
+          "price" : 10,
+          "buyersObject" : {
+            "test_buyer" : 1
+          },
+          "sellersObject" : {
+            "seller_1_username" : 3
           }
         }
       }
