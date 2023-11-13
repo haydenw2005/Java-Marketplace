@@ -14,7 +14,7 @@ The Marketplace project is a Java implementation of an online marketplace system
    - Run the compiled program (e.g., `java MainClass`).
 
 ## Submissions
-Suhani Rana - Submitted Report on Brightspace. 
+Hayden White - Submitted Report on Brightspace. 
 Hayden White - Submitted Vocareum workspace.
 
 ## Classes
