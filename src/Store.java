@@ -1,10 +1,16 @@
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
 
+/**
+ * Represents a store in the marketplace. Each store has a name, stock items, and sold items.
+ *
+ * <p>Purdue University -- CS18000 -- Fall 2023</p>
+ *
+ * @author Soham, Ryan
+ * @version November 13, 2023
+ */
 public class Store {
     private String name;
     private Map<String, Item> stockItems;

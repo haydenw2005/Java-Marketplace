@@ -1,7 +1,14 @@
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.Map;
 
+/**
+ * Represents an item in the marketplace that can be bought and sold.
+ *
+ * <p>Purdue University -- CS18000 -- Fall 2023</p>
+ *
+ * @author Hayden and Soham
+ * @version November 13, 2023
+ */
 public class Item {
     private String name;
     private String description;

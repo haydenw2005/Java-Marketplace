@@ -5,9 +5,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-
-
-
+/**
+ * Main class representing the entry point for the marketplace application.
+ *
+ * <p>Purdue University -- CS18000 -- Fall 2023</p>
+ *
+ * @author Hayden, Soham, and Ryan
+ * @version November 13, 2023
+ */
 public class Main {
     public static void main(String[] args) {
 
@@ -16,7 +21,7 @@ public class Main {
 
         try {
             //Example of getObjectByKey
-            Marketplace marketplace = JsonUtils.getObjectByKey(objectMapper, "", Marketplace.class);
+            Marketplace marketplace = JsonUtils.objectByKey(objectMapper, "", Marketplace.class);
             //System.out.println(buyer);
 
             //START OF USER FLOW
@@ -37,7 +42,7 @@ public class Main {
     }
 
     public static Person enterCredentials(Scanner scanner, ObjectMapper objectMapper) throws IOException {
-        Marketplace marketplace = JsonUtils.getObjectByKey(objectMapper, "", Marketplace.class);
+        Marketplace marketplace = JsonUtils.objectByKey(objectMapper, "", Marketplace.class);
         System.out.println("Welcome. Would you like to sign in (1) or sign up (2)?");
         String response = scanner.nextLine();
         Person user = null;
@@ -354,9 +359,9 @@ public class Main {
         System.out.println("What would you like to do?");
         System.out.println("\t(1) List, edit, or delete items ~");
         System.out.println("\t(2) Create, edit, or delete stores ~");
-        System.out.println("\t(3) View all listed products ~");
-        System.out.println("\t(4) View all sold products ~");
-        System.out.println("\t(5) View all product buyers ~");
+        System.out.println("\t(3) View listed products dashboard ~");
+        System.out.println("\t(4) View all sold products dashboard ~");
+        System.out.println("\t(5) View all product buyers dashboard ~");
         System.out.println("\t(6) Edit account");
         System.out.println("\t(7) Delete account");
         System.out.println("\t(8) Export store items to CSV ~");

@@ -12,6 +12,14 @@ import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * Utility class for handling CSV file operations related to the marketplace.
+ *
+ * <p>Purdue University -- CS18000 -- Fall 2023</p>
+ *
+ * @author Soham
+ * @version November 13, 2023
+ */
 public class CsvUtils {
     public static void writePurchaseHistoryToCSV(String filename, Buyer buyer) throws IOException {
         ArrayList<Item> purchasedItems = buyer.getPurchasedItems();

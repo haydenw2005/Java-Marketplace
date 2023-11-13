@@ -7,6 +7,14 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * Utility class for handling JSON file operations.
+ *
+ * <p>Purdue University -- CS18000 -- Fall 2023</p>
+ *
+ * @author Hayden, Soham
+ * @version November 13, 2023
+ */
 public class JsonUtils {
     static final String FILE_PATH = "data.json";
 
@@ -39,7 +47,7 @@ public class JsonUtils {
     }
 
     // IMPORTANT - CAN GET ANY OBJECT FROM KEY IN JSON !!!!!!!!!!
-    public static <T> T getObjectByKey(ObjectMapper objectMapper, String nodeDir, Class<T> targetClass) throws IOException {
+    public static <T> T objectByKey(ObjectMapper objectMapper, String nodeDir, Class<T> targetClass) throws IOException {
         JsonNode rootNode = JsonUtils.readJsonFile(objectMapper);
         JsonNode nestedObject = rootNode.at(nodeDir);
         return objectMapper.treeToValue(nestedObject, targetClass);
