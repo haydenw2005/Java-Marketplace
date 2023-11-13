@@ -1,5 +1,6 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -60,7 +61,8 @@ public class Main {
             System.out.println("(2) View marketplace");
             System.out.println("(3) View cart");
             System.out.println("(4) View purchase history");
-            System.out.println("(5) Signout");
+            System.out.println("(5) Export purchase history to CSV");
+            System.out.println("(6) Signout");
 
             String input = scanner.nextLine();
             while (!(input.equals("1") || input.equals("2") || input.equals("3") 
@@ -78,6 +80,15 @@ public class Main {
                 ((Buyer) user).showPurchaseHistory();
                 continue;
             } else if (input.equals("5")) {
+                try {
+                    System.out.println("Enter filename to export to (excluding .csv extension)");
+                    String file = scanner.nextLine();
+                    CsvUtils.writePurchaseHistoryToCSV(file, (Buyer) user);
+                } catch (IOException e) {
+                    System.out.println("An error occured while writing to file.");
+                };
+                continue;
+            } else if (input.equals("6")) {
                 System.out.println("Signing out...");
                 break;
             }

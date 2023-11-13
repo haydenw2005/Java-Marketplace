@@ -9,12 +9,12 @@
 - [X] ~~List of stores by number of products bought by customer~~
 - [X] ~~List stores by total number of sales~~
 ### CSV
-- [ ] Export file with purchase history
+- [X] ~~Export file with purchase history~~
 
 ## Seller
-- [ ] Add items to store
-- [ ] Delete items from store
-- [ ] Edit store item
+- [X] ~~Add items to store~~
+- [X] ~~Delete items from store~~
+- [X] ~~Edit store item~~
 ### STATS
 - [ ] List of customers who purchased seller's products
 - [ ] Number of products currently in buyers' carts

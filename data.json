@@ -9,17 +9,6 @@
         "store_1_name" : {
           "name" : "store_1_name",
           "stockItems" : {
-            "bread" : {
-              "name" : "bread",
-              "description" : "tastes good",
-              "stock" : 4,
-              "count" : -1,
-              "price" : 10,
-              "buyersObject" : null,
-              "sellersObject" : {
-                "seller_1_username" : 2
-              }
-            },
             "soccer ball" : {
               "name" : "soccer ball",
               "description" : "kick it",
@@ -70,6 +59,19 @@
               },
               "sellersObject" : {
                 "seller_1_username" : 1
+              }
+            },
+            "bread" : {
+              "name" : "bread",
+              "description" : "tastes good",
+              "stock" : 4,
+              "count" : 1,
+              "price" : 10,
+              "buyersObject" : {
+                "test_buyer" : 1
+              },
+              "sellersObject" : {
+                "seller_1_username" : 3
               }
             }
           }
@@ -178,13 +180,26 @@
           "name" : "computer",
           "description" : "is a computer",
           "stock" : -1,
-          "count" : -1,
+          "count" : 1,
           "price" : 500,
           "buyersObject" : {
             "test_buyer" : -1
           },
           "sellersObject" : {
             "seller_1_username" : 1
+          }
+        },
+        "bread" : {
+          "name" : "bread",
+          "description" : "tastes good",
+          "stock" : -1,
+          "count" : 1,
+          "price" : 10,
+          "buyersObject" : {
+            "test_buyer" : 1
+          },
+          "sellersObject" : {
+            "seller_1_username" : 3
           }
         }
       }

@@ -105,6 +105,7 @@ public class Buyer extends Person {
                 if (JsonUtils.hasKey(buyerCartDir, item.getName(), objectMapper)) {
                     // Remove from cart if exists
                     JsonUtils.removeObjectFromJson(buyerCartDir, item.getName(), objectMapper);
+                    cart.remove(item.getName());
                 }
                 
                 // Add to sold items in seller object
@@ -161,6 +162,7 @@ public class Buyer extends Person {
         try {
             String dir = "/buyers/" + this.getUsername() + "/purchaseHistory";
             JsonUtils.addObjectToJson(dir, purchasedItem.getName(), purchasedItem, objectMapper);
+            purchaseHistory.put(purchasedItem.getName(), purchasedItem);
         } catch (IOException e) {
             System.out.println("Error adding item to cart.");
             e.printStackTrace();
