@@ -60,10 +60,12 @@ public class Main {
             System.out.println("(1) View store information");
             System.out.println("(2) View marketplace");
             System.out.println("(3) View cart");
-            System.out.println("(4) Signout");
+            System.out.println("(4) View purchase history");
+            System.out.println("(5) Signout");
 
             String input = scanner.nextLine();
-            while (!(input.equals("1") || input.equals("2") || input.equals("3") || input.equals("4"))) {
+            while (!(input.equals("1") || input.equals("2") || input.equals("3") 
+            || input.equals("4")|| input.equals("5"))) {
                 System.out.println("Invalid input");
                 input = scanner.nextLine();
             }
@@ -74,6 +76,9 @@ public class Main {
             } else if (input.equals("3")) {
                 marketplace.cartFlow(scanner, (Buyer) user, objectMapper);
             } else if (input.equals("4")) {
+                ((Buyer) user).showPurchaseHistory();
+                continue;
+            } else if (input.equals("5")) {
                 System.out.println("Signing out...");
                 break;
             }

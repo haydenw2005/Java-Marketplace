@@ -157,9 +157,11 @@ public class Buyer extends Person {
     }
     
     public void addToPurchaseHistory(Item item, ObjectMapper objectMapper) {
+        Item purchasedItem = item;
+        purchasedItem.setStock(-1);
         try {
             String dir = "/buyers/" + this.getUsername() + "/purchaseHistory";
-            JsonUtils.addObjectToJson(dir, item.getName(), item, objectMapper);
+            JsonUtils.addObjectToJson(dir, purchasedItem.getName(), purchasedItem, objectMapper);
         } catch (IOException e) {
             System.out.println("Error adding item to cart.");
             e.printStackTrace();
@@ -167,7 +169,7 @@ public class Buyer extends Person {
     }
     public void updateStock(Item item) {
         item.setStock(item.getStock() - item.getCount());
-        item.setCount(0);
+        item.setCount(-1);
     }
     
     /**
@@ -185,4 +187,14 @@ public class Buyer extends Person {
         
     }
 
+    public void showPurchaseHistory() {
+        if(!(purchaseHistory.isEmpty())) {
+            for (Map.Entry<String, Item> purchaseEntry : purchaseHistory.entrySet()) {
+                Item item = purchaseEntry.getValue();
+                System.out.println(item.toString());
+            } 
+        } else {
+            System.out.println("No items purchased yet.");
+        }   
+    }
 }
