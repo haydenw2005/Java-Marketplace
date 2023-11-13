@@ -147,6 +147,16 @@ public class CsvUtilsTest {
     }
 }
 
+/**
+ * Additional utils class.
+ *
+ * <p>
+ * Purdue University -- CS18000 -- Fall 2023
+ * </p>
+ *
+ * @author Soham
+ * @version November 13, 2023
+ */
 class CsvUtilsTestUtils {
     public static void writeToFile(File file, String[] data) throws IOException {
         try (PrintWriter writer = new PrintWriter(new FileOutputStream(file, false))) {
