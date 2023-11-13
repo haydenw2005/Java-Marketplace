@@ -1,13 +1,11 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import javax.swing.text.MaskFormatter;
+
 
 
 public class Main {
@@ -70,7 +68,8 @@ public class Main {
 
             String input = scanner.nextLine();
             while (!(input.equals("1") || input.equals("2") || input.equals("3") 
-            || input.equals("4")|| input.equals("5"))) {
+            || input.equals("4")|| input.equals("5")|| input.equals("6")
+                    || input.equals("7") || input.equals("8"))) {
                 System.out.println("Invalid input");
                 input = scanner.nextLine();
             }
@@ -81,8 +80,7 @@ public class Main {
             } else if (input.equals("3")) {
                 marketplace.cartFlow(scanner, (Buyer) user, objectMapper);
             } else if (input.equals("4")) {
-                ((Buyer) user).showPurchaseHistory();
-                continue;
+                user.showPurchaseHistory();
             } else if (input.equals("5")) {
                 try {
                     System.out.println("Enter filename to export to (excluding .csv extension)");
@@ -95,7 +93,6 @@ public class Main {
                 System.out.println("Edit account ~");
                 marketplace.editUser(scanner, user, objectMapper);
                 System.out.println();
-                break;
             } else if (input.equals("7")) {
                 System.out.println("Deleting account...");
                 marketplace.deleteUser(user, objectMapper);
