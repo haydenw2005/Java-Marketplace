@@ -1,5 +1,5 @@
 # Marketplace Project 
-
+### Hayden White, Vishal Kattoju, Suhani Rana, Ryan Hirsh, and Soham
 ## Overview
 
 The Marketplace project is a Java implementation of an online marketplace system. It consists of several classes representing different entities such as buyers, sellers, stores, items, and utilities for handling JSON operations.
