@@ -22,6 +22,13 @@ public class Marketplace {
     @JsonProperty("sellers")
     private Map<String, Seller> sellers;
 
+    public Marketplace() { }
+    public Marketplace(@JsonProperty("buyers") Map<String, Buyer> buyers, 
+            @JsonProperty("sellers") Map<String, Seller> sellers) {
+        this.buyers = buyers;
+        this.sellers = sellers;
+    }
+
     public Map<String, Buyer> getBuyers() {
         return buyers;
     }
