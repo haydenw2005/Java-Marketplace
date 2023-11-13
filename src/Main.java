@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import javax.swing.text.MaskFormatter;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -20,21 +22,7 @@ public class Main {
             //START OF USER FLOW
             Person user = enterCredentials(scanner, objectMapper);
             if (user instanceof Buyer){
-                //startBuyerFlow()
-                System.out.println("Welcome " + user.getFirstName() + " " + user.getLastName() + "!");
-                System.out.println("View store information: enter '1'");
-                System.out.println("View marketplace: enter '2'");
-
-                String input = scanner.nextLine();
-                while (!(input.equals("1") || input.equals("2"))) {
-                    System.out.println("Invalid input");
-                    input = scanner.nextLine();
-                }
-                if (input.equals("1")) {
-                    marketplace.viewStoreInfo(scanner);
-                } else {
-                    marketplace.buyerFlow(scanner, (Buyer) user, objectMapper);
-                }
+                startBuyerFlow((Buyer) user, marketplace, scanner, objectMapper);
 
             } else if (user instanceof Seller) {
                 startSellerFlow((Seller) user, scanner, objectMapper);
@@ -64,7 +52,38 @@ public class Main {
         }
         return user;
     }
+    
+    public static void startBuyerFlow(Buyer user, Marketplace marketplace, Scanner scanner, ObjectMapper objectMapper) {
+        // TODO purchase history
+        while (true) {
+            System.out.println("Welcome " + user.getFirstName() + " " + user.getLastName() + "!");
+            System.out.println("(1) View store information");
+            System.out.println("(2) View marketplace");
+            System.out.println("(3) View cart");
+            System.out.println("(4) View purchase history");
+            System.out.println("(5) Signout");
 
+            String input = scanner.nextLine();
+            while (!(input.equals("1") || input.equals("2") || input.equals("3") 
+            || input.equals("4")|| input.equals("5"))) {
+                System.out.println("Invalid input");
+                input = scanner.nextLine();
+            }
+            if (input.equals("1")) {
+                marketplace.viewStoreInfo(scanner, (Buyer) user, objectMapper);
+            } else if (input.equals("2")) {
+                marketplace.showMarketplace(scanner, (Buyer) user, objectMapper);
+            } else if (input.equals("3")) {
+                marketplace.cartFlow(scanner, (Buyer) user, objectMapper);
+            } else if (input.equals("4")) {
+                ((Buyer) user).showPurchaseHistory();
+                continue;
+            } else if (input.equals("5")) {
+                System.out.println("Signing out...");
+                break;
+            }
+        }
+    }
     public static void startSellerFlow(Seller user, Scanner scanner, ObjectMapper objectMapper) {
         System.out.println("Welcome " + user.getFirstName() + " " + user.getLastName() + "!");
         while (true) {

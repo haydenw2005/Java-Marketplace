@@ -14,28 +14,6 @@
         "store_1_name_edited" : {
           "name" : "store_1_name_edited",
           "stockItems" : {
-            "cheese" : {
-              "name" : "cheese",
-              "description" : "yummy",
-              "stock" : 5,
-              "count" : -1,
-              "price" : 123,
-              "buyersObject" : null,
-              "sellersObject" : {
-                "seller_1_username" : 5
-              }
-            },
-            "microwaves" : {
-              "name" : "microwaves",
-              "description" : "makes waves",
-              "stock" : 2,
-              "count" : -1,
-              "price" : 1000,
-              "buyersObject" : null,
-              "sellersObject" : {
-                "seller_1_username" : 2
-              }
-            },
             "bread" : {
               "name" : "bread",
               "description" : "tastes good",
@@ -74,14 +52,27 @@
             "microwaves" : {
               "name" : "microwaves",
               "description" : "makes waves",
-              "stock" : 1,
-              "count" : 2,
+              "stock" : 2,
+              "count" : 3,
               "price" : 1000,
               "buyersObject" : {
-                "buyer_1_username" : 2
+                "test_buyer" : 1
               },
               "sellersObject" : {
-                "seller_1_username" : 2
+                "seller_1_username" : 3
+              }
+            },
+            "cheese" : {
+              "name" : "cheese",
+              "description" : "yummy",
+              "stock" : 2,
+              "count" : 2,
+              "price" : 123,
+              "buyersObject" : {
+                "test_buyer" : 2
+              },
+              "sellersObject" : {
+                "seller_1_username" : 7
               }
             }
           }
@@ -154,7 +145,34 @@
       "firstName" : "bob",
       "lastName" : "dylan",
       "cart" : { },
-      "purchaseHistory" : { }
+      "purchaseHistory" : {
+        "cheese" : {
+          "name" : "cheese",
+          "description" : "yummy",
+          "stock" : 2,
+          "count" : 2,
+          "price" : 123,
+          "buyersObject" : {
+            "test_buyer" : 2
+          },
+          "sellersObject" : {
+            "seller_1_username" : 7
+          }
+        },
+        "microwaves" : {
+          "name" : "microwaves",
+          "description" : "makes waves",
+          "stock" : 2,
+          "count" : 3,
+          "price" : 1000,
+          "buyersObject" : {
+            "test_buyer" : 1
+          },
+          "sellersObject" : {
+            "seller_1_username" : 3
+          }
+        }
+      }
     },
     "testingbuyer" : {
       "username" : "testingbuyer",
