@@ -1,17 +1,15 @@
-# Marketplace Project README
-
+# Marketplace Project 
+### Authors -> Hayden White, Vishal Kattoju, Suhani Rana, Ryan Hirsh, and Soham
 ## Overview
 
 The Marketplace project is a Java implementation of an online marketplace system. It consists of several classes representing different entities such as buyers, sellers, stores, items, and utilities for handling JSON operations.
 
 ## How to run
 1. Compilation:
-   - Open a terminal.
-   - Navigate to the project directory.
-   - Run the compilation command (e.g., `javac MainClass.java`).
+   - While in root directory, run the following command `javac -d bin -cp jar_files/jackson-annotations-2.16.0-rc1.jar:jar_files/jackson-databind-2.16.0-rc1.jar:jar_files/jackson-core-2.16.0-rc1.jar src/*.java`
 
 2. Execution:
-   - Run the compiled program (e.g., `java MainClass`).
+   - Run the now compiled Main.java with the command `java -cp bin:jar_files/jackson-annotations-2.16.0-rc1.jar:jar_files/jackson-databind-2.16.0-rc1.jar:jar_files/jackson-core-2.16.0-rc1.jar Main`
 
 ## Submissions
 Suhani Rana - Submitted Report on Brightspace. 
