@@ -114,6 +114,11 @@
           "name" : "store_123",
           "stockItems" : { },
           "soldItems" : { }
+        },
+        "awesome store " : {
+          "name" : "awesome store ",
+          "stockItems" : { },
+          "soldItems" : { }
         }
       }
     },

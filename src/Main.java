@@ -1,4 +1,6 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.std.NullSerializer;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,29 +24,21 @@ public class Main {
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
-            // Example of getObjectByKey
             Marketplace marketplace = JsonUtils.objectByKey(objectMapper, "", Marketplace.class);
-            // System.out.println(buyer);
-
-            // START OF USER FLOW
-            Person user = enterCredentials(scanner, objectMapper);
+            Person user = enterCredentials(scanner, objectMapper, marketplace);
             if (user instanceof Buyer) {
                 startBuyerFlow((Buyer) user, marketplace, scanner, objectMapper);
 
             } else if (user instanceof Seller) {
                 startSellerFlow((Seller) user, marketplace, scanner, objectMapper);
             }
-            // by tracking sessionUsername we know who is using the system
-            // System.out.println(sessionUsername);
-            // CONTINUE USER FLOW HERE
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static Person enterCredentials(Scanner scanner, ObjectMapper objectMapper) throws IOException {
-        Marketplace marketplace = JsonUtils.objectByKey(objectMapper, "", Marketplace.class);
+    public static Person enterCredentials(Scanner scanner, ObjectMapper objectMapper, Marketplace marketplace) throws IOException {
         System.out.println("Welcome. Would you like to sign in (1) or sign up (2)?");
         String response = scanner.nextLine();
         Person user = null;
@@ -127,6 +121,7 @@ public class Main {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+                        user = updatedSeller(objectMapper, user.getUsername());
                     }
                     System.out.println();
                     break;
@@ -139,6 +134,7 @@ public class Main {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+                        user = updatedSeller(objectMapper, user.getUsername());
                     }
                     System.out.println();
                     break;
@@ -179,15 +175,6 @@ public class Main {
                     }
                     break;
                 case "7":
-                    System.out.println("Edit account");
-                    marketplace.editUser(scanner, user, objectMapper);
-                    System.out.println();
-                    break;
-                case "8":
-                    System.out.println("Deleting account...");
-                    marketplace.deleteUser(user, objectMapper);
-                    return;
-                case "9":
                     System.out.println("Enter filename to read from (excluding .csv extension)");
                     String filename = scanner.nextLine();
                     try {
@@ -197,6 +184,16 @@ public class Main {
                         e.printStackTrace();
                     }
                     break;
+                case "8":
+                    System.out.println("Edit account");
+                    marketplace.editUser(scanner, user, objectMapper);
+                    System.out.println();
+                    user = updatedSeller(objectMapper, user.getUsername());
+                    break;
+                case "9":
+                    System.out.println("Deleting account...");
+                    marketplace.deleteUser(user, objectMapper);
+                    return;
                 case "10":
                     System.out.println("Signing out...");
                     return;
@@ -376,10 +373,21 @@ public class Main {
         System.out.println("\t(3) View listed products dashboard ~");
         System.out.println("\t(4) View all sold products dashboard ~");
         System.out.println("\t(5) View all product buyers dashboard ~");
-        System.out.println("\t(6) Edit account");
-        System.out.println("\t(7) Delete account");
-        System.out.println("\t(8) Export store items to CSV ~");
-        System.out.println("\t(9) Import store items from CSV ~");
+        System.out.println("\t(6) Export store items to CSV ~");
+        System.out.println("\t(7) Import store items from CSV ~");
+        System.out.println("\t(8) Edit account");
+        System.out.println("\t(9) Delete account");
         System.out.println("\t(10) Sign-out ~");
     }
+
+    public static Seller updatedSeller(ObjectMapper objectMapper, String username) {
+        try {
+            String dir = "/sellers/" + username;
+            return JsonUtils.objectByKey(objectMapper, dir, Seller.class);
+        } catch (Exception e) {
+            System.out.println("Sorry, could not update user.");
+            return null;
+        }
+    }
+
 }
