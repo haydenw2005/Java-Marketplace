@@ -4,9 +4,12 @@ import java.util.Map;
 import java.util.ArrayList;
 
 /**
- * Represents a store in the marketplace. Each store has a name, stock items, and sold items.
+ * Represents a store in the marketplace. Each store has a name, stock items,
+ * and sold items.
  *
- * <p>Purdue University -- CS18000 -- Fall 2023</p>
+ * <p>
+ * Purdue University -- CS18000 -- Fall 2023
+ * </p>
  *
  * @author Soham, Ryan
  * @version November 13, 2023
@@ -16,28 +19,36 @@ public class Store {
     private Map<String, Item> stockItems;
     private Map<String, Item> soldItems;
 
-    public Store() {}
+    public Store() {
+    }
+
     public Store(@JsonProperty("name") String name, @JsonProperty("stockItems") Map<String, Item> stockItems,
-                 @JsonProperty("soldItems") Map<String, Item> soldItems) {
+            @JsonProperty("soldItems") Map<String, Item> soldItems) {
         this.name = name;
         this.stockItems = stockItems;
         this.soldItems = soldItems;
     }
+
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public Map<String, Item> getStockItems() {
         return stockItems;
     }
+
     public void setStockItems(Map<String, Item> stockItems) {
         this.stockItems = stockItems;
     }
+
     public Map<String, Item> getSoldItems() {
         return soldItems;
     }
+
     public void setSoldItems(Map<String, Item> soldItems) {
         this.soldItems = soldItems;
     }
@@ -52,8 +63,6 @@ public class Store {
         }
     }
 
-
-
     public void deleteItem(String username, String deletedItemName, ObjectMapper objectMapper) {
         try {
             String dir = "/sellers/" + username + "/stores/" + this.getName() + "/stockItems";
@@ -62,7 +71,6 @@ public class Store {
             System.out.println("Error deleting item");
         }
     }
-
 
     public int numProductsSold() {
         int count = 0;

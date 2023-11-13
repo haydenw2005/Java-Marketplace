@@ -1,8 +1,3 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -26,8 +21,8 @@ public class ProductManager {
         String productIdToModify = scanner.nextLine();
         Iterator var6 = data.iterator();
 
-        while(var6.hasNext()) {
-            String[] row = (String[])var6.next();
+        while (var6.hasNext()) {
+            String[] row = (String[]) var6.next();
             if (productIdToModify.equals(row[0])) {
                 System.out.print("Enter the new StoreName: ");
                 row[1] = scanner.nextLine();
@@ -55,7 +50,7 @@ public class ProductManager {
 
             String line;
             try {
-                while((line = br.readLine()) != null) {
+                while ((line = br.readLine()) != null) {
                     String[] row = line.split(",");
                     data.add(row);
                 }
@@ -84,11 +79,11 @@ public class ProductManager {
             try {
                 Iterator var3 = data.iterator();
 
-                while(var3.hasNext()) {
-                    String[] row = (String[])var3.next();
+                while (var3.hasNext()) {
+                    String[] row = (String[]) var3.next();
                     StringBuilder line = new StringBuilder();
 
-                    for(int i = 0; i < row.length; ++i) {
+                    for (int i = 0; i < row.length; ++i) {
                         line.append(row[i]);
                         if (i < row.length - 1) {
                             line.append(",");

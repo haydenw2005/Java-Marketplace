@@ -8,7 +8,9 @@ import java.util.Scanner;
 /**
  * Main class representing the entry point for the marketplace application.
  *
- * <p>Purdue University -- CS18000 -- Fall 2023</p>
+ * <p>
+ * Purdue University -- CS18000 -- Fall 2023
+ * </p>
  *
  * @author Hayden, Soham, and Ryan
  * @version November 13, 2023
@@ -20,21 +22,21 @@ public class Main {
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
-            //Example of getObjectByKey
+            // Example of getObjectByKey
             Marketplace marketplace = JsonUtils.objectByKey(objectMapper, "", Marketplace.class);
-            //System.out.println(buyer);
+            // System.out.println(buyer);
 
-            //START OF USER FLOW
+            // START OF USER FLOW
             Person user = enterCredentials(scanner, objectMapper);
-            if (user instanceof Buyer){
+            if (user instanceof Buyer) {
                 startBuyerFlow((Buyer) user, marketplace, scanner, objectMapper);
 
             } else if (user instanceof Seller) {
                 startSellerFlow((Seller) user, marketplace, scanner, objectMapper);
             }
-            //by tracking sessionUsername we know who is using the system
-            //System.out.println(sessionUsername);
-            //CONTINUE USER FLOW HERE
+            // by tracking sessionUsername we know who is using the system
+            // System.out.println(sessionUsername);
+            // CONTINUE USER FLOW HERE
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -57,7 +59,7 @@ public class Main {
         }
         return user;
     }
-    
+
     public static void startBuyerFlow(Buyer user, Marketplace marketplace, Scanner scanner, ObjectMapper objectMapper) {
         System.out.println("Welcome " + user.getFirstName() + " " + user.getLastName() + "!");
         while (true) {
@@ -72,8 +74,8 @@ public class Main {
             System.out.println("\t(8) Signout");
 
             String input = scanner.nextLine();
-            while (!(input.equals("1") || input.equals("2") || input.equals("3") 
-            || input.equals("4")|| input.equals("5")|| input.equals("6")
+            while (!(input.equals("1") || input.equals("2") || input.equals("3")
+                    || input.equals("4") || input.equals("5") || input.equals("6")
                     || input.equals("7") || input.equals("8"))) {
                 System.out.println("Invalid input");
                 input = scanner.nextLine();
@@ -108,7 +110,9 @@ public class Main {
             }
         }
     }
-    public static void startSellerFlow(Seller user, Marketplace marketplace, Scanner scanner, ObjectMapper objectMapper) {
+
+    public static void startSellerFlow(Seller user, Marketplace marketplace, Scanner scanner,
+            ObjectMapper objectMapper) {
         System.out.println("Welcome " + user.getFirstName() + " " + user.getLastName() + "!");
         while (true) {
             printSellerMenu();
@@ -170,7 +174,8 @@ public class Main {
                     try {
                         CsvUtils.writeProductsToCSV(file, (Seller) user);
                     } catch (IOException e) {
-                        System.out.println("Error writing to file.");;
+                        System.out.println("Error writing to file.");
+                        ;
                     }
                     break;
                 case "7":
@@ -207,21 +212,25 @@ public class Main {
                 int input = Integer.parseInt(option);
                 if (input >= start && input <= end) {
                     return option;
-                } else System.out.println("Invalid input. Please enter a number from " + start + " to " + end + ":");
+                } else
+                    System.out.println("Invalid input. Please enter a number from " + start + " to " + end + ":");
             } catch (Exception e) {
                 System.out.println("Invalid input. Please enter a valid number:");
             }
         }
     }
 
-    public static boolean getStoreMenuInput(Scanner scanner, Seller user, ObjectMapper objectMapper) throws IOException {
+    public static boolean getStoreMenuInput(Scanner scanner, Seller user, ObjectMapper objectMapper)
+            throws IOException {
         String option = getMenuInput(1, 4, scanner);
         switch (option) {
             case "1":
                 System.out.println("What would you like the name of the store to be?");
                 String name = scanner.nextLine();
-                if (!user.getStores().containsKey(name)) user.createNewStore(name, objectMapper);
-                else System.out.println("Sorry, you already have a store with this name.");
+                if (!user.getStores().containsKey(name))
+                    user.createNewStore(name, objectMapper);
+                else
+                    System.out.println("Sorry, you already have a store with this name.");
                 break;
             case "2":
                 System.out.println("What is the name of the store you would like to edit?");
@@ -230,17 +239,17 @@ public class Main {
                     System.out.println("What will the new name of your store be?");
                     String newStoreName = scanner.nextLine();
                     user.editStore(storeName, newStoreName, objectMapper);
-                }
-                else System.out.println("Sorry, we can't find a store with name " + storeName);
+                } else
+                    System.out.println("Sorry, we can't find a store with name " + storeName);
                 break;
             case "3":
                 System.out.println("What store would you like to delete");
                 String deletedStoreName = scanner.nextLine();
-                if (user.getStores().containsKey(deletedStoreName)){
+                if (user.getStores().containsKey(deletedStoreName)) {
                     String dir = "/sellers/" + user.getUsername() + "/stores";
                     JsonUtils.removeObjectFromJson(dir, deletedStoreName, objectMapper);
-                }
-                else System.out.println("Sorry, we can't find a store with name " + deletedStoreName);
+                } else
+                    System.out.println("Sorry, we can't find a store with name " + deletedStoreName);
                 break;
             case "4":
                 return false;
@@ -260,8 +269,8 @@ public class Main {
                     if (user.getStores().containsKey(storeName)) {
                         user.getStoreByName(storeName).addToStockItems(newItem, user.getUsername(), objectMapper);
                         break;
-                    }
-                    else System.out.println("Sorry, we can't find a store with this name.");
+                    } else
+                        System.out.println("Sorry, we can't find a store with this name.");
                 }
                 break;
             case "2":
@@ -269,25 +278,25 @@ public class Main {
                     System.out.println("What is the name of the item you would like to restock?");
                     String itemName = scanner.nextLine();
                     Item itemToChange = getItemFromAllStores(itemName, user);
-                    if (itemToChange != null){
+                    if (itemToChange != null) {
                         Store store = user.getStoreByItem(itemToChange);
                         int stock = (int) getValidDouble(scanner, "What would you like the item stock to be?");
                         itemToChange.setStock(stock);
                         String dir = "/sellers/" + user.getUsername() + "/stores/" + store.getName() + "/stockItems";
                         JsonUtils.addObjectToJson(dir, itemName, itemToChange, objectMapper);
                         break;
-                    }
-                    else System.out.println("Sorry, we can't find an item with this name.");
+                    } else
+                        System.out.println("Sorry, we can't find an item with this name.");
                 }
                 break;
             case "3":
                 System.out.println("What item would you like to delete");
                 String deletedItemName = scanner.nextLine();
                 Item itemToDelete = getItemFromAllStores(deletedItemName, user);
-                if (itemToDelete != null){
+                if (itemToDelete != null) {
                     user.getStoreByItem(itemToDelete).deleteItem(user.getUsername(), deletedItemName, objectMapper);
-                }
-                else System.out.println("Sorry, we can't find an item with name " + deletedItemName);
+                } else
+                    System.out.println("Sorry, we can't find an item with name " + deletedItemName);
                 break;
             case "4":
                 return false;
@@ -305,22 +314,24 @@ public class Main {
         return null;
 
     }
+
     public static double getValidDouble(Scanner scanner, String message) {
-        while(true) {
+        while (true) {
             System.out.println(message);
             try {
                 double input = scanner.nextDouble();
                 scanner.nextLine();
                 if (input <= 0) {
                     System.out.println("Please enter a number greater than 0.");
-                }
-                else return input;
+                } else
+                    return input;
             } catch (Exception e) {
                 System.out.println("Please enter a valid number.");
             }
         }
 
     }
+
     public static Item createItem(Scanner scanner, Seller user) {
 
         String name;
@@ -328,8 +339,10 @@ public class Main {
             System.out.println("Please enter a name for the product:");
             name = scanner.nextLine();
             boolean doesExist = getItemFromAllStores(name, user) != null;
-            if (!doesExist) break;
-            else System.out.println("Sorry, this item already exists. Try another name.");
+            if (!doesExist)
+                break;
+            else
+                System.out.println("Sorry, this item already exists. Try another name.");
         }
         System.out.println("Please enter a description for the product:");
         String description = scanner.nextLine();
@@ -340,7 +353,6 @@ public class Main {
         return new Item(name, description, stock, -1, price, null, sellerHashmap);
     }
 
-
     public static void printSellerItemMenu() {
         System.out.println("What would you like to do?");
         System.out.println("\t(1) List new item ~");
@@ -348,6 +360,7 @@ public class Main {
         System.out.println("\t(3) Delete items ~");
         System.out.println("\t(4) Back");
     }
+
     public static void printSellerStoreMenu() {
         System.out.println("What would you like to do?");
         System.out.println("\t(1) Create a store ~");
@@ -355,6 +368,7 @@ public class Main {
         System.out.println("\t(3) Delete a store ~");
         System.out.println("\t(4) Back");
     }
+
     public static void printSellerMenu() {
         System.out.println("What would you like to do?");
         System.out.println("\t(1) List, edit, or delete items ~");

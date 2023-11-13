@@ -15,7 +15,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * Utility class for handling CSV file operations related to the marketplace.
  *
- * <p>Purdue University -- CS18000 -- Fall 2023</p>
+ * <p>
+ * Purdue University -- CS18000 -- Fall 2023
+ * </p>
  *
  * @author Soham
  * @version November 13, 2023
@@ -33,7 +35,7 @@ public class CsvUtils {
             writer.println("Product, Description, Price, Stock");
             for (int i = 0; i < purchasedItems.size(); i++) {
                 writer.println(purchasedItems.get(i).getName() + ", "
-                        + purchasedItems.get(i).getDescription()  + ", " + purchasedItems.get(i).getPrice() 
+                        + purchasedItems.get(i).getDescription() + ", " + purchasedItems.get(i).getPrice()
                         + ", " + purchasedItems.get(i).getCount());
             }
 
@@ -63,10 +65,10 @@ public class CsvUtils {
             for (Map.Entry<String, Item> itemEntry : stores.get(i).getStockItems().entrySet()) {
                 items.add(itemEntry.getValue());
             }
-            
+
             for (int j = 0; j < items.size(); j++) {
                 writer.println(items.get(j).getName() + ", "
-                        + items.get(j).getDescription()  + ", " + items.get(j).getPrice() 
+                        + items.get(j).getDescription() + ", " + items.get(j).getPrice()
                         + ", " + items.get(j).getStock() + ", " + stores.get(i).getName());
             }
         }
@@ -74,7 +76,8 @@ public class CsvUtils {
         writer.close();
     }
 
-    public static void importFromCSV(String filename, Seller seller, ObjectMapper objectMapper) throws FileNotFoundException {
+    public static void importFromCSV(String filename, Seller seller, ObjectMapper objectMapper)
+            throws FileNotFoundException {
         File csvOutputFile = new File(filename + ".csv");
         if (!csvOutputFile.exists()) {
             System.out.println("File does not exist.");
@@ -83,7 +86,7 @@ public class CsvUtils {
         BufferedReader buffer = new BufferedReader(new FileReader(csvOutputFile));
         ArrayList<String> lines = new ArrayList<String>();
         String line;
-        
+
         try {
             buffer.readLine(); // ignore first line, column names
             while ((line = buffer.readLine()) != null) {
@@ -100,8 +103,9 @@ public class CsvUtils {
                 Map<String, Integer> sellerObject = new HashMap<String, Integer>();
                 sellerObject.put(seller.getUsername(), Integer.parseInt(data[3]));
                 Map<String, Item> stockItem = new HashMap<String, Item>();
-                stockItem.put(data[0], new Item(data[0], data[1], Integer.parseInt(data[3]), -1, Double.parseDouble(data[2]), 
-                    null, sellerObject));
+                stockItem.put(data[0],
+                        new Item(data[0], data[1], Integer.parseInt(data[3]), -1, Double.parseDouble(data[2]),
+                                null, sellerObject));
                 currentStore.setStockItems(stockItem);
                 String dir = "/sellers/" + seller.getUsername() + "/stores";
                 if (JsonUtils.hasKey(dir, currentStore.getName(), objectMapper)) {
@@ -120,6 +124,6 @@ public class CsvUtils {
             System.out.println("An error occured while importing.");
             return;
         }
-        
+
     }
 }

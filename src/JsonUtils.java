@@ -10,7 +10,9 @@ import java.io.IOException;
 /**
  * Utility class for handling JSON file operations.
  *
- * <p>Purdue University -- CS18000 -- Fall 2023</p>
+ * <p>
+ * Purdue University -- CS18000 -- Fall 2023
+ * </p>
  *
  * @author Hayden, Soham
  * @version November 13, 2023
@@ -18,12 +20,13 @@ import java.io.IOException;
 public class JsonUtils {
     static final String FILE_PATH = "data.json";
 
-    //IMPORTANT - ADDS OBJECT TO ANY PLACE IN JSON !!!!!!!!!!
-    //nodeDir = name of object to add in JSON
-    //newObjectKey - key of object being added
-    //object - object being added
-    //objectMapper - utlity
-    public static void addObjectToJson(String nodeDir, String newObjectKey, Object object, ObjectMapper objectMapper) throws IOException {
+    // IMPORTANT - ADDS OBJECT TO ANY PLACE IN JSON !!!!!!!!!!
+    // nodeDir = name of object to add in JSON
+    // newObjectKey - key of object being added
+    // object - object being added
+    // objectMapper - utlity
+    public static void addObjectToJson(String nodeDir, String newObjectKey, Object object, ObjectMapper objectMapper)
+            throws IOException {
         JsonNode rootNode = JsonUtils.readJsonFile(objectMapper);
         JsonNode nestedObject = rootNode.at(nodeDir);
         JsonNode objectNode = objectMapper.valueToTree(object);
@@ -34,11 +37,13 @@ public class JsonUtils {
 
     /**
      * REMOVES ANY OBJECT FROM JSON
-     * @param nodeDir - String JSON path of object to be removed  
-     * @param objectKey - key of the object to be removed
+     * 
+     * @param nodeDir      - String JSON path of object to be removed
+     * @param objectKey    - key of the object to be removed
      * @param objectMapper - objectMapper utility
      */
-    public static void removeObjectFromJson(String nodeDir, String objectKey, ObjectMapper objectMapper) throws IOException {
+    public static void removeObjectFromJson(String nodeDir, String objectKey, ObjectMapper objectMapper)
+            throws IOException {
         JsonNode rootNode = JsonUtils.readJsonFile(objectMapper);
         JsonNode nestedObject = rootNode.at(nodeDir);
         ((ObjectNode) nestedObject).remove(objectKey);
@@ -47,15 +52,18 @@ public class JsonUtils {
     }
 
     // IMPORTANT - CAN GET ANY OBJECT FROM KEY IN JSON !!!!!!!!!!
-    public static <T> T objectByKey(ObjectMapper objectMapper, String nodeDir, Class<T> targetClass) throws IOException {
+    public static <T> T objectByKey(ObjectMapper objectMapper, String nodeDir, Class<T> targetClass)
+            throws IOException {
         JsonNode rootNode = JsonUtils.readJsonFile(objectMapper);
         JsonNode nestedObject = rootNode.at(nodeDir);
         return objectMapper.treeToValue(nestedObject, targetClass);
     }
+
     /**
      * Check if JSON object contains a particular key.
-     * @param nodeDir - JSON path of object.
-     * @param objectKey - key to check if exists.
+     * 
+     * @param nodeDir      - JSON path of object.
+     * @param objectKey    - key to check if exists.
      * @param objectMapper - utility.
      * @return
      * @throws IOException
@@ -63,7 +71,8 @@ public class JsonUtils {
     public static boolean hasKey(String nodeDir, String objectKey, ObjectMapper objectMapper) throws IOException {
         JsonNode rootNode = JsonUtils.readJsonFile(objectMapper);
         JsonNode nestedObject = rootNode.at(nodeDir);
-        if(((ObjectNode) nestedObject).has(objectKey)) return true;
+        if (((ObjectNode) nestedObject).has(objectKey))
+            return true;
         return false;
     }
 

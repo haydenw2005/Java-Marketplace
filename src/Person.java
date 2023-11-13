@@ -1,10 +1,13 @@
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Represents a person in the system with basic information such as username, password, first name,
+ * Represents a person in the system with basic information such as username,
+ * password, first name,
  * last name, and email.
  *
- * <p>Purdue University -- CS18000 -- Fall 2023</p>
+ * <p>
+ * Purdue University -- CS18000 -- Fall 2023
+ * </p>
  *
  * @author Soham, Hayden
  * @version November 13, 2023
@@ -16,15 +19,19 @@ public class Person {
     private String lastName;
     private String email;
 
-    public Person() {}
+    public Person() {
+    }
 
-    public Person(@JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("firstName") String firstName, @JsonProperty("lastName") String lastName, @JsonProperty("email") String email) {
+    public Person(@JsonProperty("username") String username, @JsonProperty("password") String password,
+            @JsonProperty("firstName") String firstName, @JsonProperty("lastName") String lastName,
+            @JsonProperty("email") String email) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
     }
+
     public String getUsername() {
         return username;
     }
