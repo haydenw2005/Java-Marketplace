@@ -259,6 +259,8 @@ public class Marketplace {
         } else if (input.toLowerCase().equals("d")) {
             return null;
         }
+        if (input.equals("back"))
+            return null;
 
         try {
             int inputNum = Integer.parseInt(input);
