@@ -15,9 +15,10 @@ public class Buyer extends Person {
     public Buyer() {}
     public Buyer(@JsonProperty("username") String username, @JsonProperty("password") String password,
                  @JsonProperty("firstName") String firstName, @JsonProperty("lastName") String lastName,
+                 @JsonProperty("email") String email,
                  @JsonProperty("cart") Map<String, Item> cart,
                  @JsonProperty("purchaseHistory") Map<String, Item> purchaseHistory) {
-        super(username, password, firstName, lastName);
+        super(username, password, firstName, lastName, email);
         this.cart = cart;
         this.purchaseHistory = purchaseHistory;
     }

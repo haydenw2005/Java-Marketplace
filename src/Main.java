@@ -2,6 +2,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import javax.swing.text.MaskFormatter;
@@ -17,8 +21,6 @@ public class Main {
             //Example of getObjectByKey
             Marketplace marketplace = JsonUtils.getObjectByKey(objectMapper, "", Marketplace.class);
             //System.out.println(buyer);
-
-            //
 
             //START OF USER FLOW
             Person user = enterCredentials(scanner, objectMapper);
@@ -98,9 +100,18 @@ public class Main {
         System.out.println("Welcome " + user.getFirstName() + " " + user.getLastName() + "!");
         while (true) {
             printSellerMenu();
-            String option = getMenuInput(1, 5, scanner);
+            String option = getMenuInput(1, 6, scanner);
             switch (option) {
                 case "1":
+                    boolean inItemMenu = true;
+                    while (inItemMenu) {
+                        printSellerItemMenu();
+                        try {
+                            inItemMenu = getItemMenuInput(scanner, user, objectMapper);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
                     break;
                 case "2":
                     boolean inStoreMenu = true;
@@ -115,13 +126,28 @@ public class Main {
                     break;
                 case "3":
                     System.out.println("All listed products");
-                    user.getAllStockItems("stock");
+                    /*Array.getAllStoreItems("stock");
+                    for (String item : stringList) {
+                        System.out.println(item);
+                    }*/
                     break;
                 case "4":
                     System.out.println("All sold products");
-                    user.getAllStockItems("sold");
+                    /*user.getAllStoreItems("sold");
+                    for (String item : stringList) {
+                        System.out.println(item);
+                    }*/
                     break;
                 case "5":
+                    System.out.println("All product buyers");
+                    HashMap<String, Integer> buyers = user.getAllBuyers();
+                    for (Map.Entry<String, Integer> entry : buyers.entrySet()) {
+                        String key = entry.getKey();
+                        Integer value = entry.getValue();
+                        System.out.println("\tUser " + key + " has bought " + value + "products ~");
+                    }
+                    break;
+                case "6":
                     System.out.println("Signing out...");
                     return;
             }
@@ -130,8 +156,8 @@ public class Main {
 
     public static String getMenuInput(int start, int end, Scanner scanner) {
         System.out.println("What would you like to do next? Please enter a number " + start + " through " + end + ":");
-        String option = scanner.nextLine();
         while (true) {
+            String option = scanner.nextLine();
             try {
                 int input = Integer.parseInt(option);
                 if (input >= start && input <= end) {
@@ -176,8 +202,106 @@ public class Main {
         }
         return true;
     }
-    public static void printSellerItemMenu() {
 
+    public static boolean getItemMenuInput(Scanner scanner, Seller user, ObjectMapper objectMapper) throws IOException {
+        String option = getMenuInput(1, 4, scanner);
+        switch (option) {
+
+            case "1":
+                Item newItem = createItem(scanner, user);
+                while (true) {
+                    System.out.println("What is the name of the store you would like to list it in?");
+                    String storeName = scanner.nextLine();
+                    if (user.getStores().containsKey(storeName)) {
+                        user.getStoreByName(storeName).addToStockItems(newItem, user.getUsername(), objectMapper);
+                        break;
+                    }
+                    else System.out.println("Sorry, we can't find a store with this name.");
+                }
+                break;
+            case "2":
+                while (true) {
+                    System.out.println("What is the name of the item you would like to restock?");
+                    String itemName = scanner.nextLine();
+                    Item itemToChange = getItemFromAllStores(itemName, user);
+                    if (itemToChange != null){
+                        Store store = user.getStoreByItem(itemToChange);
+                        int stock = (int) getValidDouble(scanner, "What would you like the item stock to be?");
+                        itemToChange.setStock(stock);
+                        String dir = "/sellers/" + user.getUsername() + "/stores/" + store.getName() + "/stockItems";
+                        JsonUtils.addObjectToJson(dir, itemName, itemToChange, objectMapper);
+                        break;
+                    }
+                    else System.out.println("Sorry, we can't find an item with this name.");
+                }
+                break;
+            case "3":
+                System.out.println("What item would you like to delete");
+                String deletedItemName = scanner.nextLine();
+                Item itemToDelete = getItemFromAllStores(deletedItemName, user);
+                if (itemToDelete != null){
+                    user.getStoreByItem(itemToDelete).deleteItem(user.getUsername(), deletedItemName, objectMapper);
+                }
+                else System.out.println("Sorry, we can't find an item with name " + deletedItemName);
+                break;
+            case "4":
+                return false;
+        }
+        return true;
+    }
+
+    public static Item getItemFromAllStores(String itemName, Seller user) {
+        ArrayList<Item> items = user.getAllStoreItems("stock");
+        for (Item item : items) {
+            if (item.getName().equals(itemName)) {
+                return item;
+            }
+        }
+        return null;
+
+    }
+    public static double getValidDouble(Scanner scanner, String message) {
+        while(true) {
+            System.out.println(message);
+            try {
+                double input = scanner.nextDouble();
+                scanner.nextLine();
+                if (input <= 0) {
+                    System.out.println("Please enter a number greater than 0.");
+                }
+                else return input;
+            } catch (Exception e) {
+                System.out.println("Please enter a valid number.");
+            }
+        }
+
+    }
+    public static Item createItem(Scanner scanner, Seller user) {
+
+        String name;
+        while (true) {
+            System.out.println("Please enter a name for the product:");
+            name = scanner.nextLine();
+            boolean doesExist = getItemFromAllStores(name, user) != null;
+            if (!doesExist) break;
+            else System.out.println("Sorry, this item already exists. Try another name.");
+        }
+        System.out.println("Please enter a description for the product:");
+        String description = scanner.nextLine();
+        int stock = (int) getValidDouble(scanner, "Please enter how many of these items you would like to list:");
+        double price = getValidDouble(scanner, "Please enter the price of the item:");
+        HashMap<String, Integer> sellerHashmap = new HashMap<String, Integer>();
+        sellerHashmap.put(user.getUsername(), stock);
+        return new Item(name, description, stock, -1, price, null, sellerHashmap);
+
+    }
+
+    public static void printSellerItemMenu() {
+        System.out.println("What would you like to do?");
+        System.out.println("\t(1) List new item ~");
+        System.out.println("\t(2) Restock items ~");
+        System.out.println("\t(3) Delete items ~");
+        System.out.println("\t(4) Back");
     }
     public static void printSellerStoreMenu() {
         System.out.println("What would you like to do?");
@@ -192,6 +316,7 @@ public class Main {
         System.out.println("\t(2) Create, edit, or delete stores ~");
         System.out.println("\t(3) View all listed products ~");
         System.out.println("\t(4) View all sold products ~");
-        System.out.println("\t(5) Signout");
+        System.out.println("\t(5) View all product buyers ~");
+        System.out.println("\t(6) Sign-out ~");
     }
 }

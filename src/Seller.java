@@ -1,6 +1,7 @@
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,8 +11,9 @@ public class Seller extends Person {
     public Seller() {}
     public Seller(@JsonProperty("username") String username, @JsonProperty("password") String password,
                   @JsonProperty("firstName") String firstName, @JsonProperty("lastName") String lastName,
+                  @JsonProperty("email") String email,
                   @JsonProperty("stores") Map<String, Store> stores) {
-        super(username, password, firstName, lastName);
+        super(username, password, firstName, lastName, email);
         this.stores = stores;
     }
 
@@ -39,17 +41,53 @@ public class Seller extends Person {
         }
     }
 
-    public void getAllStockItems(String type) {
+    public ArrayList<Item> getAllStoreItems(String type) {
+        ArrayList<Item> storeItems = new ArrayList<>();
         for (Map.Entry<String, Store> storeEntry : stores.entrySet()) {
             Store store = storeEntry.getValue();
             Map<String, Item> items;
             if (type.equals("stock")) items = store.getStockItems();
             else if (type.equals("sold")) items = store.getSoldItems();
-            else return;
+            else return null;
             for (Map.Entry<String, Item> itemEntry : items.entrySet()) {
-                System.out.println(itemEntry.getValue().toString());
+                storeItems.add(itemEntry.getValue());
             }
         }
+        return storeItems;
+    }
+
+    public HashMap<String, Integer> getAllBuyers()  {
+        HashMap<String, Integer> personCount = new HashMap<>();
+        for (Map.Entry<String, Store> storeEntry : stores.entrySet()) {
+            Store store = storeEntry.getValue();
+            Map<String, Item> items = store.getSoldItems();
+            for (Map.Entry<String, Item> itemEntry : items.entrySet()) {
+                Item item = itemEntry.getValue();
+                Map<String, Integer> peopleMap = item.getBuyersObject();
+                for (Map.Entry<String, Integer> peopleEntry : peopleMap.entrySet()) {
+                    String key = peopleEntry.getKey();
+                    if (!personCount.containsKey(key)) {
+                        personCount.put(key, peopleEntry.getValue());
+                    } else {
+                        personCount.put(key, personCount.get(key) + peopleEntry.getValue());
+                    }
+                }
+            }
+        }
+        return personCount;
+    }
+
+    public Store getStoreByItem(Item item) {
+        for (Map.Entry<String, Store> storeEntry : stores.entrySet()) {
+            Store store = storeEntry.getValue();
+            Map<String, Item> items = store.getStockItems();
+            for (Map.Entry<String, Item> itemEntry : items.entrySet()) {
+                if (itemEntry.getValue().getName().equals(item.getName())) {
+                    return store;
+                }
+            }
+        }
+        return null;
     }
 
     @Override
@@ -79,5 +117,6 @@ public class Seller extends Person {
     public Store getStoreByName(String name) {
         return stores.get(name);
     }
+
 
 }

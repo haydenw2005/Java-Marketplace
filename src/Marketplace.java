@@ -59,6 +59,8 @@ public class Marketplace {
         String firstName = scanner.nextLine();
         System.out.println("Please enter your last name:");
         String lastName = scanner.nextLine();
+        System.out.println("Please enter your email:");
+        String email = scanner.nextLine();
         System.out.println("Would you like to create a buyer (1) or seller (2) account? " +
                 "Please enter respective number.");
         String accountType = scanner.nextLine();
@@ -67,11 +69,11 @@ public class Marketplace {
             accountType = scanner.nextLine();
         }
         if (accountType.equals("1")) {
-            Buyer buyer = new Buyer(username, password, firstName, lastName, new HashMap<>(), new HashMap<>());
+            Buyer buyer = new Buyer(username, password, firstName, lastName, email, new HashMap<>(), new HashMap<>());
             addBuyerAccount(username, buyer, objectMapper);
             return buyer;
         } else {
-            Seller seller = new Seller(username, password, firstName, lastName, new HashMap<>());
+            Seller seller = new Seller(username, password, firstName, lastName, email, new HashMap<>());
             addSellerAccount(username, seller, objectMapper);
             return seller;
         }

@@ -1,5 +1,7 @@
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
 
@@ -33,6 +35,28 @@ public class Store {
     public void setSoldItems(Map<String, Item> soldItems) {
         this.soldItems = soldItems;
     }
+
+    public void addToStockItems(Item item, String userName, ObjectMapper objectMapper) {
+        try {
+            String dir = "/sellers/" + userName + "/stores/" + this.getName() + "/stockItems";
+            JsonUtils.addObjectToJson(dir, item.getName(), item, objectMapper);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error creating item.");
+        }
+    }
+
+
+
+    public void deleteItem(String username, String deletedItemName, ObjectMapper objectMapper) {
+        try {
+            String dir = "/sellers/" + username + "/stores/" + this.getName() + "/stockItems";
+            JsonUtils.removeObjectFromJson(dir, deletedItemName, objectMapper);
+        } catch (Exception e) {
+            System.out.println("Error deleting item");
+        }
+    }
+
 
     public int getNumProductsSold() {
         int count = 0;

@@ -5,10 +5,27 @@
       "password" : "password123!",
       "firstName" : "John",
       "lastName" : "Doe",
+      "email" : "sasd@123",
       "stores" : {
-        "store_1_name" : {
-          "name" : "store_1_name",
+        "mystore2" : {
+          "name" : "mystore2",
+          "stockItems" : { },
+          "soldItems" : { }
+        },
+        "store_1_name_edited" : {
+          "name" : "store_1_name_edited",
           "stockItems" : {
+            "bread" : {
+              "name" : "bread",
+              "description" : "tastes good",
+              "stock" : 2147483647,
+              "count" : -1,
+              "price" : 10.0,
+              "buyersObject" : null,
+              "sellersObject" : {
+                "seller_1_username" : 2
+              }
+            },
             "soccer ball" : {
               "name" : "soccer ball",
               "description" : "kick it",
@@ -48,6 +65,19 @@
                 "seller_1_username" : 7
               }
             },
+            "soccer ball" : {
+              "name" : "soccer ball",
+              "description" : "kick it",
+              "stock" : 2,
+              "count" : 2,
+              "price" : 20.0,
+              "buyersObject" : {
+                "buyer_1_username" : 2
+              },
+              "sellersObject" : {
+                "seller_1_username" : 4
+              }
+            },
             "computer" : {
               "name" : "computer",
               "description" : "is a computer",
@@ -60,26 +90,8 @@
               "sellersObject" : {
                 "seller_1_username" : 1
               }
-            },
-            "bread" : {
-              "name" : "bread",
-              "description" : "tastes good",
-              "stock" : 4,
-              "count" : 1,
-              "price" : 10,
-              "buyersObject" : {
-                "test_buyer" : 1
-              },
-              "sellersObject" : {
-                "seller_1_username" : 3
-              }
             }
           }
-        },
-        "store1" : {
-          "name" : "store1",
-          "stockItems" : { },
-          "soldItems" : { }
         }
       }
     }
@@ -90,6 +102,7 @@
       "password" : "password123!",
       "firstName" : "John",
       "lastName" : "Doe",
+      "email" : "sasd@123",
       "cart" : {
         "cheese" : {
           "name" : "cheese",
@@ -140,6 +153,19 @@
           "sellersObject" : {
             "seller_1_username" : 4
           }
+        },
+        "soccer ball" : {
+          "name" : "soccer ball",
+          "description" : "kick it",
+          "stock" : -1,
+          "count" : 2,
+          "price" : 20.0,
+          "buyersObject" : {
+            "buyer_1_username" : 2
+          },
+          "sellersObject" : {
+            "seller_1_username" : 4
+          }
         }
       }
     },
@@ -148,6 +174,7 @@
       "password" : "123test",
       "firstName" : "bob",
       "lastName" : "dylan",
+      "email" : "sasd@123",
       "cart" : { },
       "purchaseHistory" : {
         "cheese" : {
@@ -209,6 +236,7 @@
       "password" : "test",
       "firstName" : "john",
       "lastName" : "doe",
+      "email" : "sasd@123",
       "cart" : { },
       "purchaseHistory" : { }
     }
