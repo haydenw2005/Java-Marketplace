@@ -15,6 +15,14 @@ The Marketplace project is a Java implementation of an online marketplace system
 Suhani Rana - Submitted Report on Brightspace. 
 Hayden White - Submitted Vocareum workspace.
 
+## Testing
+
+All classes have test cases, in the format <Class_Name>Test.java. The JUnit test cases check all functional methods, and check invalid inputs where an invalid input may be possible.
+
+1. Compilation
+   - Run the following command in root: `javac -d bin -cp jar_files/jackson-annotations-2.16.0-rc1.jar:jar_files/jackson-databind-2.16.0-rc1.jar:jar_files/jackson-core-2.16.0-rc1.jar:jar_files/junit-4.13.2.jar src/*.java`
+2. Execution:
+ 
 ## Classes
 
 ### Main
