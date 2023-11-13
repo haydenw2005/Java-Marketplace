@@ -1,7 +1,6 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -115,17 +114,17 @@ public class Main {
                     break;
                 case "3":
                     System.out.println("All listed products");
-                    /*Array.getAllStoreItems("stock");
-                    for (String item : stringList) {
-                        System.out.println(item);
-                    }*/
+                    ArrayList<Item> stockItems = user.getAllStoreItems("stock");
+                    for (Item item : stockItems) {
+                        System.out.println(item.toString());
+                    }
                     break;
                 case "4":
                     System.out.println("All sold products");
-                    /*user.getAllStoreItems("sold");
-                    for (String item : stringList) {
-                        System.out.println(item);
-                    }*/
+                    ArrayList<Item> soldItems = user.getAllStoreItems("sold");
+                    for (Item item : soldItems) {
+                        System.out.println(item.toString());
+                    }
                     break;
                 case "5":
                     System.out.println("All product buyers");
