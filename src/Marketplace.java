@@ -129,12 +129,12 @@ public class Marketplace {
                 Store store = storeEntry.getValue();
                 Map<String, Item> stockItems = store.getStockItems();
                 for (Map.Entry<String, Item> stockItemEntry : stockItems.entrySet()) {
-                    if (stockItemEntry.getValue().getName().equals(item.getName())) {
+                    if (stockItemEntry.getValue().equals(item)) {
                         return store;
                     }
                     Map<String, Item> soldItems = store.getSoldItems();
                     for (Map.Entry<String, Item> soldItemEntry : soldItems.entrySet()) {
-                        if (soldItemEntry.getValue().getName().equals(item.getName())) {
+                        if (soldItemEntry.getValue().equals(item)) {
                             return store;
                         }
                     }
