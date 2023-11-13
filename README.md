@@ -17,6 +17,15 @@ Hayden White - Submitted Vocareum workspace.
 
 ## Classes
 
+### Main
+- **Functionality:** The entry point to the main Marketplace application and user flow. 
+
+### Marketplace
+
+- **Functionality:** Represents the main marketplace, handling interactions between buyers, sellers, and items. Provides methods for importing and exporting data, managing transactions, and updating stock. It is where all user flow lives.
+- **Testing:** JUnit tests cover methods related to managing transactions, importing/exporting data, and updating stock.
+- **Relationships:** Uses various other classes to implement the marketplace functionality.
+- 
 ### Person
 
 - **Functionality:** Represents a generic person with basic attributes like username, password, first name, last name, and email.
@@ -58,11 +67,5 @@ Hayden White - Submitted Vocareum workspace.
 - **Functionality:** Provides utility methods for writing purchase history and product information to CSV files.
 - **Testing:** JUnit tests cover methods related to writing purchase history and product information to CSV files.
 - **Relationships:** Used by the `Marketplace` class to export data to CSV.
-
-### Marketplace
-
-- **Functionality:** Represents the main marketplace, handling interactions between buyers, sellers, and items. Provides methods for importing and exporting data, managing transactions, and updating stock.
-- **Testing:** JUnit tests cover methods related to managing transactions, importing/exporting data, and updating stock.
-- **Relationships:** Uses various other classes to implement the marketplace functionality.
 
 
