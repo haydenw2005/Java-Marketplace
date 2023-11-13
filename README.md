@@ -2,12 +2,12 @@
 
 # TODO
 ## Buyer
-- [X] Buy an item
-- [X] Buy entire cart
-- [X] Purchase History
+- [X] ~~Buy an item~~
+- [X] ~~Buy entire cart~~
+- [X] ~~Purchase History~~
 ### Stats
-- [ ] List of stores by number of products bought by customer
-- [ ] List stores by total number of sales
+- [X] ~~List of stores by number of products bought by customer~~
+- [X] ~~List stores by total number of sales~~
 ### CSV
 - [ ] Export file with purchase history
 

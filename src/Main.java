@@ -54,7 +54,6 @@ public class Main {
     }
     
     public static void startBuyerFlow(Buyer user, Marketplace marketplace, Scanner scanner, ObjectMapper objectMapper) {
-        // TODO purchase history
         while (true) {
             System.out.println("Welcome " + user.getFirstName() + " " + user.getLastName() + "!");
             System.out.println("(1) View store information");

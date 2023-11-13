@@ -11,8 +11,9 @@ public class Seller extends Person {
     public Seller() {}
     public Seller(@JsonProperty("username") String username, @JsonProperty("password") String password,
                   @JsonProperty("firstName") String firstName, @JsonProperty("lastName") String lastName,
+                  @JsonProperty("email") String email,
                   @JsonProperty("stores") Map<String, Store> stores) {
-        super(username, password, firstName, lastName);
+        super(username, password, firstName, lastName, email);
         this.stores = stores;
     }
 
