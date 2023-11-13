@@ -109,7 +109,7 @@ public class Main {
         System.out.println("Welcome " + user.getFirstName() + " " + user.getLastName() + "!");
         while (true) {
             printSellerMenu();
-            String option = getMenuInput(1, 6, scanner);
+            String option = getMenuInput(1, 9, scanner);
             switch (option) {
                 case "1":
                     boolean inItemMenu = true;
@@ -170,6 +170,15 @@ public class Main {
                     System.out.println("Deleting account...");
                     return;
                 case "8":
+                    System.out.println("Enter filename to write to (excluding .csv extension)");
+                    String file = scanner.nextLine();
+                    try {
+                        CsvUtils.writeProductsToCSV(file, (Seller) user);
+                    } catch (IOException e) {
+                        System.out.println("Error writing to file.");;
+                    }
+                    break;
+                case "9":
                     System.out.println("Signing out...");
                     return;
             }
@@ -341,6 +350,7 @@ public class Main {
         System.out.println("\t(5) View all product buyers ~");
         System.out.println("\t(6) Edit account");
         System.out.println("\t(7) Delete account");
-        System.out.println("\t(8) Sign-out ~");
+        System.out.println("\t(8) Export store items to CSV ~");
+        System.out.println("\t(9) Sign-out ~");
     }
 }
