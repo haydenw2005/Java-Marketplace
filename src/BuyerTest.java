@@ -30,7 +30,7 @@ public class BuyerTest {
     @Test
     public void testAddItemToCart() {
         // TODO: Change item names
-        Item item = new Item("Laptop", "A laptop.", 5, 2, 1000,
+        Item item = new Item("Cheese", "Indiana Cheese.", 5, 2, 1000,
                 null, new HashMap<String, Integer>() {
                     {
                         put("seller", 5);
@@ -38,9 +38,9 @@ public class BuyerTest {
                 });
         buyer.addItemToCart(item, objectMapper);
 
-        assertTrue(buyer.getCart().containsKey("Laptop"));
+        assertTrue(buyer.getCart().containsKey("Cheese"));
         assertEquals(1, buyer.getCart().size());
-        assertEquals(2, buyer.getCart().get("Laptop").getCount()); // check if count is 2
+        assertEquals(2, buyer.getCart().get("Cheese").getCount()); // check if count is 2
     }
 
     @Test
@@ -53,7 +53,7 @@ public class BuyerTest {
                 });
         buyer.addItemToCart(item, objectMapper);
 
-        assertFalse(buyer.getCart().containsKey("Phone"));
+        assertFalse(buyer.getCart().containsKey("Bread"));
         assertEquals(0, buyer.getCart().size());
     }
 
@@ -71,7 +71,7 @@ public class BuyerTest {
 
     @Test
     public void testBuyCart() {
-        Item item1 = new Item("Headphones", "Noise-canceling headphones", 2, 1, 150.0,
+        Item item1 = new Item("earphones", "Noise-canceling earphones", 2, 1, 150.0,
                 new HashMap<>(), new HashMap<String, Integer>() {
                     {
                         put("seller", 2);
@@ -93,7 +93,7 @@ public class BuyerTest {
 
         assertTrue(buyer.getCart().isEmpty());
         assertEquals(2, buyer.getPurchaseHistory().size());
-        assertEquals(item1, buyer.getPurchaseHistory().get("Headphones"));
+        assertEquals(item1, buyer.getPurchaseHistory().get("earphones"));
         assertEquals(item2, buyer.getPurchaseHistory().get("Monitor"));
 
     }
@@ -120,13 +120,13 @@ public class BuyerTest {
 
     @Test
     public void showAllCartItems_NotEmpty() {
-        Item item1 = new Item("Laptop", "High-performance laptop", 5, 1, 1200.0,
+        Item item1 = new Item("toaster", "High-performance toaster", 5, 1, 1200.0,
                 new HashMap<>(), new HashMap<String, Integer>() {
                     {
                         put("seller", 5);
                     }
                 });
-        Item item2 = new Item("Headphones", "Noise-canceling headphones", 2, 2, 150.0,
+        Item item2 = new Item("earphones", "Noise-canceling earphones", 2, 2, 150.0,
                 new HashMap<>(), new HashMap<String, Integer>() {
                     {
                         put("seller", 2);
@@ -138,8 +138,8 @@ public class BuyerTest {
 
         buyer.showAllCartItems();
 
-        String expectedOutput = "Product: Headphones | Price: 150.0 | Stock: 2\n" +
-                "Product: Laptop | Price: 1200.0 | Stock: 5\n";
+        String expectedOutput = "Product: toaster | Price: 1200.0 | Stock: 5\n"
+                + "Product: earphones | Price: 150.0 | Stock: 2\n";
         assertEquals(expectedOutput, outContent.toString());
     }
 
@@ -152,9 +152,9 @@ public class BuyerTest {
 
     @Test
     public void showPurchaseHistory_NotEmpty() {
-        Item item1 = new Item("Laptop", "High-performance laptop", 5, 1, 1200.0,
+        Item item1 = new Item("toaster", "High-performance toaster", 5, 1, 1200.0,
                 new HashMap<>(), new HashMap<>());
-        Item item2 = new Item("Headphones", "Noise-canceling headphones", 2, 2, 150.0,
+        Item item2 = new Item("earphones", "Noise-canceling earphones", 2, 2, 150.0,
                 new HashMap<>(), new HashMap<>());
         buyer.setPurchaseHistory(new HashMap<>());
 
@@ -164,8 +164,8 @@ public class BuyerTest {
         buyer.showPurchaseHistory();
 
         String expectedOutput = "\nPurchase history:\n\n" +
-                "Product: Headphones | Price: 150.0 | Count: 2\n" +
-                "Product: Laptop | Price: 1200.0 | Count: 1\n";
+                "Product: toaster | Price: 1200.0 | Count: 1\n" +
+                "Product: earphones | Price: 150.0 | Count: 2\n";
         assertEquals(expectedOutput, outContent.toString());
     }
 

@@ -346,6 +346,39 @@
           "sellersObject" : {
             "seller" : 2
           }
+        },
+        "Cheese" : {
+          "name" : "Cheese",
+          "description" : "Indiana Cheese.",
+          "stock" : 5,
+          "count" : 2,
+          "price" : 1000.0,
+          "buyersObject" : null,
+          "sellersObject" : {
+            "seller" : 5
+          }
+        },
+        "toaster" : {
+          "name" : "toaster",
+          "description" : "High-performance toaster",
+          "stock" : 5,
+          "count" : 3,
+          "price" : 1200.0,
+          "buyersObject" : { },
+          "sellersObject" : {
+            "seller" : 5
+          }
+        },
+        "earphones" : {
+          "name" : "earphones",
+          "description" : "Noise-canceling earphones",
+          "stock" : 2,
+          "count" : 6,
+          "price" : 150.0,
+          "buyersObject" : { },
+          "sellersObject" : {
+            "seller" : 2
+          }
         }
       },
       "purchaseHistory" : {
@@ -401,6 +434,24 @@
           "sellersObject" : {
             "seller" : 5
           }
+        },
+        "toaster" : {
+          "name" : "toaster",
+          "description" : "High-performance toaster",
+          "stock" : -1,
+          "count" : 1,
+          "price" : 1200.0,
+          "buyersObject" : { },
+          "sellersObject" : { }
+        },
+        "earphones" : {
+          "name" : "earphones",
+          "description" : "Noise-canceling earphones",
+          "stock" : -1,
+          "count" : 2,
+          "price" : 150.0,
+          "buyersObject" : { },
+          "sellersObject" : { }
         }
       }
     }

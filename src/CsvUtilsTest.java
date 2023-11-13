@@ -31,9 +31,9 @@ public class CsvUtilsTest {
 
     @Test
     public void writePurchaseHistoryToCSV_Success() throws IOException {
-        Item item1 = new Item("Laptop", "High-performance laptop", 5, 1, 1200.0,
+        Item item1 = new Item("toaster", "High-performance toaster", 5, 1, 1200.0,
                 new HashMap<>(), new HashMap<>());
-        Item item2 = new Item("Headphones", "Noise-canceling headphones", 2, 2, 150.0,
+        Item item2 = new Item("earphones", "Noise-canceling earphones", 2, 2, 150.0,
                 new HashMap<>(), new HashMap<>());
 
         buyer.addToPurchaseHistory(item1, objectMapper);
@@ -51,9 +51,9 @@ public class CsvUtilsTest {
     @Test
     public void writeProductsToCSV_Success() throws IOException {
         Store store = new Store("Electronics", new HashMap<>(), new HashMap<>());
-        Item item1 = new Item("Laptop", "High-performance laptop", 5, 1, 1200.0,
+        Item item1 = new Item("toaster", "High-performance toaster", 5, 1, 1200.0,
                 new HashMap<>(), new HashMap<>());
-        Item item2 = new Item("Headphones", "Noise-canceling headphones", 2, 2, 150.0,
+        Item item2 = new Item("earphones", "Noise-canceling earphones", 2, 2, 150.0,
                 new HashMap<>(), new HashMap<>());
         store.addToStockItems(item1, seller.getUsername(), objectMapper);
         store.addToStockItems(item2, seller.getUsername(), objectMapper);
@@ -73,7 +73,7 @@ public class CsvUtilsTest {
         File testFile = new File("importTest.csv");
         testFile.createNewFile();
         String[] testData = { "Product,Description,Price,Stock,Store",
-                "Laptop,High-performance laptop,1200.0,5,Electronics" };
+                "toaster,High-performance toaster,1200.0,5,Electronics" };
         CsvUtilsTestUtils.writeToFile(testFile, testData);
 
         CsvUtils.importFromCSV("importTest", seller, objectMapper);
