@@ -20,17 +20,6 @@
                 "seller_1_username" : 2
               }
             },
-            "computer" : {
-              "name" : "computer",
-              "description" : "is a computer",
-              "stock" : 1,
-              "count" : -1,
-              "price" : 500,
-              "buyersObject" : null,
-              "sellersObject" : {
-                "seller_1_username" : 2
-              }
-            },
             "soccer ball" : {
               "name" : "soccer ball",
               "description" : "kick it",
@@ -68,6 +57,19 @@
               },
               "sellersObject" : {
                 "seller_1_username" : 7
+              }
+            },
+            "computer" : {
+              "name" : "computer",
+              "description" : "is a computer",
+              "stock" : 1,
+              "count" : -1,
+              "price" : 500,
+              "buyersObject" : {
+                "test_buyer" : -1
+              },
+              "sellersObject" : {
+                "seller_1_username" : 1
               }
             }
           }
@@ -170,6 +172,19 @@
           },
           "sellersObject" : {
             "seller_1_username" : 3
+          }
+        },
+        "computer" : {
+          "name" : "computer",
+          "description" : "is a computer",
+          "stock" : -1,
+          "count" : -1,
+          "price" : 500,
+          "buyersObject" : {
+            "test_buyer" : -1
+          },
+          "sellersObject" : {
+            "seller_1_username" : 1
           }
         }
       }

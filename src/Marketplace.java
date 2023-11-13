@@ -234,10 +234,18 @@ public class Marketplace {
             }
         } else if (input.toLowerCase().equals("sort price")) {
             this.listProducts(this.sortByPrice(itemsList));
+            System.out.println("Go back: enter 'back'");
             input = scanner.nextLine();
+            if (input.equals("back")) {
+                this.showMarketplace(scanner, buyer, objectMapper);
+            }
         } else if (input.toLowerCase().equals("sort quantity")) {
             this.listProducts(this.sortByQuantity(itemsList));
+            System.out.println("Go back: enter 'back'");
             input = scanner.nextLine();
+            if (input.equals("back")) {
+                this.showMarketplace(scanner, buyer, objectMapper);
+            }
         } else if (input.toLowerCase().equals("back")) {
             return null;
         }
