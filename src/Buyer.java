@@ -7,6 +7,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
 
+/**
+ * Represents a buyer in the system, extending the {@code Person} class. A buyer has a cart for
+ * adding items, a purchase history, and methods to interact with the marketplace.
+ *
+ * <p>Purdue University -- CS18000 -- Fall 2023</p>
+ *
+ * @author Soham, Ryan
+ * @version November 13, 2023
+ */
 public class Buyer extends Person {
 
     private Map<String, Item> cart;
@@ -75,7 +84,7 @@ public class Buyer extends Person {
                 String itemDir = cartDir + "/" + item.getName();
                 if(JsonUtils.hasKey(cartDir, item.getName(), objectMapper)) {
                     // iterate item count if item already exists in cart
-                    Item cartItem = JsonUtils.getObjectByKey(objectMapper, itemDir, Item.class);
+                    Item cartItem = JsonUtils.objectByKey(objectMapper, itemDir, Item.class);
                     item.setCount(cartItem.getCount() + item.getCount()); 
                 } 
                 JsonUtils.addObjectToJson(cartDir, item.getName(), item, objectMapper);
@@ -113,7 +122,7 @@ public class Buyer extends Person {
                 String sellerSoldDir = "/sellers/" + item.findSeller() + "/stores/" + marketplace.getStore(item).getName() + "/soldItems";
                 if(marketplace.getStore(item).getSoldItems().containsKey(item.getName())) {
                     // Item already exists, update count first
-                    Item cartItem = JsonUtils.getObjectByKey(objectMapper, sellerSoldDir + "/" + item.getName(), Item.class);
+                    Item cartItem = JsonUtils.objectByKey(objectMapper, sellerSoldDir + "/" + item.getName(), Item.class);
                     item.setCount(cartItem.getCount() + item.getCount()); 
                 } 
                 JsonUtils.addObjectToJson(sellerSoldDir, item.getName(), item, objectMapper);

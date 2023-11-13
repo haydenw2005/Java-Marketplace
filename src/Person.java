@@ -1,6 +1,14 @@
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.Scanner;
 
+/**
+ * Represents a person in the system with basic information such as username, password, first name,
+ * last name, and email.
+ *
+ * <p>Purdue University -- CS18000 -- Fall 2023</p>
+ *
+ * @author Soham, Hayden
+ * @version November 13, 2023
+ */
 public class Person {
     private String username;
     private String password;

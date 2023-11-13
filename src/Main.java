@@ -5,9 +5,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-
-
-
+/**
+ * Main class representing the entry point for the marketplace application.
+ *
+ * <p>Purdue University -- CS18000 -- Fall 2023</p>
+ *
+ * @author Hayden, Soham, and Ryan
+ * @version November 13, 2023
+ */
 public class Main {
     public static void main(String[] args) {
 
@@ -16,7 +21,7 @@ public class Main {
 
         try {
             //Example of getObjectByKey
-            Marketplace marketplace = JsonUtils.getObjectByKey(objectMapper, "", Marketplace.class);
+            Marketplace marketplace = JsonUtils.objectByKey(objectMapper, "", Marketplace.class);
             //System.out.println(buyer);
 
             //START OF USER FLOW
@@ -37,7 +42,7 @@ public class Main {
     }
 
     public static Person enterCredentials(Scanner scanner, ObjectMapper objectMapper) throws IOException {
-        Marketplace marketplace = JsonUtils.getObjectByKey(objectMapper, "", Marketplace.class);
+        Marketplace marketplace = JsonUtils.objectByKey(objectMapper, "", Marketplace.class);
         System.out.println("Welcome. Would you like to sign in (1) or sign up (2)?");
         String response = scanner.nextLine();
         Person user = null;

@@ -5,6 +5,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Represents a Seller in the marketplace, extending the Person class.
+ *
+ * <p>Purdue University -- CS18000 -- Fall 2023</p>
+ *
+ * @author Hayden, Vishal
+ * @version November 13, 2023
+ */
 public class Seller extends Person {
 
     private Map<String, Store> stores;
@@ -31,7 +39,7 @@ public class Seller extends Person {
     public void editStore(String name, String newName, ObjectMapper objectMapper) {
         try {
             String dir = "/sellers/" + this.getUsername() + "/stores";
-            Store store = JsonUtils.getObjectByKey(objectMapper, dir + "/" + name, Store.class);
+            Store store = JsonUtils.objectByKey(objectMapper, dir + "/" + name, Store.class);
             JsonUtils.removeObjectFromJson(dir, name, objectMapper);
             store.setName(newName);
             JsonUtils.addObjectToJson(dir, newName, store, objectMapper);

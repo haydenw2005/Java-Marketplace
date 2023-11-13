@@ -1,9 +1,17 @@
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * Represents a marketplace where buyers and sellers interact to buy and sell items.
+ * Provides methods for managing accounts, signing in, signing up, and interacting with the marketplace.
+ *
+ * <p>Purdue University -- CS18000 -- Fall 2023</p>
+ *
+ * @author Hayden, Soham, and Ryan
+ * @version November 13, 2023
+ */
 public class Marketplace {
     @JsonProperty("buyers")
     private Map<String, Buyer> buyers;
