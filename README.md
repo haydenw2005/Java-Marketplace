@@ -20,7 +20,7 @@ Hayden White - Submitted Vocareum workspace.
 All classes have test cases, in the format <Class_Name>Test.java. The JUnit test cases check all functional methods, and check invalid inputs where an invalid input may be possible.
 
 1. Compilation
-   - Make sure you have already compiled all the classes with the command listed above: `java -cp bin:"jar_files/*" Main`
+   - Make sure you have already compiled all the classes with the command listed above: `javac -d bin -cp "jar_files/*" *.java`
 2. Execution:
    - Run this command for each test case you want to run: `java -cp "bin:jar_files/*" org.junit.runner.JUnitCore <YourClassHere>`
    - Replace `<YourClassHere>` with any of the following Test Classes:
