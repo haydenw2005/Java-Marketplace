@@ -1,4 +1,3 @@
-/*
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -30,7 +29,6 @@ public class BuyerTest {
 
     @Test
     public void testAddItemToCart() {
-        // TODO: Change item names
         Item item = new Item("Cheese", "Indiana Cheese.", 5, 2, 1000,
                 null, new HashMap<String, Integer>() {
                     {
@@ -179,4 +177,3 @@ public class BuyerTest {
         assertEquals("No items purchased yet.\n", outContent.toString());
     }
 }
-*/

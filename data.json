@@ -168,6 +168,30 @@
           "soldItems" : { }
         }
       }
+    },
+    "seller1" : {
+      "username" : "seller1",
+      "password" : "sellerpass",
+      "firstName" : "Seller",
+      "lastName" : "One",
+      "email" : "seller@example.com",
+      "stores" : { }
+    },
+    "test_seller" : {
+      "username" : "test_seller",
+      "password" : "sellerpass",
+      "firstName" : "Test",
+      "lastName" : "Seller",
+      "email" : "test.seller@example.com",
+      "stores" : { }
+    },
+    "new_seller" : {
+      "username" : "new_seller",
+      "password" : "password123",
+      "firstName" : "New",
+      "lastName" : "Seller",
+      "email" : "new.seller@example.com",
+      "stores" : { }
     }
   },
   "buyers" : {
@@ -258,65 +282,13 @@
     },
     "test_buyer" : {
       "username" : "test_buyer",
-      "password" : "123test",
-      "firstName" : "bob",
-      "lastName" : "dylan",
-      "email" : "sasd@123",
+      "password" : "password123",
+      "firstName" : "Test",
+      "lastName" : "Buyer",
+      "email" : "test.buyer@example.com",
       "cart" : { },
-      "purchaseHistory" : {
-        "cheese" : {
-          "name" : "cheese",
-          "description" : "yummy",
-          "stock" : 2,
-          "count" : 2,
-          "price" : 123,
-          "buyersObject" : {
-            "test_buyer" : 2
-          },
-          "sellersObject" : {
-            "seller_1_username" : 7
-          }
-        },
-        "microwaves" : {
-          "name" : "microwaves",
-          "description" : "makes waves",
-          "stock" : 2,
-          "count" : 3,
-          "price" : 1000,
-          "buyersObject" : {
-            "test_buyer" : 1
-          },
-          "sellersObject" : {
-            "seller_1_username" : 3
-          }
-        },
-        "computer" : {
-          "name" : "computer",
-          "description" : "is a computer",
-          "stock" : -1,
-          "count" : 1,
-          "price" : 500,
-          "buyersObject" : {
-            "test_buyer" : -1
-          },
-          "sellersObject" : {
-            "seller_1_username" : 1
-          }
-        },
-        "bread" : {
-          "name" : "bread",
-          "description" : "tastes good",
-          "stock" : -1,
-          "count" : 1,
-          "price" : 10,
-          "buyersObject" : {
-            "test_buyer" : 1
-          },
-          "sellersObject" : {
-            "seller_1_username" : 3
-          }
-        }
-      }
+      "purchaseHistory" : { },
+      "purchasedItems" : [ ]
     },
     "testingbuyer" : {
       "username" : "testingbuyer",
@@ -454,6 +426,26 @@
           "sellersObject" : { }
         }
       }
+    },
+    "john_doe" : {
+      "username" : "john_doe",
+      "password" : "password123",
+      "firstName" : "John",
+      "lastName" : "Doe",
+      "email" : "john.doe@example.com",
+      "cart" : { },
+      "purchaseHistory" : { },
+      "purchasedItems" : [ ]
+    },
+    "new_buyer" : {
+      "username" : "new_buyer",
+      "password" : "password123",
+      "firstName" : "New",
+      "lastName" : "Buyer",
+      "email" : "new.buyer@example.com",
+      "cart" : { },
+      "purchaseHistory" : { },
+      "purchasedItems" : [ ]
     }
   }
 }
