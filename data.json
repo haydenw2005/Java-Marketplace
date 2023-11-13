@@ -176,7 +176,7 @@
             }
           },
           "soldItems" : { }
-        }      
+        }
       }
     },
     "seller1" : {
@@ -193,7 +193,18 @@
       "firstName" : "Test",
       "lastName" : "Seller",
       "email" : "test.seller@example.com",
-      "stores" : { }
+      "stores" : {
+        "EditedStore" : {
+          "name" : "EditedStore",
+          "stockItems" : { },
+          "soldItems" : { }
+        },
+        "TestStore" : {
+          "name" : "TestStore",
+          "stockItems" : { },
+          "soldItems" : { }
+        }
+      }
     },
     "new_seller" : {
       "username" : "new_seller",

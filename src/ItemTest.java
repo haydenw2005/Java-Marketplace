@@ -57,7 +57,7 @@ public class ItemTest {
 
         assertEquals(3, item.totalBoughtByBuyer("testUser"));
     }
-    
+
     @Test
     public void toStringStockTest() {
         String expected = "Product: Laptop | Price: 1200.0 | Stock: 5";

@@ -63,7 +63,7 @@ public class JsonUtilsTest {
 
     @Test
     public void removeObjectFromJson_ValidInput() throws IOException {
-        
+
         ObjectMapper objectMapper = new ObjectMapper();
         String nodeDir = "/sellers";
         String objectKey = seller.getUsername();

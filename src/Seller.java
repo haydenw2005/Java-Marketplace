@@ -33,6 +33,7 @@ public class Seller extends Person {
     public void createNewStore(String name, ObjectMapper objectMapper) {
         try {
             Store newStore = new Store(name, new HashMap<>(), new HashMap<>());
+            this.stores.put(name, newStore);
             String dir = "/sellers/" + this.getUsername() + "/stores";
             JsonUtils.addObjectToJson(dir, name, newStore, objectMapper);
         } catch (Exception e) {

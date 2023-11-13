@@ -14,7 +14,6 @@ import java.util.Scanner;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-
 /**
  * Class to test Marketplace Class.
  *
@@ -45,7 +44,8 @@ public class MarketplaceTest {
 
     @Test
     public void testAddBuyerAccount() throws IOException {
-        Buyer buyer = new Buyer("john_doe", "password123", "John", "Doe", "john.doe@example.com", new HashMap<>(), new HashMap<>());
+        Buyer buyer = new Buyer("john_doe", "password123", "John", "Doe", "john.doe@example.com", new HashMap<>(),
+                new HashMap<>());
 
         // Provide input for scanner
         provideInput("john_doe");
@@ -92,7 +92,7 @@ public class MarketplaceTest {
         Person loggedInUser = marketplace.signIn(new Scanner(System.in));
         assertEquals(buyer, loggedInUser);
     }
-    
+
     @Test
     public void testSignInInvalidCredentials() throws IOException {
         Buyer buyer = createTestBuyer();
@@ -100,7 +100,7 @@ public class MarketplaceTest {
 
         // Provide wrong password
         provideInput("test_buyer\nwrong_password\n");
-        // invalid input prompts user to try again        
+        // invalid input prompts user to try again
         // then provide corrent ones
         provideInput("test_buyer\npassword123\n");
         Person loggedInUser = marketplace.signIn(new Scanner(System.in));
@@ -154,7 +154,8 @@ public class MarketplaceTest {
 
     // Helper method to create a test buyer
     private Buyer createTestBuyer() {
-        return new Buyer("test_buyer", "password123", "Test", "Buyer", "test.buyer@example.com", new HashMap<>(), new HashMap<>());
+        return new Buyer("test_buyer", "password123", "Test", "Buyer", "test.buyer@example.com", new HashMap<>(),
+                new HashMap<>());
     }
 
     // Helper method to create a test seller
