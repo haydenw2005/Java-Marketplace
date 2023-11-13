@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -72,14 +74,13 @@ public class CsvUtils {
         writer.close();
     }
 
-    public static void importFromCSV(String filename, Seller seller, ObjectMapper objectMapper) {
+    public static void importFromCSV(String filename, Seller seller, ObjectMapper objectMapper) throws FileNotFoundException {
         File csvOutputFile = new File(filename + ".csv");
         if (!csvOutputFile.exists()) {
             System.out.println("File does not exist.");
             return;
         }
-        InputStreamReader streamReader = new InputStreamReader(System.in);
-        BufferedReader buffer = new BufferedReader(streamReader);
+        BufferedReader buffer = new BufferedReader(new FileReader(csvOutputFile));
         ArrayList<String> lines = new ArrayList<String>();
         String line;
         
@@ -95,18 +96,26 @@ public class CsvUtils {
                 String[] data = lines.get(i).split(", ");
 
                 // 0 - Name, 1 - Description, 2 - Price, 3 - Stock, 4 - Store
-                Store currentStore = seller.getStoreByName(data[4]);
+                Store currentStore = new Store(data[4], new HashMap<String, Item>(), new HashMap<String, Item>());
                 Map<String, Integer> sellerObject = new HashMap<String, Integer>();
                 sellerObject.put(seller.getUsername(), Integer.parseInt(data[3]));
-                currentStore.addToStockItems(new Item(data[0], data[1], Integer.parseInt(data[3]), -1, Integer.parseInt(data[2]), 
-                    null, sellerObject), seller.getUsername(), objectMapper);
+                Map<String, Item> stockItem = new HashMap<String, Item>();
+                stockItem.put(data[0], new Item(data[0], data[1], Integer.parseInt(data[3]), -1, Double.parseDouble(data[2]), 
+                    null, sellerObject));
+                currentStore.setStockItems(stockItem);
                 String dir = "/sellers/" + seller.getUsername() + "/stores";
-                JsonUtils.addObjectToJson(dir, currentStore.getName(), currentStore, objectMapper);
+                if (JsonUtils.hasKey(dir, currentStore.getName(), objectMapper)) {
+                    String stockDir = dir + "/" + currentStore.getName() + "/stockItems";
+                    JsonUtils.addObjectToJson(stockDir, data[0], stockItem.get(data[0]), objectMapper);
+                } else {
+                    JsonUtils.addObjectToJson(dir, currentStore.getName(), currentStore, objectMapper);
+                }
             }
+            buffer.close();
         } catch (IOException e) {
             System.out.println("An error occured while importing.");
             return;
         }
-
+        
     }
 }

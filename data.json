@@ -97,11 +97,57 @@
     },
     "testseller" : {
       "username" : "testseller",
-      "password" : "pass",
+      "password" : "test",
       "firstName" : "john",
       "lastName" : "doe",
-      "stores" : { },
-      "allBuyers" : { }
+      "email" : "johndoe!jfda",
+      "stores" : {
+        "store_1_name_edited" : {
+          "name" : "store_1_name_edited",
+          "stockItems" : {
+            "bread" : {
+              "name" : "bread",
+              "description" : "tastes good",
+              "stock" : 2147483647,
+              "count" : -1,
+              "price" : 10.0,
+              "buyersObject" : null,
+              "sellersObject" : {
+                "testseller" : 2147483647
+              }
+            },
+            "bread 2" : {
+              "name" : "bread 2",
+              "description" : "tastes better",
+              "stock" : 2147483647,
+              "count" : -1,
+              "price" : 0.0,
+              "buyersObject" : null,
+              "sellersObject" : {
+                "testseller" : 2147483647
+              }
+            }
+          },
+          "soldItems" : { }
+        },
+        "store_2_name_edited" : {
+          "name" : "store_2_name_edited",
+          "stockItems" : {
+            "soccer ball" : {
+              "name" : "soccer ball",
+              "description" : "kick it",
+              "stock" : 2,
+              "count" : -1,
+              "price" : 20.0,
+              "buyersObject" : null,
+              "sellersObject" : {
+                "testseller" : 2
+              }
+            }
+          },
+          "soldItems" : { }
+        }
+      }
     }
   },
   "buyers" : {

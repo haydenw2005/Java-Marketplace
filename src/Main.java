@@ -188,7 +188,8 @@ public class Main {
                     try {
                         CsvUtils.importFromCSV(filename, (Seller) user, objectMapper);
                     } catch (Exception e) {
-                        System.out.println("Error writing to file.");;
+                        System.out.println("Error reading from file.");
+                        e.printStackTrace();
                     }
                     break;
                 case "10":
