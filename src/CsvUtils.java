@@ -52,7 +52,7 @@ public class CsvUtils {
             for (int j = 0; j < items.size(); j++) {
                 writer.println(items.get(j).getName() + ", "
                         + items.get(j).getDescription()  + ", " + items.get(j).getPrice() 
-                        + ", " + items.get(j).getCount() + ", " + stores.get(i).getName());
+                        + ", " + items.get(j).getStock() + ", " + stores.get(i).getName());
             }
         }
 
