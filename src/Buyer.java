@@ -139,16 +139,20 @@ public class Buyer extends Person {
     }
 
     public void buyCart(Marketplace marketplace, ObjectMapper objectMapper) {
-        Collection<Item> values = cart.values();
-        Item[] items = values.toArray(new Item[0]);
+        if(!(cart.isEmpty())) {
+            Collection<Item> values = cart.values();
+            Item[] items = values.toArray(new Item[0]);
 
-        try {
-            for(int i = 0; i < items.length; i++) {
-                buyItem(items[i], marketplace, objectMapper);
-            } 
-            System.out.println("Successfully purchased all items in cart!");
-        } catch (Exception e) {
-            System.out.println("Error buying cart.");
+            try {
+                for(int i = 0; i < items.length; i++) {
+                    buyItem(items[i], marketplace, objectMapper);
+                } 
+                System.out.println("Successfully purchased all items in cart!");
+            } catch (Exception e) {
+                System.out.println("Error buying cart.");
+            }
+        } else {
+            System.out.println("Cart is empty!");
         }
     }
     

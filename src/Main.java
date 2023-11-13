@@ -54,6 +54,7 @@ public class Main {
     }
     
     public static void startBuyerFlow(Buyer user, Marketplace marketplace, Scanner scanner, ObjectMapper objectMapper) {
+        // TODO purchase history
         while (true) {
             System.out.println("Welcome " + user.getFirstName() + " " + user.getLastName() + "!");
             System.out.println("(1) View store information");
@@ -62,17 +63,18 @@ public class Main {
             System.out.println("(4) Signout");
 
             String input = scanner.nextLine();
-            while (!(input.equals("1") || input.equals("2"))) {
+            while (!(input.equals("1") || input.equals("2") || input.equals("3") || input.equals("4"))) {
                 System.out.println("Invalid input");
                 input = scanner.nextLine();
             }
             if (input.equals("1")) {
                 marketplace.viewStoreInfo(scanner, (Buyer) user, objectMapper);
             } else if (input.equals("2")) {
-                marketplace.buyerFlow(scanner, (Buyer) user, objectMapper);
+                marketplace.showMarketplace(scanner, (Buyer) user, objectMapper);
             } else if (input.equals("3")) {
                 marketplace.cartFlow(scanner, (Buyer) user, objectMapper);
             } else if (input.equals("4")) {
+                System.out.println("Signing out...");
                 break;
             }
         }

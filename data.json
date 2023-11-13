@@ -9,17 +9,6 @@
         "store_1_name" : {
           "name" : "store_1_name",
           "stockItems" : {
-            "microwaves" : {
-              "name" : "microwaves",
-              "description" : "makes waves",
-              "stock" : 2,
-              "count" : -1,
-              "price" : 1000,
-              "buyersObject" : null,
-              "sellersObject" : {
-                "seller_1_username" : 2
-              }
-            },
             "bread" : {
               "name" : "bread",
               "description" : "tastes good",
@@ -58,14 +47,14 @@
             "microwaves" : {
               "name" : "microwaves",
               "description" : "makes waves",
-              "stock" : 1,
-              "count" : 2,
+              "stock" : 2,
+              "count" : 3,
               "price" : 1000,
               "buyersObject" : {
-                "buyer_1_username" : 2
+                "test_buyer" : 1
               },
               "sellersObject" : {
-                "seller_1_username" : 2
+                "seller_1_username" : 3
               }
             },
             "cheese" : {
@@ -168,6 +157,19 @@
           },
           "sellersObject" : {
             "seller_1_username" : 7
+          }
+        },
+        "microwaves" : {
+          "name" : "microwaves",
+          "description" : "makes waves",
+          "stock" : 2,
+          "count" : 3,
+          "price" : 1000,
+          "buyersObject" : {
+            "test_buyer" : 1
+          },
+          "sellersObject" : {
+            "seller_1_username" : 3
           }
         }
       }
