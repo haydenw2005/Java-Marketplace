@@ -29,6 +29,7 @@ public class BuyerTest {
 
     @Test
     public void testAddItemToCart() {
+        // TODO: Change item names
         Item item = new Item("Laptop", "A laptop.", 5, 2, 1000,
                 null, new HashMap<String, Integer>() {
                     {
