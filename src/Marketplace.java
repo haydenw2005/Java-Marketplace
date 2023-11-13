@@ -38,6 +38,7 @@ public class Marketplace {
     }
 
     public Person enterCredentials(Scanner scanner, ObjectMapper objectMapper) throws IOException {
+        System.out.println();
         System.out.println("Welcome to zBay Market Place! (FULL SCREEN RECOMMENDED)");
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         System.out.println("Would you like to sign in (1) or sign up (2)?");

@@ -187,6 +187,26 @@
             }
           },
           "soldItems" : { }
+        },
+        "TestStore" : {
+          "name" : "TestStore",
+          "stockItems" : {
+            "TestItem" : {
+              "name" : "TestItem",
+              "description" : "Description",
+              "stock" : 10,
+              "count" : 5,
+              "price" : 20.0,
+              "buyersObject" : null,
+              "sellersObject" : { }
+            }
+          },
+          "soldItems" : { }
+        },
+        "TestStore2" : {
+          "name" : "TestStore2",
+          "stockItems" : { },
+          "soldItems" : { }
         }
       }
     },
@@ -204,18 +224,7 @@
       "firstName" : "Test",
       "lastName" : "Seller",
       "email" : "test.seller@example.com",
-      "stores" : {
-        "EditedStore" : {
-          "name" : "EditedStore",
-          "stockItems" : { },
-          "soldItems" : { }
-        },
-        "TestStore" : {
-          "name" : "TestStore",
-          "stockItems" : { },
-          "soldItems" : { }
-        }
-      }
+      "stores" : { }
     },
     "new_seller" : {
       "username" : "new_seller",
@@ -329,7 +338,35 @@
       "lastName" : "doe",
       "email" : "john.doe@example.com",
       "cart" : { },
-      "purchaseHistory" : { }
+      "purchaseHistory" : {
+        "PurchasedItem" : {
+          "name" : "PurchasedItem",
+          "description" : "Description",
+          "stock" : -1,
+          "count" : 0,
+          "price" : 15.0,
+          "buyersObject" : null,
+          "sellersObject" : { }
+        },
+        "PurchasedItem1" : {
+          "name" : "PurchasedItem1",
+          "description" : "Description",
+          "stock" : -1,
+          "count" : 5,
+          "price" : 15.0,
+          "buyersObject" : null,
+          "sellersObject" : { }
+        },
+        "PurchasedItem2" : {
+          "name" : "PurchasedItem2",
+          "description" : "Description",
+          "stock" : -1,
+          "count" : 3,
+          "price" : 12.0,
+          "buyersObject" : null,
+          "sellersObject" : { }
+        }
+      }
     },
     "john_doe" : {
       "username" : "john_doe",
