@@ -227,9 +227,9 @@ public class Marketplace {
         ArrayList<Item> itemsList = this.getAllMarketPlaceItems();
         this.listProducts(itemsList);
         System.out.println("\t (a) Search for a product ~");
-        System.out.println("\t (b)Sort products by price ~");
-        System.out.println("\t (c)Sort products by quantity in stock ~");
-        System.out.println("\t (d)Go back ~");
+        System.out.println("\t (b) Sort products by price ~");
+        System.out.println("\t (c) Sort products by quantity in stock ~");
+        System.out.println("\t (d) Go back ~");
 
         String input = scanner.nextLine();
 
@@ -342,7 +342,7 @@ public class Marketplace {
 
     public void viewStoreInfo(Scanner scanner, Buyer buyer, ObjectMapper objectMapper) {
         ArrayList<Store> allStores = this.getAllStores();
-
+        System.out.println("What would you like to do?");
         System.out.println("\t(1) View stores by number of products sold");
         System.out.println("\t(2) View stores by products you purchased");
         System.out.println("\t(3) Back");
@@ -369,6 +369,7 @@ public class Marketplace {
                     allStores.get(i).numProductsSold());
         }
 
+        System.out.println("What would you like to do?");
         System.out.println("\t(1) Sort stores by number of products sold");
         System.out.println("\t(2) Back");
 
@@ -400,7 +401,7 @@ public class Marketplace {
                 }
             }
         }
-
+        System.out.println("What would you like to do?");
         System.out.println("\t(1) Sort stores by number of products bought");
         System.out.println("\t(2) Back");
 

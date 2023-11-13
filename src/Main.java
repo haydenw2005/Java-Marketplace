@@ -49,7 +49,7 @@ public class Main {
         String response = scanner.nextLine();
         Person user = null;
         while (!(response.equals("1") || response.equals("2"))) {
-            System.out.println("Invalid. Please enter 1 (sign in ) or 2 (sign up).");
+            System.out.println("Invalid. Please enter 1 (sign in) or 2 (sign up).");
             response = scanner.nextLine();
         }
         if (response.equals("1")) {
@@ -164,7 +164,7 @@ public class Main {
                     for (Map.Entry<String, Integer> entry : buyers.entrySet()) {
                         String key = entry.getKey();
                         Integer value = entry.getValue();
-                        System.out.println("\tUser " + key + " has bought " + value + "products ~");
+                        System.out.println("\tUser " + key + " has bought " + value + " products ~");
                     }
                     System.out.println();
                     break;

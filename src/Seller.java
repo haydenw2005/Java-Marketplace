@@ -128,6 +128,7 @@ public class Seller extends Person {
 
     public Map<String, Store> getStores() {
         return stores;
+
     }
 
     public Store getStoreByName(String name) {

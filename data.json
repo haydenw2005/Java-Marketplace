@@ -7,18 +7,13 @@
       "lastName" : "black",
       "email" : "blahblack@gmail.com",
       "stores" : {
-        "mystore2" : {
-          "name" : "mystore2",
-          "stockItems" : { },
-          "soldItems" : { }
-        },
         "store_1_name_edited" : {
           "name" : "store_1_name_edited",
           "stockItems" : {
             "bread" : {
               "name" : "bread",
               "description" : "tastes good",
-              "stock" : 2147483647,
+              "stock" : 234,
               "count" : -1,
               "price" : 10.0,
               "buyersObject" : null,
@@ -26,15 +21,15 @@
                 "seller_1_username" : 2
               }
             },
-            "soccer ball" : {
-              "name" : "soccer ball",
-              "description" : "kick it",
-              "stock" : 2,
+            "spring" : {
+              "name" : "spring",
+              "description" : "boing boing boing",
+              "stock" : 3,
               "count" : -1,
-              "price" : 20.0,
+              "price" : 44.0,
               "buyersObject" : null,
               "sellersObject" : {
-                "seller_1_username" : 2
+                "seller_1_username" : 3
               }
             }
           },
@@ -92,6 +87,33 @@
               }
             }
           }
+        },
+        "my store" : {
+          "name" : "my store",
+          "stockItems" : {
+            "dr pepper" : {
+              "name" : "dr pepper",
+              "description" : "bubbly",
+              "stock" : 3,
+              "count" : -1,
+              "price" : 12.0,
+              "buyersObject" : null,
+              "sellersObject" : {
+                "seller_1_username" : 3
+              }
+            }
+          },
+          "soldItems" : { }
+        },
+        "my_store_2" : {
+          "name" : "my_store_2",
+          "stockItems" : { },
+          "soldItems" : { }
+        },
+        "store_123" : {
+          "name" : "store_123",
+          "stockItems" : { },
+          "soldItems" : { }
         }
       }
     },
