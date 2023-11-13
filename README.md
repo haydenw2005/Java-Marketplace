@@ -4,6 +4,13 @@
 
 The Marketplace project is a Java implementation of an online marketplace system. It consists of several classes representing different entities such as buyers, sellers, stores, items, and utilities for handling JSON operations.
 
+## How to run
+INSERT HERE
+
+## Submissions
+Hayden White - Submitted Report on Brightspace. 
+Hayden White - Submitted Vocareum workspace.
+
 ## Classes
 
 ### Person
@@ -54,23 +61,4 @@ The Marketplace project is a Java implementation of an online marketplace system
 - **Testing:** JUnit tests cover methods related to managing transactions, importing/exporting data, and updating stock.
 - **Relationships:** Uses various other classes to implement the marketplace functionality.
 
-## Running the Project
 
-1. Compile the project using `javac`:
-
-    ```bash
-    javac -cp jackson-core-2.16.0-rc1.jar:jackson-databind-2.16.0-rc1.jar:jackson-annotation-2.16.0-rc1.jar *.java
-    ```
-
-2. Run the project using `java`:
-
-    ```bash
-    java -cp .:jackson-core-2.16.0-rc1.jar:jackson-databind-2.16.0-rc1.jar:jackson-annotation-2.16.0-rc1.jar Main
-    ```
-
-3. Follow the instructions provided by the program.
-
-## Notes
-
-- Ensure that the required Jackson libraries (`jackson-core-2.16.0-rc1.jar`, `jackson-databind-2.16.0-rc1.jar`, `jackson-annotation-2.16.0-rc1.jar`) are available in the classpath.
-- The project uses JUnit for testing. Make sure to have JUnit in the classpath when running tests.
