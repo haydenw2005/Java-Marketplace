@@ -183,8 +183,6 @@ public class Marketplace {
         return items;
     }
 
-
-
     public ArrayList<Store> sortByProductsSold(ArrayList<Store> stores) {
         for (int i = 0; i < stores.size(); i++) {
             for (int j = i; j < stores.size() - 1; j++) {
@@ -471,4 +469,20 @@ public class Marketplace {
         }
 
     }
+
+    public void deleteUser(Person user, ObjectMapper objectMapper) {
+        try {
+            if (user instanceof Buyer) {
+                String dir = "/buyers";
+                JsonUtils.removeObjectFromJson(dir, user.getUsername(), objectMapper);
+            } else {
+                String dir = "/sellers";
+                JsonUtils.removeObjectFromJson(dir, user.getUsername(), objectMapper);
+
+            }
+        } catch (Exception e) {
+            System.out.println("Error deleting account");
+        }
+    }
+
 }

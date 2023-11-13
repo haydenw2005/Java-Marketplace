@@ -92,12 +92,13 @@ public class Main {
                     System.out.println("An error occured while writing to file.");
                 }
             } else if (input.equals("6")) {
-                System.out.println("Edit account");
+                System.out.println("Edit account ~");
                 marketplace.editUser(scanner, user, objectMapper);
                 System.out.println();
                 break;
             } else if (input.equals("7")) {
                 System.out.println("Deleting account...");
+                marketplace.deleteUser(user, objectMapper);
                 break;
             } else if (input.equals("8")) {
                 System.out.println("Signing out...");
@@ -153,7 +154,7 @@ public class Main {
                     break;
                 case "5":
                     System.out.println("All product buyers");
-                    HashMap<String, Integer> buyers = user.getAllBuyers();
+                    HashMap<String, Integer> buyers = user.allBuyers();
                     for (Map.Entry<String, Integer> entry : buyers.entrySet()) {
                         String key = entry.getKey();
                         Integer value = entry.getValue();
@@ -162,14 +163,6 @@ public class Main {
                     System.out.println();
                     break;
                 case "6":
-                    System.out.println("Edit account");
-                    marketplace.editUser(scanner, user, objectMapper);
-                    System.out.println();
-                    return;
-                case "7":
-                    System.out.println("Deleting account...");
-                    return;
-                case "8":
                     System.out.println("Enter filename to write to (excluding .csv extension)");
                     String file = scanner.nextLine();
                     try {
@@ -178,6 +171,15 @@ public class Main {
                         System.out.println("Error writing to file.");;
                     }
                     break;
+                case "7":
+                    System.out.println("Edit account");
+                    marketplace.editUser(scanner, user, objectMapper);
+                    System.out.println();
+                    break;
+                case "8":
+                    System.out.println("Deleting account...");
+                    marketplace.deleteUser(user, objectMapper);
+                    return;
                 case "9":
                     System.out.println("Enter filename to read from (excluding .csv extension)");
                     String filename = scanner.nextLine();
