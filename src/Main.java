@@ -93,7 +93,7 @@ public class Main {
                     System.out.println("Enter filename to export to (excluding .csv extension)");
                     String file = scanner.nextLine();
                     CsvUtils.writePurchaseHistoryToCSV(file, (Buyer) user);
-                } catch (IOException e) {
+                } catch (Exception e) {
                     System.out.println("An error occured while writing to file.");
                 }
             } else if (input.equals("6")) {
@@ -173,7 +173,7 @@ public class Main {
                     String file = scanner.nextLine();
                     try {
                         CsvUtils.writeProductsToCSV(file, (Seller) user);
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         System.out.println("Error writing to file.");
                         ;
                     }
