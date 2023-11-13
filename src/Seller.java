@@ -56,7 +56,7 @@ public class Seller extends Person {
         return storeItems;
     }
 
-    public HashMap<String, Integer> getAllBuyers()  {
+    public HashMap<String, Integer> allBuyers()  {
         HashMap<String, Integer> personCount = new HashMap<>();
         for (Map.Entry<String, Store> storeEntry : stores.entrySet()) {
             Store store = storeEntry.getValue();

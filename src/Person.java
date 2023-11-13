@@ -45,15 +45,15 @@ public class Person {
         return lastName;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public void deleteUser() {
-
     }
 }

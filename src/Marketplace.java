@@ -183,12 +183,10 @@ public class Marketplace {
         return items;
     }
 
-
-
     public ArrayList<Store> sortByProductsSold(ArrayList<Store> stores) {
         for (int i = 0; i < stores.size(); i++) {
             for (int j = i; j < stores.size() - 1; j++) {
-                if (stores.get(i).getNumProductsSold() < stores.get(j + 1).getNumProductsSold()) {
+                if (stores.get(i).numProductsSold() < stores.get(j + 1).numProductsSold()) {
                     Store temp = stores.get(i);
                     stores.set(i, stores.get(j + 1));
                     stores.set(j + 1, temp);
@@ -366,7 +364,7 @@ public class Marketplace {
     public void listStoresBySales(Scanner scanner, ArrayList<Store> allStores, Buyer buyer, ObjectMapper objectMapper) {
         for (int i = 0; i < allStores.size(); i++) {
             System.out.println(allStores.get(i).getName() + " | Products sold: " +
-                    allStores.get(i).getNumProductsSold());
+                    allStores.get(i).numProductsSold());
         }
 
 
@@ -471,4 +469,20 @@ public class Marketplace {
         }
 
     }
+
+    public void deleteUser(Person user, ObjectMapper objectMapper) {
+        try {
+            if (user instanceof Buyer) {
+                String dir = "/buyers";
+                JsonUtils.removeObjectFromJson(dir, user.getUsername(), objectMapper);
+            } else {
+                String dir = "/sellers";
+                JsonUtils.removeObjectFromJson(dir, user.getUsername(), objectMapper);
+
+            }
+        } catch (Exception e) {
+            System.out.println("Error deleting account");
+        }
+    }
+
 }

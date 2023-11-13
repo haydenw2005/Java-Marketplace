@@ -2,10 +2,10 @@
   "sellers" : {
     "seller_1_username" : {
       "username" : "seller_1_username",
-      "password" : "password123!",
-      "firstName" : "John",
-      "lastName" : "Doe",
-      "email" : "sasd@123",
+      "password" : "123",
+      "firstName" : "blah",
+      "lastName" : "black",
+      "email" : "blahblack@gmail.com",
       "stores" : {
         "mystore2" : {
           "name" : "mystore2",
@@ -31,7 +31,7 @@
               "description" : "kick it",
               "stock" : 2,
               "count" : -1,
-              "price" : 20,
+              "price" : 20.0,
               "buyersObject" : null,
               "sellersObject" : {
                 "seller_1_username" : 2
@@ -44,7 +44,7 @@
               "description" : "makes waves",
               "stock" : 2,
               "count" : 3,
-              "price" : 1000,
+              "price" : 1000.0,
               "buyersObject" : {
                 "test_buyer" : 1
               },
@@ -57,7 +57,7 @@
               "description" : "yummy",
               "stock" : 2,
               "count" : 2,
-              "price" : 123,
+              "price" : 123.0,
               "buyersObject" : {
                 "test_buyer" : 2
               },
@@ -83,7 +83,7 @@
               "description" : "is a computer",
               "stock" : 1,
               "count" : -1,
-              "price" : 500,
+              "price" : 500.0,
               "buyersObject" : {
                 "test_buyer" : -1
               },
