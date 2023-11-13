@@ -6,10 +6,10 @@ The Marketplace project is a Java implementation of an online marketplace system
 
 ## How to run
 1. Compilation:
-   - While in root directory, run the following command `javac -d bin -cp jar_files/jackson-annotations-2.16.0-rc1.jar:jar_files/jackson-databind-2.16.0-rc1.jar:jar_files/jackson-core-2.16.0-rc1.jar *.java`
+   - While in root directory, run the following command `javac -d bin -cp "jar_files/*" *.java`
 
 2. Execution:
-   - Run the now compiled Main.java with the command `java -cp bin:jar_files/jackson-annotations-2.16.0-rc1.jar:jar_files/jackson-databind-2.16.0-rc1.jar:jar_files/jackson-core-2.16.0-rc1.jar Main`
+   - Run the now compiled Main.java with the command `java -cp bin:"jar_files/*" Main`
 
 ## Submissions
 Suhani Rana - Submitted Report on Brightspace. 
@@ -20,8 +20,18 @@ Hayden White - Submitted Vocareum workspace.
 All classes have test cases, in the format <Class_Name>Test.java. The JUnit test cases check all functional methods, and check invalid inputs where an invalid input may be possible.
 
 1. Compilation
-   - Run the following command in root: `javac -d bin -cp jar_files/jackson-annotations-2.16.0-rc1.jar:jar_files/jackson-databind-2.16.0-rc1.jar:jar_files/jackson-core-2.16.0-rc1.jar:jar_files/junit-4.13.2.jar src/*.java`
+   - Make sure you have already compiled all the classes with the command listed above: `java -cp bin:"jar_files/*" Main`
 2. Execution:
+   - Run this command for each test case you want to run: `java -cp "bin:jar_files/*" org.junit.runner.JUnitCore <YourClassHere>`
+   - Replace `<YourClassHere>` with any of the following Test Classes:
+      - BuyerTest
+      - CsvUtilsTest
+      - ItemTest
+      - JsonUtilsTest
+      - MarketplaceTest
+      - PersonTest
+      - SellerTest
+      - StoreTest  
  
 ## Classes
 
