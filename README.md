@@ -85,5 +85,5 @@ All classes have test cases, in the format <Class_Name>Test.java. The JUnit test
 - **Functionality:** Provides utility methods for writing purchase history and product information to CSV files.
 - **Testing:** JUnit tests cover methods related to writing purchase history and product information to CSV files.
 - **Relationships:** Used by the `Marketplace` class to export data to CSV.
-
+- **Importing CSV files:** When importing CSV files, make sure the file follows the correct format. A sample format is shown in stock.csv.
 
