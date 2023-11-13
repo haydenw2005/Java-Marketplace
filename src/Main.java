@@ -1,6 +1,8 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 
@@ -70,6 +72,15 @@ public class Main {
             String option = getMenuInput(1, 5, scanner);
             switch (option) {
                 case "1":
+                    boolean inItemMenu = true;
+                    while (inItemMenu) {
+                        printSellerItemMenu();
+                        try {
+                            inItemMenu = getItemMenuInput(scanner, user, objectMapper);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
                     break;
                 case "2":
                     boolean inStoreMenu = true;
@@ -84,11 +95,11 @@ public class Main {
                     break;
                 case "3":
                     System.out.println("All listed products");
-                    user.getAllStockItems("stock");
+                    user.getAllStoreItems("stock");
                     break;
                 case "4":
                     System.out.println("All sold products");
-                    user.getAllStockItems("sold");
+                    user.getAllStoreItems("sold");
                     break;
                 case "5":
                     System.out.println("Signing out...");
@@ -146,6 +157,104 @@ public class Main {
         return true;
     }
 
+    public static boolean getItemMenuInput(Scanner scanner, Seller user, ObjectMapper objectMapper) throws IOException {
+        String option = getMenuInput(1, 4, scanner);
+        switch (option) {
+
+            case "1":
+                Item newItem = createItem(scanner, user);
+                while (true) {
+                    System.out.println("What is the name of the store you would like to list it in?");
+                    String storeName = scanner.nextLine();
+                    if (user.getStores().containsKey(storeName)) {
+                        user.getStoreByName(storeName).addToStockItems(newItem, user.getUsername(), objectMapper);
+                        break;
+                    }
+                    else System.out.println("Sorry, we can't find a store with this name.");
+                }
+                break;
+            case "2":
+
+                break;
+            case "3":
+                /*System.out.println("What is the name of the item you would like to edit?");
+                String storeName = scanner.nextLine();
+                if (user.getStores().containsKey(storeName)) {
+                    System.out.println("What will the new name of your store be?");
+                    String newStoreName = user.getStoreByItem(item);
+                    user.editItem(itemName, new, objectMapper);
+                }
+                else System.out.println("Sorry, we can't find a store with name " + storeName);*/
+                break;
+            case "4":
+                System.out.println("What item would you like to delete");
+                String deletedItemName = scanner.nextLine();
+                Item itemToDelete = getItemFromAllStores(deletedItemName, user);
+                if (itemToDelete != null){
+                    user.getStoreByItem(itemToDelete).deleteItem(user.getUsername(), deletedItemName, objectMapper);
+                }
+                else System.out.println("Sorry, we can't find an item with name " + deletedItemName);
+                break;
+            case "5":
+                return false;
+        }
+        return true;
+    }
+
+    public static Item getItemFromAllStores(String itemName, Seller user) {
+        ArrayList<Item> items = user.getAllStoreItems("stock");
+        for (Item item : items) {
+            if (item.getName().equals(itemName)) {
+                return item;
+            }
+        }
+        return null;
+
+    }
+    public static double getValidDouble(Scanner scanner, String message) {
+        while(true) {
+            System.out.println(message);
+            try {
+                double input = scanner.nextDouble();
+                scanner.nextLine();
+                if (input <= 0) {
+                    System.out.println("Please enter a number greater than 0.");
+                }
+                else return input;
+            } catch (Exception e) {
+                System.out.println("Please enter a valid number.");
+            }
+        }
+
+    }
+    public static Item createItem(Scanner scanner, Seller user) {
+
+        String name;
+        while (true) {
+            System.out.println("Please enter a name for the product:");
+            name = scanner.nextLine();
+            boolean doesExist = getItemFromAllStores(name, user) != null;
+            if (!doesExist) break;
+            else System.out.println("Sorry, this item already exists. Try another name.");
+        }
+        System.out.println("Please enter a description for the product:");
+        String description = scanner.nextLine();
+        int stock = (int) getValidDouble(scanner, "Please enter how many of these items you would like to list:");
+        double price = getValidDouble(scanner, "Please enter the price of the item:");
+        HashMap<String, Integer> sellerHashmap = new HashMap<String, Integer>();
+        sellerHashmap.put(user.getUsername(), stock);
+        return new Item(name, description, stock, -1, price, null, sellerHashmap);
+
+    }
+
+    public static void printSellerItemMenu() {
+        System.out.println("What would you like to do?");
+        System.out.println("\t(1) List new item ~");
+        System.out.println("\t(2) Restock items ~");
+        System.out.println("\t(3) Edit items ~");
+        System.out.println("\t(4) Delete items ~");
+        System.out.println("\t(5) Back");
+    }
     public static void printSellerStoreMenu() {
         System.out.println("What would you like to do?");
         System.out.println("\t(1) Create a store ~");

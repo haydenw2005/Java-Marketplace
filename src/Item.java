@@ -7,13 +7,13 @@ public class Item {
     private String description;
     private int stock;
     private int count;
-    private int price;
+    private double price;
     private Map<String, Integer> buyersObject;
     private Map<String, Integer> sellersObject;
 
     public Item() {}
     public Item(@JsonProperty("name") String name, @JsonProperty("description") String description, 
-                 @JsonProperty("stock") int stock, @JsonProperty("count") int count, @JsonProperty("price") int price,
+                 @JsonProperty("stock") int stock, @JsonProperty("count") int count, @JsonProperty("price") double price,
                  @JsonProperty("buyersObject") Map<String, Integer> buyersObject,
                  @JsonProperty("sellersObject") Map<String, Integer> sellersObject) {
         this.name = name;
@@ -42,12 +42,8 @@ public class Item {
         //change json
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
-    }
-
-    public int getTotalPrice() {
-        return price*count;
     }
 
     public int totalBoughtByBuyer(String username) {
@@ -80,7 +76,7 @@ public class Item {
     public void setStock(int stock) {
         this.stock = stock;
     }
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
     public Map<String, Integer> getBuyersObject() {
