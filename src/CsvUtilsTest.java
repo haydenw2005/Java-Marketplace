@@ -38,7 +38,7 @@ public class CsvUtilsTest {
     }
 
     @Test
-    public void writePurchaseHistoryToCSV_Success() throws IOException {
+    public void writePurchaseHistoryToCSVSuccess() throws IOException {
         Item item1 = new Item("toaster", "High-performance toaster", 5, 1, 1200.0,
                 new HashMap<>(), new HashMap<>());
         Item item2 = new Item("earphones", "Noise-canceling earphones", 2, 2, 150.0,
@@ -57,7 +57,7 @@ public class CsvUtilsTest {
     }
 
     @Test
-    public void writeProductsToCSV_Success() throws IOException {
+    public void writeProductsToCSVSuccess() throws IOException {
         Store store = new Store("Electronics", new HashMap<>(), new HashMap<>());
         Item item1 = new Item("toaster", "High-performance toaster", 5, 1, 1200.0,
                 new HashMap<>(), new HashMap<>());
@@ -76,12 +76,12 @@ public class CsvUtilsTest {
     }
 
     @Test
-    public void importFromCSV_Success() throws IOException {
+    public void importFromCSVSuccess() throws IOException {
         // create CSV file for test
         File testFile = new File("importTest.csv");
         testFile.createNewFile();
         String[] testData = { "Product,Description,Price,Stock,Store",
-                "toaster,High-performance toaster,1200.0,5,Electronics" };
+            "toaster,High-performance toaster,1200.0,5,Electronics" };
         CsvUtilsTestUtils.writeToFile(testFile, testData);
 
         CsvUtils.importFromCSV("importTest", seller, objectMapper);
@@ -93,60 +93,70 @@ public class CsvUtilsTest {
     }
 
     @Test
-    public void writePurchaseHistoryToCSV_InvalidFilename() {
-        Buyer buyer = new Buyer("testUser", "password", "John", "Doe", "john.doe@example.com",
+    public void writePurchaseHistoryToCSVInvalidFilename() {
+        Buyer newBuyer = new Buyer("testUser", "password", "John", "Doe", "john.doe@example.com",
                 new HashMap<>(), new HashMap<>());
 
-        CsvUtils.writePurchaseHistoryToCSV("", buyer); // Empty filename
+        CsvUtils.writePurchaseHistoryToCSV("", newBuyer); // Empty filename
 
         File file = new File("");
         assertFalse(file.exists());
     }
 
     @Test
-    public void writeProductsToCSV_InvalidFilename() {
-        Seller seller = new Seller("sellerUser", "password", "Seller", "One", "seller.one@example.com",
+    public void writeProductsToCSVInvalidFilename() {
+        Seller newSeller = new Seller("sellerUser", "password", "Seller", "One", "seller.one@example.com",
                 new HashMap<>());
 
-        CsvUtils.writeProductsToCSV("", seller); // Empty filename
+        CsvUtils.writeProductsToCSV("", newSeller); // Empty filename
 
         File file = new File("");
         assertFalse(file.exists());
     }
 
     @Test
-    public void importFromCSV_InvalidFilename() {
-        Seller seller = new Seller("sellerUser", "password", "Seller", "One", "seller.one@example.com",
+    public void importFromCSVInvalidFilename() {
+        Seller newSeller = new Seller("sellerUser", "password", "Seller", "One", "seller.one@example.com",
                 new HashMap<>());
-        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper newObjectMapper = new ObjectMapper();
 
         try {
-            CsvUtils.importFromCSV("", seller, objectMapper); // Empty filename
+            CsvUtils.importFromCSV("", newSeller, newObjectMapper); // Empty filename
 
             // No changes should be made since the filename is invalid
-            assertFalse(seller.getStores().containsKey("Electronics"));
+            assertFalse(newSeller.getStores().containsKey("Electronics"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @Test
-    public void importFromCSV_NonExistingFile() {
-        Seller seller = new Seller("sellerUser", "password", "Seller", "One", "seller.one@example.com",
+    public void importFromCSVNonExistingFile() {
+        Seller newSeller = new Seller("sellerUser", "password", "Seller", "One", "seller.one@example.com",
                 new HashMap<>());
-        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper newObjectMapper = new ObjectMapper();
 
         try {
-            CsvUtils.importFromCSV("nonExistingFile", seller, objectMapper);
+            CsvUtils.importFromCSV("nonExistingFile", newSeller, newObjectMapper);
 
             // No changes should be made since the file does not exist
-            assertFalse(seller.getStores().containsKey("Electronics"));
+            assertFalse(newSeller.getStores().containsKey("Electronics"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 }
 
+/**
+ * Additional utils class.
+ *
+ * <p>
+ * Purdue University -- CS18000 -- Fall 2023
+ * </p>
+ *
+ * @author Soham
+ * @version November 13, 2023
+ */
 class CsvUtilsTestUtils {
     public static void writeToFile(File file, String[] data) throws IOException {
         try (PrintWriter writer = new PrintWriter(new FileOutputStream(file, false))) {

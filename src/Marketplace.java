@@ -38,6 +38,7 @@ public class Marketplace {
     }
 
     public Person enterCredentials(Scanner scanner, ObjectMapper objectMapper) throws IOException {
+        System.out.println();
         System.out.println("Welcome to zBay Market Place! (FULL SCREEN RECOMMENDED)");
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         System.out.println("Would you like to sign in (1) or sign up (2)?");
@@ -170,7 +171,6 @@ public class Marketplace {
 
     public ArrayList<Item> getAllMarketPlaceItems() {
         ArrayList<Item> itemsArray = new ArrayList<>();
-        ;
         for (Map.Entry<String, Seller> sellerEntry : sellers.entrySet()) {
             Seller seller = sellerEntry.getValue();
             Map<String, Store> stores = seller.getStores();
@@ -187,7 +187,6 @@ public class Marketplace {
 
     public ArrayList<Store> getAllStores() {
         ArrayList<Store> storesArray = new ArrayList<>();
-        ;
         for (Map.Entry<String, Seller> sellerEntry : sellers.entrySet()) {
             Seller seller = sellerEntry.getValue();
             Map<String, Store> stores = seller.getStores();
@@ -206,12 +205,12 @@ public class Marketplace {
                 Store store = storeEntry.getValue();
                 Map<String, Item> stockItems = store.getStockItems();
                 for (Map.Entry<String, Item> stockItemEntry : stockItems.entrySet()) {
-                    if (stockItemEntry.getValue().equals(item)) {
+                    if (stockItemEntry.getValue().equalsItem(item)) {
                         return store;
                     }
                     Map<String, Item> soldItems = store.getSoldItems();
                     for (Map.Entry<String, Item> soldItemEntry : soldItems.entrySet()) {
-                        if (soldItemEntry.getValue().equals(item)) {
+                        if (soldItemEntry.getValue().equalsItem(item)) {
                             return store;
                         }
                     }

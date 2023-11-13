@@ -20,11 +20,14 @@ import java.io.IOException;
 public class JsonUtils {
     static final String FILE_PATH = "data.json";
 
-    // IMPORTANT - ADDS OBJECT TO ANY PLACE IN JSON !!!!!!!!!!
-    // nodeDir = name of object to add in JSON
-    // newObjectKey - key of object being added
-    // object - object being added
-    // objectMapper - utlity
+    /**
+     * ADDS OBJECT TO ANY PLACE IN JSON
+     *
+     * @param nodeDir      - String JSON path of object to be removed
+     * @param newObjectKey    - key of the object to be removed
+     * @param object       - object being added
+     * @param objectMapper - objectMapper utility
+     */
     public static void addObjectToJson(String nodeDir, String newObjectKey, Object object, ObjectMapper objectMapper)
             throws IOException {
         JsonNode rootNode = JsonUtils.readJsonFile(objectMapper);
@@ -71,9 +74,7 @@ public class JsonUtils {
     public static boolean hasKey(String nodeDir, String objectKey, ObjectMapper objectMapper) throws IOException {
         JsonNode rootNode = JsonUtils.readJsonFile(objectMapper);
         JsonNode nestedObject = rootNode.at(nodeDir);
-        if (((ObjectNode) nestedObject).has(objectKey))
-            return true;
-        return false;
+        return ((ObjectNode) nestedObject).has(objectKey);
     }
 
     public static JsonNode readJsonFile(ObjectMapper objectMapper) throws IOException {

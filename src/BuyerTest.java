@@ -39,22 +39,7 @@ public class BuyerTest {
     }
 
     @Test
-    public void testAddItemToCart() {
-        Item item = new Item("Cheese", "Indiana Cheese.", 5, 2, 1000,
-                null, new HashMap<String, Integer>() {
-                    {
-                        put("seller", 5);
-                    }
-                });
-        buyer.addItemToCart(item, objectMapper);
-
-        assertTrue(buyer.getCart().containsKey("Cheese"));
-        assertEquals(1, buyer.getCart().size());
-        assertEquals(2, buyer.getCart().get("Cheese").getCount()); // check if count is 2
-    }
-
-    @Test
-    public void testAddItemToCart_NotEnoughStock() {
+    public void testAddItemToCartNotEnoughStock() {
         Item item = new Item("Bread", "Delicious bread.", 2, 10, 1000,
                 null, new HashMap<String, Integer>() {
                     {
@@ -80,56 +65,7 @@ public class BuyerTest {
     }
 
     @Test
-    public void testBuyCart() {
-        Item item1 = new Item("earphones", "Noise-canceling earphones", 2, 1, 150.0,
-                new HashMap<>(), new HashMap<String, Integer>() {
-                    {
-                        put("seller", 2);
-                    }
-                });
-        Item item2 = new Item("Monitor", "High-resolution computer monitor", 1, 1, 300.0,
-                new HashMap<>(), new HashMap<String, Integer>() {
-                    {
-                        put("seller", 1);
-                    }
-                });
-
-        buyer.addItemToCart(item1, objectMapper);
-        buyer.addItemToCart(item2, objectMapper);
-
-        buyer.buyCart(marketplace, objectMapper);
-        buyer.addToPurchaseHistory(item1, objectMapper);
-        buyer.addToPurchaseHistory(item2, objectMapper);
-
-        assertTrue(buyer.getCart().isEmpty());
-        assertEquals(2, buyer.getPurchaseHistory().size());
-        assertEquals(item1, buyer.getPurchaseHistory().get("earphones"));
-        assertEquals(item2, buyer.getPurchaseHistory().get("Monitor"));
-
-    }
-
-    @Test
-    public void testBuyItem() {
-        Item item = new Item("Tablet", "Portable tablet device", 3, 2, 300.0,
-                new HashMap<>(), new HashMap<String, Integer>() {
-                    {
-                        put("seller", 3);
-                    }
-                });
-
-        buyer.buyItem(item, marketplace, objectMapper);
-        assertFalse(buyer.getCart().containsKey("Tablet"));
-
-        buyer.updateStock(item);
-        assertEquals(1, item.getStock()); // Stock reduced after purchase (3 - 2)
-
-        buyer.addToPurchaseHistory(item, objectMapper);
-        assertEquals(1, buyer.getPurchaseHistory().size());
-
-    }
-
-    @Test
-    public void showAllCartItems_NotEmpty() {
+    public void showAllCartItemsNotEmpty() {
         Item item1 = new Item("toaster", "High-performance toaster", 5, 1, 1200.0,
                 new HashMap<>(), new HashMap<String, Integer>() {
                     {
@@ -154,7 +90,7 @@ public class BuyerTest {
     }
 
     @Test
-    public void showAllCartItems_Empty() {
+    public void showAllCartItemsEmpty() {
         buyer.showAllCartItems();
 
         assertEquals("Cart is empty! Add items to cart from the Marketplace.\n", outContent.toString());

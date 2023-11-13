@@ -2,11 +2,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,7 +45,7 @@ public class JsonUtilsTest {
     }
 
     @Test
-    public void addObjectToJson_ValidInput() throws IOException {
+    public void addObjectToJsonValidInput() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         String nodeDir = "/sellers";
         String newObjectKey = seller.getUsername();
@@ -62,7 +59,7 @@ public class JsonUtilsTest {
     }
 
     @Test
-    public void removeObjectFromJson_ValidInput() throws IOException {
+    public void removeObjectFromJsonValidInput() throws IOException {
 
         ObjectMapper objectMapper = new ObjectMapper();
         String nodeDir = "/sellers";
@@ -98,7 +95,7 @@ public class JsonUtilsTest {
     }
 
     @Test
-    public void hasKey_ValidInput() throws IOException {
+    public void hasKeyValidInput() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         String nodeDir = "/sellers";
         String objectKey = seller.getUsername();
