@@ -31,6 +31,17 @@
               "sellersObject" : {
                 "seller_1_username" : 3
               }
+            },
+            "t" : {
+              "name" : "t",
+              "description" : "t",
+              "stock" : 3,
+              "count" : -1,
+              "price" : 3.0,
+              "buyersObject" : null,
+              "sellersObject" : {
+                "seller_1_username" : 3
+              }
             }
           },
           "soldItems" : {

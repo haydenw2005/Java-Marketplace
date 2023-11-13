@@ -25,12 +25,12 @@ public class Main {
 
         try {
             Marketplace marketplace = JsonUtils.objectByKey(objectMapper, "", Marketplace.class);
-            Person user = enterCredentials(scanner, objectMapper, marketplace);
+            Person user = marketplace.enterCredentials(scanner, objectMapper);
             if (user instanceof Buyer) {
-                startBuyerFlow((Buyer) user, marketplace, scanner, objectMapper);
+                marketplace.startBuyerFlow((Buyer) user, scanner, objectMapper);
 
             } else if (user instanceof Seller) {
-                startSellerFlow((Seller) user, marketplace, scanner, objectMapper);
+                marketplace.startSellerFlow((Seller) user, scanner, objectMapper);
             }
 
         } catch (Exception e) {
@@ -38,8 +38,10 @@ public class Main {
         }
     }
 
-    public static Person enterCredentials(Scanner scanner, ObjectMapper objectMapper, Marketplace marketplace) throws IOException {
-        System.out.println("Welcome. Would you like to sign in (1) or sign up (2)?");
+    /*public static Person enterCredentials(Scanner scanner, ObjectMapper objectMapper, Marketplace marketplace) throws IOException {
+        System.out.println("Welcome to zBay Market Place! (FULL SCREEN RECOMMENDED)");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("Would you like to sign in (1) or sign up (2)?");
         String response = scanner.nextLine();
         Person user = null;
         while (!(response.equals("1") || response.equals("2"))) {
@@ -104,6 +106,7 @@ public class Main {
             }
         }
     }
+
 
     public static void startSellerFlow(Seller user, Marketplace marketplace, Scanner scanner,
             ObjectMapper objectMapper) {
@@ -388,6 +391,6 @@ public class Main {
             System.out.println("Sorry, could not update user.");
             return null;
         }
-    }
+    }*/
 
 }
