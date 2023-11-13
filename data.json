@@ -94,6 +94,14 @@
           }
         }
       }
+    },
+    "testseller" : {
+      "username" : "testseller",
+      "password" : "pass",
+      "firstName" : "john",
+      "lastName" : "doe",
+      "stores" : { },
+      "allBuyers" : { }
     }
   },
   "buyers" : {
