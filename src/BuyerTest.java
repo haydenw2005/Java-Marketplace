@@ -173,7 +173,7 @@ public class BuyerTest {
 
         buyer.showPurchaseHistory();
 
-        String expectedOutput = "\nPurchase history:\n\n" +
+        String expectedOutput = "\nPurchase history:\n" +
                 "Product: toaster | Price: 1200.0 | Count: 1\n" +
                 "Product: earphones | Price: 150.0 | Count: 2\n";
         assertEquals(expectedOutput, outContent.toString());
