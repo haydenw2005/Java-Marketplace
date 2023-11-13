@@ -67,7 +67,7 @@ public class Main {
                 input = scanner.nextLine();
             }
             if (input.equals("1")) {
-                marketplace.viewStoreInfo(scanner);
+                marketplace.viewStoreInfo(scanner, (Buyer) user, objectMapper);
             } else if (input.equals("2")) {
                 marketplace.buyerFlow(scanner, (Buyer) user, objectMapper);
             } else if (input.equals("3")) {

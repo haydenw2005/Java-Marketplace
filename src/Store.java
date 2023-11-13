@@ -1,6 +1,7 @@
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Map;
+import java.util.ArrayList;
 
 public class Store {
     private String name;
@@ -31,5 +32,35 @@ public class Store {
     }
     public void setSoldItems(Map<String, Item> soldItems) {
         this.soldItems = soldItems;
+    }
+
+    public int getNumProductsSold() {
+        int count = 0;
+        for (Map.Entry<String, Item> itemEntry : soldItems.entrySet()) {
+            count += itemEntry.getValue().getStock();
+        }
+
+        return count;
+    }
+
+    public ArrayList<Item> getProductsPurchasedFromStore(Marketplace marketplace, Buyer buyer) {
+        ArrayList<Item> productsPurchased = new ArrayList<Item>();
+        ArrayList<Item> purchasedItems = buyer.getPurchasedItems();
+        for (int i = 0; i < purchasedItems.size(); i++) {
+            if (marketplace.getStore(purchasedItems.get(i)).getName().equals(name)) {
+                productsPurchased.add(purchasedItems.get(i));
+            }
+        }
+        return productsPurchased;
+    }
+
+    public int getTotalItemsPurchased(Marketplace marketplace, Buyer buyer) {
+        int count = 0;
+        ArrayList<Item> list = this.getProductsPurchasedFromStore(marketplace, buyer);
+        for (int i = 0; i < list.size(); i++) {
+            count += list.get(i).getCount();
+        }
+
+        return count;
     }
 }
