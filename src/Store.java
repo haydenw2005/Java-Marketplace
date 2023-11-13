@@ -46,13 +46,7 @@ public class Store {
         }
     }
 
-    public void restockItem() {
 
-    }
-
-    public void editItemAttributes() {
-
-    }
 
     public void deleteItem(String username, String deletedItemName, ObjectMapper objectMapper) {
         try {

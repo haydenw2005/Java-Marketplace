@@ -56,6 +56,27 @@ public class Seller extends Person {
         return storeItems;
     }
 
+    public HashMap<String, Integer> getAllBuyers()  {
+        HashMap<String, Integer> personCount = new HashMap<>();
+        for (Map.Entry<String, Store> storeEntry : stores.entrySet()) {
+            Store store = storeEntry.getValue();
+            Map<String, Item> items = store.getSoldItems();
+            for (Map.Entry<String, Item> itemEntry : items.entrySet()) {
+                Item item = itemEntry.getValue();
+                Map<String, Integer> peopleMap = item.getBuyersObject();
+                for (Map.Entry<String, Integer> peopleEntry : peopleMap.entrySet()) {
+                    String key = peopleEntry.getKey();
+                    if (!personCount.containsKey(key)) {
+                        personCount.put(key, peopleEntry.getValue());
+                    } else {
+                        personCount.put(key, personCount.get(key) + peopleEntry.getValue());
+                    }
+                }
+            }
+        }
+        return personCount;
+    }
+
     public Store getStoreByItem(Item item) {
         for (Map.Entry<String, Store> storeEntry : stores.entrySet()) {
             Store store = storeEntry.getValue();
