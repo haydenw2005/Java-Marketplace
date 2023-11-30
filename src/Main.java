@@ -19,7 +19,7 @@ public class Main {
 
         try {
             Marketplace marketplace = JsonUtils.objectByKey(objectMapper, "", Marketplace.class);
-            Person user = marketplace.enterCredentials(scanner, objectMapper);
+            Person user = marketplace.enterCredentials(objectMapper);
             if (user instanceof Buyer) {
                 marketplace.startBuyerFlow((Buyer) user, scanner, objectMapper);
 

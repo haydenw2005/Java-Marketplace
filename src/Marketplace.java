@@ -2,6 +2,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.*;
+import javax.swing.JOptionPane;
 
 /**
  * Represents a marketplace where buyers and sellers interact to buy and sell
@@ -37,21 +38,29 @@ public class Marketplace {
         return sellers;
     }
 
-    public Person enterCredentials(Scanner scanner, ObjectMapper objectMapper) throws IOException {
-        System.out.println();
-        System.out.println("Welcome to zBay Market Place! (FULL SCREEN RECOMMENDED)");
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        System.out.println("Would you like to sign in (1) or sign up (2)?");
-        String response = scanner.nextLine();
-        Person user = null;
-        while (!(response.equals("1") || response.equals("2"))) {
-            System.out.println("Invalid. Please enter 1 (sign in) or 2 (sign up).");
-            response = scanner.nextLine();
+    public Person enterCredentials(ObjectMapper objectMapper) throws IOException {
+        String[] options = { "Sign in", "Sign up" };
+        int response;
+        boolean error;
+        do {
+            error = false;
+            response = JOptionPane.showOptionDialog(null, "Welcome to zBay Marketplace!",
+                    "Welcome", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE,
+                    null, options, options[0]);
+
+            if (!(response == 0 || response == 1)) {
+                JOptionPane.showMessageDialog(null, "Please choose to sign in or sign up",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                error = true;
+            }
         }
-        if (response.equals("1")) {
-            user = signIn(scanner);
+        while (error);
+
+        Person user;
+        if (response == 0) {
+            user = signIn();
         } else {
-            user = signUp(scanner, objectMapper);
+            user = signUp(objectMapper);
         }
         return user;
     }
@@ -67,46 +76,119 @@ public class Marketplace {
     }
 
     // METHOD TO SIGN IN, RETURN USER OBJECT
-    public Person signIn(Scanner scanner) {
+    public Person signIn() {
         while (true) {
-            System.out.println("Please enter your username:");
-            String username = scanner.nextLine();
-            System.out.println("Please enter your password:");
-            String password = scanner.nextLine();
+            String username = JOptionPane.showInputDialog(null, "Please enter your username:",
+                    "zBay Marketplace", JOptionPane.QUESTION_MESSAGE);
+            String password = JOptionPane.showInputDialog(null, "Please enter your password:",
+                    "zBay Marketplace", JOptionPane.QUESTION_MESSAGE);
             if (buyers.containsKey(username) && buyers.get(username).getPassword().equals(password)) {
                 return getBuyers().get(username);
             } else if (sellers.containsKey(username) && sellers.get(username).getPassword().equals(password)) {
                 return getSellers().get(username);
             } else {
-                System.out.println("Sorry, your credentials are invalid. Please try again");
+                JOptionPane.showMessageDialog(null, "Your credentials are invalid. Please try again",
+                        "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
 
     // METHOD TO SIGN UP, RETURN USER OBJECT
-    public Person signUp(Scanner scanner, ObjectMapper objectMapper) throws IOException {
-        System.out.println("Please enter your permanent username:");
-        String username = scanner.nextLine();
-        while (buyers.containsKey(username) || sellers.containsKey(username)) {
-            System.out.println("Username taken. Please try again:");
-            username = scanner.nextLine();
+    public Person signUp(ObjectMapper objectMapper) throws IOException {
+        boolean error;
+        String username;
+        do {
+            error = false;
+            username = JOptionPane.showInputDialog(null, "Please enter your permanent username:",
+                    "zBay Marketplace", JOptionPane.QUESTION_MESSAGE);
+
+            if (username.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Please enter a valid username",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                error = true;
+            }
+
+            if (buyers.containsKey(username) || sellers.containsKey(username)) {
+                JOptionPane.showMessageDialog(null, "Username taken. Please try again",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                error = true;
+            }
         }
-        System.out.println("Please enter your password:");
-        String password = scanner.nextLine();
-        System.out.println("Please enter your first name:");
-        String firstName = scanner.nextLine();
-        System.out.println("Please enter your last name:");
-        String lastName = scanner.nextLine();
-        System.out.println("Please enter your email:");
-        String email = scanner.nextLine();
-        System.out.println("Would you like to create a buyer (1) or seller (2) account? " +
-                "Please enter respective number.");
-        String accountType = scanner.nextLine();
-        while (!(accountType.equals("1") || accountType.equals("2"))) {
-            System.out.println("Invalid. Please enter 1 (buyer) or 2 (seller).");
-            accountType = scanner.nextLine();
+        while (error);
+
+        String password;
+        do {
+            error = false;
+            password = JOptionPane.showInputDialog(null, "Please enter your password:",
+                    "zBay Marketplace", JOptionPane.QUESTION_MESSAGE);
+
+            if (password.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Please enter a valid password",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                error = true;
+            }
         }
-        if (accountType.equals("1")) {
+        while (error);
+
+        String firstName;
+        do {
+            error = false;
+            firstName = JOptionPane.showInputDialog(null, "Please enter your first name:",
+                    "zBay Marketplace", JOptionPane.QUESTION_MESSAGE);
+
+            if (firstName.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Please enter a valid name",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                error = true;
+            }
+        }
+        while (error);
+
+        String lastName;
+        do {
+            error = false;
+            lastName = JOptionPane.showInputDialog(null, "Please enter your last name:",
+                    "zBay Marketplace", JOptionPane.QUESTION_MESSAGE);
+
+            if (lastName.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Please enter a valid name",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                error = true;
+            }
+        }
+        while (error);
+
+        String email;
+        do {
+            error = false;
+            email = JOptionPane.showInputDialog(null, "Please enter your email:",
+                    "zBay Marketplace", JOptionPane.QUESTION_MESSAGE);
+
+            if (email.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Please enter a valid email",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                error = true;
+            }
+        }
+        while (error);
+
+        String[] options = { "Buyer", "Seller" };
+        int accountType;
+        do {
+            error = false;
+            accountType = JOptionPane.showOptionDialog(null, "What type of account would you like to create?",
+                    "Welcome", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE,
+                    null, options, options[0]);
+
+            if (!(accountType == 0 || accountType == 1)) {
+                JOptionPane.showMessageDialog(null, "Please choose an account type",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                error = true;
+            }
+        }
+        while (error);
+
+        if (accountType == 0) {
             Buyer buyer = new Buyer(username, password, firstName, lastName, email, new HashMap<>(), new HashMap<>());
             addBuyerAccount(username, buyer, objectMapper);
             return buyer;
