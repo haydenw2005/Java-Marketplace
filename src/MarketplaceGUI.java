@@ -8,6 +8,7 @@ public class MarketplaceGUI extends JComponent implements Runnable {
     private Marketplace marketplace;
     private Person user;
 
+    //Home page
     JButton storeInfoButton;
     JButton marketplaceButton;
     JButton cartButton;
@@ -17,65 +18,130 @@ public class MarketplaceGUI extends JComponent implements Runnable {
     JButton deleteAccountButton;
     JButton signOutButton;
 
+    //Marketplace
+    JButton searchButton;
+    JTextField searchText;
+    JButton sortPriceButton;
+    JButton sortQuantityButton;
+    JButton backButton;
+    JButton refreshButton;
+
     public MarketplaceGUI (Marketplace marketplace, Person user) {
         this.marketplace = marketplace;
         this.user = user;
     }
 
-    ActionListener actionListener = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (e.getSource() == storeInfoButton) {
 
-            } else if (e.getSource() == marketplaceButton) {
-
-            }
-        }
-    };
 
     public void run() {
+
         if (user instanceof Buyer) {
-            JFrame frame = new JFrame();
-            frame.setTitle("zBay Marketplace");
+            JFrame homeFrame = new JFrame();
+            homeFrame.setTitle("Home");
 
-            Container content = frame.getContentPane();
+            homeFrame.setSize(600, 400);
+            homeFrame.setLocationRelativeTo(null);
+            homeFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            homeFrame.setVisible(true);
 
-            content.setLayout(new BorderLayout());
-            content.add(this, BorderLayout.CENTER);
+            JFrame marketplaceFrame = new JFrame();
+            marketplaceFrame.setTitle("zBay Marketplace");
 
-            frame.setSize(600, 400);
-            frame.setLocationRelativeTo(null);
-            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            frame.setLayout(new GridLayout());
-            frame.setVisible(true);
+            marketplaceFrame.setSize(600, 400);
+            marketplaceFrame.setLocationRelativeTo(null);
+            marketplaceFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            marketplaceFrame.setVisible(false);
 
             storeInfoButton = new JButton("View store information");
-            storeInfoButton.addActionListener(actionListener);
             marketplaceButton = new JButton("View marketplace");
-            marketplaceButton.addActionListener(actionListener);
             cartButton = new JButton("View cart");
-            cartButton.addActionListener(actionListener);
             purchaseHistoryButton = new JButton("View purchase history");
-            purchaseHistoryButton.addActionListener(actionListener);
             exportButton = new JButton("Export purchase history to CSV");
-            exportButton.addActionListener(actionListener);
             editAccountButton = new JButton("Edit account");
-            editAccountButton.addActionListener(actionListener);
             deleteAccountButton = new JButton("Delete Account");
-            deleteAccountButton.addActionListener(actionListener);
             signOutButton = new JButton("Sign out");
+
+            JPanel homePanel = new JPanel();
+            homePanel.setLayout(new FlowLayout());
+
+            homePanel.add(storeInfoButton);
+            homePanel.add(marketplaceButton);
+            homePanel.add(cartButton);
+            homePanel.add(purchaseHistoryButton);
+            homePanel.add(exportButton);
+            homePanel.add(editAccountButton);
+            homePanel.add(deleteAccountButton);
+            homePanel.add(signOutButton);
+            homeFrame.add(homePanel, BorderLayout.CENTER);
+
+            JPanel marketplacePanel = new JPanel();
+            marketplacePanel.setLayout(new FlowLayout());
+
+            searchButton = new JButton("Search");
+            searchText = new JTextField("", 10);
+            sortPriceButton = new JButton("Sort by price");
+            sortQuantityButton = new JButton("Sort by quantity");
+            backButton = new JButton("Back");
+            refreshButton = new JButton("Refresh");
+
+            marketplacePanel.add(searchButton);
+            marketplacePanel.add(searchText);
+            marketplacePanel.add(sortPriceButton);
+            marketplacePanel.add(sortQuantityButton);
+            marketplacePanel.add(backButton);
+            marketplacePanel.add(refreshButton);
+            marketplaceFrame.add(marketplacePanel);
+
+            ActionListener actionListener = new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (e.getSource() == storeInfoButton) {
+
+                    } else if (e.getSource() == marketplaceButton) {
+                        homeFrame.setVisible(false);
+                        marketplaceFrame.setVisible(true);
+                    } else if (e.getSource() == cartButton) {
+
+                    }  else if (e.getSource() == purchaseHistoryButton) {
+
+                    } else if (e.getSource() == exportButton) {
+
+                    } else if (e.getSource() == editAccountButton) {
+
+                    } else if (e.getSource() == deleteAccountButton) {
+
+                    } else if (e.getSource() == signOutButton) {
+
+                    } else if (e.getSource() == searchButton) {
+
+                    } else if (e.getSource() == sortPriceButton) {
+
+                    } else if (e.getSource() == sortQuantityButton) {
+
+                    } else if (e.getSource() == backButton) {
+                        marketplaceFrame.setVisible(false);
+                        homeFrame.setVisible(true);
+                    } else if (e.getSource() == refreshButton) {
+
+                    }
+                }
+            };
+
+            storeInfoButton.addActionListener(actionListener);
+            marketplaceButton.addActionListener(actionListener);
+            cartButton.addActionListener(actionListener);
+            purchaseHistoryButton.addActionListener(actionListener);
+            exportButton.addActionListener(actionListener);
+            editAccountButton.addActionListener(actionListener);
+            deleteAccountButton.addActionListener(actionListener);
             signOutButton.addActionListener(actionListener);
 
-            JPanel panel = new JPanel();
-            panel.add(storeInfoButton);
-            panel.add(marketplaceButton);
-            panel.add(cartButton);
-            panel.add(purchaseHistoryButton);
-            panel.add(exportButton);
-            panel.add(editAccountButton);
-            panel.add(deleteAccountButton);
-            panel.add(signOutButton);
-            content.add(panel, BorderLayout.NORTH);
+            searchButton.addActionListener(actionListener);
+            sortPriceButton.addActionListener(actionListener);
+            sortQuantityButton.addActionListener(actionListener);
+            backButton.addActionListener(actionListener);
+            refreshButton.addActionListener(actionListener);
+
         } else {
 
         }
