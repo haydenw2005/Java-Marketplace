@@ -1,5 +1,6 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Scanner;
+import javax.swing.*;
 
 /**
  * Main class representing the entry point for the marketplace application.
@@ -20,12 +21,18 @@ public class Main {
         try {
             Marketplace marketplace = JsonUtils.objectByKey(objectMapper, "", Marketplace.class);
             Person user = marketplace.enterCredentials(objectMapper);
+            SwingUtilities.invokeLater(new MarketplaceGUI(marketplace, user));
+
+            /*
             if (user instanceof Buyer) {
                 marketplace.startBuyerFlow((Buyer) user, scanner, objectMapper);
 
             } else if (user instanceof Seller) {
                 marketplace.startSellerFlow((Seller) user, scanner, objectMapper);
             }
+
+             */
+
 
         } catch (Exception e) {
             e.printStackTrace();
