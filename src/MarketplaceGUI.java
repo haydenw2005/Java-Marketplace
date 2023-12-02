@@ -13,6 +13,7 @@ public class MarketplaceGUI extends JComponent implements Runnable {
     private ObjectMapper objectMapper;
     private ArrayList<Item> itemsList;
     private Item selectedProduct;
+    private JList storeInfoList = new JList();
 
     public MarketplaceGUI (Marketplace marketplace, Person user, ObjectMapper objectMapper) {
         this.marketplace = marketplace;
@@ -141,36 +142,28 @@ public class MarketplaceGUI extends JComponent implements Runnable {
 
             JPanel storeInfoTopPanel = new JPanel();
             storeInfoTopPanel.setLayout(new FlowLayout());
-            storeInfoTopPanel.setSize(600, 200);
-            storeInfoTopPanel.setLocation(0, 0);
 
             JLabel listStoresLabel = new JLabel("View stores by: ");
             JButton productsSoldButton = new JButton("Number of products sold");
             JButton productsPurchasedButton = new JButton("Products you purchased");
+            JButton sortByProductsSoldButton = new JButton("Sort by number of products sold");
+            JButton sortByProductsBoughtButton = new JButton("Sort by number of products bought");
+            sortByProductsBoughtButton.setVisible(false);
 
             storeInfoTopPanel.add(listStoresLabel);
             storeInfoTopPanel.add(productsSoldButton);
             storeInfoTopPanel.add(productsPurchasedButton);
-
+            storeInfoTopPanel.add(sortByProductsSoldButton);
+            storeInfoTopPanel.add(sortByProductsBoughtButton);
 
             JPanel storeInfoBottomPanel = new JPanel();
             storeInfoBottomPanel.setLayout(new FlowLayout());
-            storeInfoTopPanel.setSize(600, 200);
-            storeInfoTopPanel.setLocation(0, 200);
 
-
-            ArrayList<Store> allStores = marketplace.getAllStores();
-            String[] storeInfoArray = new String[allStores.size()];
-            for (int i = 0; i < allStores.size(); i++) {
-                storeInfoArray[i] = allStores.get(i).getName() + " | Products sold: " +
-                        allStores.get(i).numProductsSold();
-            }
-            JList storeInfo = new JList(storeInfoArray);
-
-            storeInfoBottomPanel.add(storeInfo);
+            updateStoreInfoList(true, false);
+            storeInfoBottomPanel.add(storeInfoList);
 
             storeInfoFrame.add(storeInfoTopPanel);
-            storeInfoFrame.add(storeInfoBottomPanel);
+            storeInfoFrame.add(storeInfoBottomPanel, BorderLayout.SOUTH);
 
             ActionListener actionListener = new ActionListener() {
                 @Override
@@ -180,9 +173,17 @@ public class MarketplaceGUI extends JComponent implements Runnable {
                         homeFrame.setVisible(false);
                         storeInfoFrame.setVisible(true);
                     } else if (e.getSource() == productsSoldButton) {
-
+                        sortByProductsBoughtButton.setVisible(false);
+                        sortByProductsSoldButton.setVisible(true);
+                        updateStoreInfoList(true, false);
                     } else if (e.getSource() == productsPurchasedButton) {
-
+                        sortByProductsSoldButton.setVisible(false);
+                        sortByProductsBoughtButton.setVisible(true);
+                        updateStoreInfoList(false, false);
+                    } else if (e.getSource() == sortByProductsSoldButton) {
+                        updateStoreInfoList(true, true);
+                    } else if (e.getSource() == sortByProductsBoughtButton) {
+                        updateStoreInfoList(false, true);
                     } else if (e.getSource() == marketplaceButton) {
                         marketplaceBottomPanel.add(backToHomeButton);
                         homeFrame.setVisible(false);
@@ -264,6 +265,8 @@ public class MarketplaceGUI extends JComponent implements Runnable {
 
             productsSoldButton.addActionListener(actionListener);
             productsPurchasedButton.addActionListener(actionListener);
+            sortByProductsSoldButton.addActionListener(actionListener);
+            sortByProductsBoughtButton.addActionListener(actionListener);
 
         } else {
 
@@ -276,5 +279,48 @@ public class MarketplaceGUI extends JComponent implements Runnable {
                 return itemsList.get(i);
         }
         return null;
+    }
+
+    private void updateStoreInfoList(boolean byProductsSold, boolean sorted) {
+        ArrayList<Store> allStores = marketplace.getAllStores();
+        String[] storeInfoArray = new String[allStores.size()];
+        DefaultListModel listModel = new DefaultListModel();
+        if (byProductsSold) {
+            if (sorted) {
+                allStores = marketplace.sortByProductsSold(allStores);
+            }
+            for (int i = 0; i < allStores.size(); i++) {
+                listModel.addElement(allStores.get(i).getName() + " | Products sold: " +
+                        allStores.get(i).numProductsSold());
+            }
+        } else {
+            if (sorted) {
+                allStores = marketplace.sortByProductsBought(allStores, (Buyer) user);
+            }
+
+            ArrayList<ArrayList<Item>> list = new ArrayList<ArrayList<Item>>();
+            for (int i = 0; i < allStores.size(); i++) {
+                list.add(allStores.get(i).getProductsPurchasedFromStore(marketplace, (Buyer) user));
+            }
+
+            for (int i = 0; i < allStores.size(); i++) {
+                String s = null;
+                if (list.get(i).size() > 0) {
+                    s = "From " + allStores.get(i).getName() + ", you purchased: ";
+                    for (int j = 0; j < list.get(i).size() - 1; j++) {
+                        s += list.get(i).get(j).getCount() + " " +
+                                list.get(i).get(j).getName() + ", ";
+                    }
+                    s += list.get(i).get(list.get(i).size() - 1).getCount() + " " +
+                            list.get(i).get(list.get(i).size() - 1).getName();
+
+                } else {
+                    s = "From " + allStores.get(i).getName() + ", you purchased: nothing";
+                }
+                listModel.addElement(s);
+            }
+        }
+
+        storeInfoList.setModel(listModel);
     }
 }

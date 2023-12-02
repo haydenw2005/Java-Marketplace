@@ -369,7 +369,7 @@ public class Marketplace {
     public ArrayList<Store> sortByProductsBought(ArrayList<Store> stores, Buyer buyer) {
         for (int i = 0; i < stores.size(); i++) {
             for (int j = i; j < stores.size() - 1; j++) {
-                if (stores.get(i).getTotalItemsPurchased(this, buyer) > stores.get(j + 1).getTotalItemsPurchased(this,
+                if (stores.get(i).getTotalItemsPurchased(this, buyer) < stores.get(j + 1).getTotalItemsPurchased(this,
                         buyer)) {
                     Store temp = stores.get(i);
                     stores.set(i, stores.get(j + 1));
