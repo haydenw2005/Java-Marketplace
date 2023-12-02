@@ -21,7 +21,7 @@ public class Main {
         try {
             Marketplace marketplace = JsonUtils.objectByKey(objectMapper, "", Marketplace.class);
             Person user = marketplace.enterCredentials(objectMapper);
-            SwingUtilities.invokeLater(new MarketplaceGUI(marketplace, user));
+            SwingUtilities.invokeLater(new MarketplaceGUI(marketplace, user, objectMapper));
 
             /*
             if (user instanceof Buyer) {

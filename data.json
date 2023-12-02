@@ -31,17 +31,6 @@
               "sellersObject" : {
                 "seller_1_username" : 3
               }
-            },
-            "t" : {
-              "name" : "t",
-              "description" : "t",
-              "stock" : 3,
-              "count" : -1,
-              "price" : 3.0,
-              "buyersObject" : null,
-              "sellersObject" : {
-                "seller_1_username" : 3
-              }
             }
           },
           "soldItems" : {
@@ -95,6 +84,19 @@
               },
               "sellersObject" : {
                 "seller_1_username" : 1
+              }
+            },
+            "t" : {
+              "name" : "t",
+              "description" : "t",
+              "stock" : 3,
+              "count" : 1,
+              "price" : 3.0,
+              "buyersObject" : {
+                "test_buyer" : 1
+              },
+              "sellersObject" : {
+                "seller_1_username" : 4
               }
             }
           }
@@ -328,7 +330,21 @@
       "lastName" : "Buyer",
       "email" : "test.buyer@example.com",
       "cart" : { },
-      "purchaseHistory" : { },
+      "purchaseHistory" : {
+        "t" : {
+          "name" : "t",
+          "description" : "t",
+          "stock" : -1,
+          "count" : 1,
+          "price" : 3.0,
+          "buyersObject" : {
+            "test_buyer" : 1
+          },
+          "sellersObject" : {
+            "seller_1_username" : 4
+          }
+        }
+      },
       "purchasedItems" : [ ]
     },
     "testingbuyer" : {

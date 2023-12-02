@@ -312,11 +312,8 @@ public class Marketplace {
         }
     }
 
-    public ArrayList<Item> searchProducts(Scanner scanner, ArrayList<Item> items) {
+    public ArrayList<Item> searchProducts(String search, ArrayList<Item> items) {
         ArrayList<Item> searchResults = new ArrayList<>();
-
-        System.out.println("Search for a product: ");
-        String search = scanner.nextLine();
         search = search.toUpperCase();
 
         for (int i = 0; i < items.size(); i++) {
@@ -394,7 +391,7 @@ public class Marketplace {
         String input = scanner.nextLine();
 
         if (input.toLowerCase().equals("a")) {
-            itemsList = this.searchProducts(scanner, itemsList);
+   //         itemsList = this.searchProducts(scanner, itemsList);
             if (itemsList.size() == 0) {
                 System.out.println("No matches");
                 this.showMarketplace(scanner, buyer, objectMapper);
@@ -489,7 +486,7 @@ public class Marketplace {
             else
                 System.out.println(numItems + " items purchased!");
 
-            buyer.buyItem(item, this, objectMapper); // handles stock updating/cart removing etc.
+      //      buyer.buyItem(item, this, objectMapper); // handles stock updating/cart removing etc.
             return item;
         } else if (input.equals("2")) {
             buyer.addItemToCart(item, objectMapper);

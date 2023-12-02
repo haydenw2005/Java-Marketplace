@@ -1,6 +1,7 @@
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
@@ -87,30 +88,31 @@ public class Buyer extends Person {
 
     // other functions
     public void addItemToCart(Item item, ObjectMapper objectMapper) {
-        if (item.getCount() <= item.getStock()) {
-            try {
-                String cartDir = "/buyers/" + this.getUsername() + "/cart";
-                String itemDir = cartDir + "/" + item.getName();
-                if (JsonUtils.hasKey(cartDir, item.getName(), objectMapper)) {
-                    // iterate item count if item already exists in cart
-                    Item cartItem = JsonUtils.objectByKey(objectMapper, itemDir, Item.class);
-                    item.setCount(cartItem.getCount() + item.getCount());
-                }
-                JsonUtils.addObjectToJson(cartDir, item.getName(), item, objectMapper);
-                cart.put(item.getName(), item);
-                // System.out.println("Item added to cart successfully.");
-            } catch (Exception e) {
-                System.out.println("Error adding item to cart.");
-                e.printStackTrace();
+        try {
+            String cartDir = "/buyers/" + this.getUsername() + "/cart";
+            String itemDir = cartDir + "/" + item.getName();
+            if (JsonUtils.hasKey(cartDir, item.getName(), objectMapper)) {
+                // iterate item count if item already exists in cart
+                Item cartItem = JsonUtils.objectByKey(objectMapper, itemDir, Item.class);
+                item.setCount(cartItem.getCount() + item.getCount());
             }
-        } else {
-            System.out.println("Error, not enough stock.");
+            JsonUtils.addObjectToJson(cartDir, item.getName(), item, objectMapper);
+            cart.put(item.getName(), item);
+            // System.out.println("Item added to cart successfully.");
+
+            JOptionPane.showMessageDialog(null, "Item added to cart", "Success!",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error adding item to cart",
+                    "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    public void buyItem(Item item, Marketplace marketplace, ObjectMapper objectMapper) {
-        if (item.getCount() <= item.getStock()) {
-            try {
+    public void buyItem(Item item, Marketplace marketplace, ObjectMapper objectMapper, String numItems) {
+        try {
+            if (Integer.parseInt(numItems) <= item.getStock()) {
+                item.setCount(Integer.parseInt(numItems));
+
                 String buyerCartDir = "/buyers/" + this.getUsername() + "/cart";
 
                 // Update buyers and sellers objects
@@ -152,12 +154,16 @@ public class Buyer extends Person {
                     // Remove from stockItems if stock is over
                     JsonUtils.removeObjectFromJson(sellerStockDir, item.getName(), objectMapper);
                 }
-            } catch (Exception e) {
-                System.out.println("Error buying item.");
-                e.printStackTrace();
+
+                JOptionPane.showMessageDialog(null, "Item bought", "Success!",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Not enough stock",
+                        "Error", JOptionPane.ERROR_MESSAGE);
             }
-        } else {
-            System.out.println("Error, not enough stock.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error buying item",
+                    "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -168,7 +174,7 @@ public class Buyer extends Person {
 
             try {
                 for (int i = 0; i < items.length; i++) {
-                    buyItem(items[i], marketplace, objectMapper);
+                    buyItem(items[i], marketplace, objectMapper, "1");
                 }
                 System.out.println("Successfully purchased all items in cart!");
             } catch (Exception e) {

@@ -5,21 +5,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Random;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class MarketplaceGUI extends JComponent implements Runnable {
     private Marketplace marketplace;
     private Person user;
+    private ObjectMapper objectMapper;
     private Item selectedProduct;
 
-    public MarketplaceGUI (Marketplace marketplace, Person user) {
+    public MarketplaceGUI (Marketplace marketplace, Person user, ObjectMapper objectMapper) {
         this.marketplace = marketplace;
         this.user = user;
+        this.objectMapper = objectMapper;
     }
 
 
 
     public void run() {
-
         if (user instanceof Buyer) {
             JFrame homeFrame = new JFrame();
             homeFrame.setTitle("Home");
@@ -111,7 +113,7 @@ public class MarketplaceGUI extends JComponent implements Runnable {
             productPageFrame.setVisible(false);
 
             JPanel productPagePanel = new JPanel();
-            productPagePanel.setLayout(new FlowLayout());
+            productPagePanel.setLayout(new BoxLayout(productPagePanel, BoxLayout.Y_AXIS));
 
             JLabel productLabel = new JLabel();
             JLabel descriptionLabel = new JLabel();
@@ -127,7 +129,7 @@ public class MarketplaceGUI extends JComponent implements Runnable {
             productPagePanel.add(addToCartButton);
             productPagePanel.add(backToMarketplaceButton);
 
-            productPageFrame.add(productPagePanel);
+            productPageFrame.add(productPagePanel, BorderLayout.CENTER);
 
             ActionListener actionListener = new ActionListener() {
                 @Override
@@ -150,7 +152,9 @@ public class MarketplaceGUI extends JComponent implements Runnable {
                     } else if (e.getSource() == signOutButton) {
 
                     } else if (e.getSource() == searchButton) {
-
+                        productsComboBox.removeAllItems();
+                        for (Item item : marketplace.searchProducts(searchText.getText(), itemsList))
+                            productsComboBox.addItem(item);
                     } else if (e.getSource() == sortPriceButton) {
                         productsComboBox.removeAllItems();
                         for (Item item : marketplace.sortByPrice(itemsArray))
@@ -169,16 +173,19 @@ public class MarketplaceGUI extends JComponent implements Runnable {
                     } else if (e.getSource() == selectButton) {
                         selectedProduct = (Item) productsComboBox.getSelectedItem();
                         marketplaceFrame.setVisible(false);
-                        productLabel.setText("Product:" + selectedProduct.getName());
+                        productLabel.setText("Product: " + selectedProduct.getName());
                         descriptionLabel.setText("Description: " + selectedProduct.getDescription());
                         quantityLabel.setText("Quantity available: " + selectedProduct.getStock());
                         productPageFrame.setVisible(true);
                     } else if (e.getSource() == purchaseButton) {
-
+                        String numProducts = JOptionPane.showInputDialog(null, "How many items would you like to purchase",
+                                "zBay Marketplace", JOptionPane.QUESTION_MESSAGE);
+                        ((Buyer) user).buyItem(selectedProduct, marketplace, objectMapper, numProducts);
                     } else if (e.getSource() == addToCartButton) {
-
+                        ((Buyer) user).addItemToCart(selectedProduct, objectMapper);
                     } else if (e.getSource() == backToMarketplaceButton) {
-
+                        productPageFrame.setVisible(false);
+                        marketplaceFrame.setVisible(true);
                     }
                 }
             };
