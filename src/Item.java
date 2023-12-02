@@ -123,13 +123,13 @@ public class Item {
         this.sellersObject = sellersObject;
     }
 
-    public String toString() {
+    public String toString(Marketplace marketplace) {
         if (stock >= 0) {
-            return "Product: " + this.getName() + " | Price: " +
-                    this.getPrice() + " | Stock: " + this.getStock();
+            return "Product: " + this.getName() + " | Store: " + marketplace.getStore(this).getName() +
+                    " | Price: " + this.getPrice() + " | Stock: " + this.getStock();
         } else if (count >= 0) {
-            return "Product: " + this.getName() + " | Price: " +
-                    this.getPrice() + " | Count: " + this.getCount();
+            return "Product: " + this.getName() + " | Store: " + marketplace.getStore(this).getName() +
+                    " | Price: " + this.getPrice() + " | Count: " + this.getCount();
         }
         return null;
     }

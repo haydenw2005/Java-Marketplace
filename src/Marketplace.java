@@ -327,26 +327,26 @@ public class Marketplace {
         return searchResults;
     }
 
-    public Item[] sortByPrice(Item[] items) {
-        for (int i = 0; i < items.length; i++) {
-            for (int j = i; j < items.length - 1; j++) {
-                if (items[i].getPrice() < items[j + 1].getPrice()) {
-                    Item temp = items[i];
-                    items[i] = items[j + 1];
-                    items[j + 1] = temp;
+    public ArrayList<Item> sortByPrice(ArrayList<Item> items) {
+        for (int i = 0; i < items.size(); i++) {
+            for (int j = i; j < items.size() - 1; j++) {
+                if (items.get(i).getPrice() < items.get(j + 1).getPrice()) {
+                    Item temp = items.get(i);
+                    items.set(i, items.get(j + 1));
+                    items.set(j + 1, temp);
                 }
             }
         }
         return items;
     }
 
-    public Item[] sortByQuantity(Item[] items) {
-        for (int i = 0; i < items.length; i++) {
-            for (int j = i; j < items.length - 1; j++) {
-                if (items[i].getStock() < items[j + 1].getStock()) {
-                    Item temp = items[i];
-                    items[i] = items[j + 1];
-                    items[j + 1] = temp;
+    public ArrayList<Item> sortByQuantity(ArrayList<Item> items) {
+        for (int i = 0; i < items.size(); i++) {
+            for (int j = i; j < items.size() - 1; j++) {
+                if (items.get(i).getStock() < items.get(j + 1).getStock()) {
+                    Item temp = items.get(i);
+                    items.set(i, items.get(j + 1));
+                    items.set(j + 1, temp);
                 }
             }
         }
