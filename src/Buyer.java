@@ -142,8 +142,10 @@ public class Buyer extends Person {
                 }
                 JsonUtils.addObjectToJson(sellerSoldDir, item.getName(), item, objectMapper);
 
-                addToPurchaseHistory(item, objectMapper);
                 updateStock(item); // Changes the stock after buying
+                item.setCount(item.getCount());
+                addToPurchaseHistory(item, objectMapper);
+                item.setCount(-1); // set count to -1 after adding to purchase history
 
                 // Update Stock JSON
                 String sellerStockDir = "/sellers/" + item.findSeller() + "/stores/"
@@ -186,7 +188,8 @@ public class Buyer extends Person {
     }
 
     public void addToPurchaseHistory(Item item, ObjectMapper objectMapper) {
-        Item purchasedItem = item;
+        Item purchasedItem = new Item(item.getName(), item.getDescription(), item.getStock(), item.getCount(),
+                item.getPrice(), item.getBuyersObject(), item.getSellersObject());;
         purchasedItem.setStock(-1);
         this.purchaseHistory.put(purchasedItem.getName(), purchasedItem);
         try {
@@ -200,7 +203,6 @@ public class Buyer extends Person {
 
     public void updateStock(Item item) {
         item.setStock(item.getStock() - item.getCount());
-        item.setCount(-1);
     }
 
     /**
@@ -221,9 +223,9 @@ public class Buyer extends Person {
     public void showPurchaseHistory() {
         if (!(purchaseHistory.isEmpty())) {
             System.out.println("\nPurchase history:");
-            for (Map.Entry<String, Item> purchaseEntry : purchaseHistory.entrySet()) {
-                Item item = purchaseEntry.getValue();
-                System.out.println(item.toString());
+            for (Map.Entry<String, Item> purchaseEntry : this.purchaseHistory.entrySet()) {
+                Item purchasedItem = purchaseEntry.getValue();
+                System.out.println(purchasedItem.toString());
             }
         } else {
             System.out.println("No items purchased yet.");
