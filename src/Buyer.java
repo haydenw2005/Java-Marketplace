@@ -218,15 +218,16 @@ public class Buyer extends Person {
 
     }
 
-    public void showPurchaseHistory() {
+    public ArrayList<String> getPurchaseHistory(Marketplace marketplace) {
+        ArrayList<String> purchaseHistoryList = new ArrayList<String>();
         if (!(purchaseHistory.isEmpty())) {
-            System.out.println("\nPurchase history:");
             for (Map.Entry<String, Item> purchaseEntry : purchaseHistory.entrySet()) {
                 Item item = purchaseEntry.getValue();
-                System.out.println(item.toString());
+                purchaseHistoryList.add(item.toString(marketplace));
             }
         } else {
-            System.out.println("No items purchased yet.");
+            purchaseHistoryList.add("No items purchased yet.");
         }
+        return purchaseHistoryList;
     }
 }

@@ -228,7 +228,7 @@ public class Marketplace {
             } else if (input.equals("3")) {
                 cartFlow(scanner, (Buyer) user, objectMapper);
             } else if (input.equals("4")) {
-                user.showPurchaseHistory();
+                //user.showPurchaseHistory();
             } else if (input.equals("5")) {
                 try {
                     System.out.println("Enter filename to export to (excluding .csv extension)");

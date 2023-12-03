@@ -23,17 +23,6 @@ public class Main {
             Person user = marketplace.enterCredentials(objectMapper);
             SwingUtilities.invokeLater(new MarketplaceGUI(marketplace, user, objectMapper));
 
-            /*
-            if (user instanceof Buyer) {
-                marketplace.startBuyerFlow((Buyer) user, scanner, objectMapper);
-
-            } else if (user instanceof Seller) {
-                marketplace.startSellerFlow((Seller) user, scanner, objectMapper);
-            }
-
-             */
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
