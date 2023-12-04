@@ -325,10 +325,10 @@
     },
     "test_buyer" : {
       "username" : "test_buyer",
-      "password" : "password123",
-      "firstName" : "Test",
-      "lastName" : "Buyer",
-      "email" : "test.buyer@example.com",
+      "password" : "",
+      "firstName" : "",
+      "lastName" : "asdfs",
+      "email" : "",
       "cart" : { },
       "purchaseHistory" : {
         "t" : {
@@ -345,7 +345,19 @@
           }
         }
       },
-      "purchasedItems" : [ ]
+      "purchasedItems" : [ {
+        "name" : "t",
+        "description" : "t",
+        "stock" : -1,
+        "count" : 1,
+        "price" : 3.0,
+        "buyersObject" : {
+          "test_buyer" : 1
+        },
+        "sellersObject" : {
+          "seller_1_username" : 4
+        }
+      } ]
     },
     "testingbuyer" : {
       "username" : "testingbuyer",

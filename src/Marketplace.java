@@ -64,6 +64,10 @@ public class Marketplace {
         } else {
             user = signUp(objectMapper);
         }
+
+        JOptionPane.showMessageDialog(null, "Welcome " + user.getFirstName() +
+                " " + user.getLastName() + "!" , "Welcome", JOptionPane.INFORMATION_MESSAGE);
+
         return user;
     }
 
@@ -239,7 +243,7 @@ public class Marketplace {
                 }
             } else if (input.equals("6")) {
                 System.out.println("Edit account ~");
-                editUser(scanner, user, objectMapper);
+                //editUser(scanner, user, objectMapper);
                 System.out.println();
             } else if (input.equals("7")) {
                 System.out.println("Deleting account...");
@@ -595,15 +599,35 @@ public class Marketplace {
 
     }
 
-    public void editUser(Scanner scanner, Person user, ObjectMapper objectMapper) {
-        System.out.println("Please enter your new password:");
-        String password = scanner.nextLine();
-        System.out.println("Please enter your new first name:");
-        String firstName = scanner.nextLine();
-        System.out.println("Please enter your new last name:");
-        String lastName = scanner.nextLine();
-        System.out.println("Please enter your new email:");
-        String email = scanner.nextLine();
+    public void editUser(Person user, ObjectMapper objectMapper) {
+        String password = JOptionPane.showInputDialog(null,
+                "Please enter your new password:",
+                "zBay Marketplace", JOptionPane.QUESTION_MESSAGE);
+        if (password == null)
+            return;
+        String firstName = JOptionPane.showInputDialog(null,
+                "Please enter your new first name:",
+                "zBay Marketplace", JOptionPane.QUESTION_MESSAGE);
+        if (firstName == null)
+            return;
+        String lastName = JOptionPane.showInputDialog(null,
+                "Please enter your new last name:",
+                "zBay Marketplace", JOptionPane.QUESTION_MESSAGE);
+        if (lastName == null)
+            return;
+        String email = JOptionPane.showInputDialog(null,
+                "Please enter your new email:",
+                "zBay Marketplace", JOptionPane.QUESTION_MESSAGE);
+        if (email == null)
+            return;
+
+        if (password.isEmpty() || firstName.isEmpty() ||
+                lastName.isEmpty() || email.isEmpty()) {
+            JOptionPane.showMessageDialog(null,
+                    "One or more fields were empty",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            this.editUser(user, objectMapper);
+        }
         user.setPassword(password);
         user.setFirstName(firstName);
         user.setLastName(lastName);
@@ -615,9 +639,10 @@ public class Marketplace {
                 addSellerAccount(user.getUsername(), (Seller) user, objectMapper);
             }
         } catch (Exception e) {
-            System.out.println("There was an error updating your account.");
+            JOptionPane.showMessageDialog(null,
+                    "There was an error updating your account",
+                    "Error", JOptionPane.ERROR_MESSAGE);
         }
-
     }
 
     public void deleteUser(Person user, ObjectMapper objectMapper) {
@@ -628,10 +653,16 @@ public class Marketplace {
             } else {
                 String dir = "/sellers";
                 JsonUtils.removeObjectFromJson(dir, user.getUsername(), objectMapper);
-
             }
+
+            JOptionPane.showMessageDialog(null, "Account deleted",
+                    "Success!", JOptionPane.INFORMATION_MESSAGE);
+
+
         } catch (Exception e) {
-            System.out.println("Error deleting account");
+            JOptionPane.showMessageDialog(null,
+                    "Error deleting account",
+                    "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -715,7 +746,7 @@ public class Marketplace {
                     break;
                 case "8":
                     System.out.println("Edit account");
-                    editUser(scanner, user, objectMapper);
+                    //editUser(scanner, user, objectMapper);
                     System.out.println();
                     user = updatedSeller(objectMapper, user.getUsername());
                     break;
