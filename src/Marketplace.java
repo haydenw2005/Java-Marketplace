@@ -581,7 +581,7 @@ public class Marketplace {
     }
 
     public void cartFlow(Scanner scanner, Buyer buyer, ObjectMapper objectMapper) {
-        buyer.showAllCartItems();
+        //buyer.showAllCartItems();
         System.out.println("\n\t(1) Buy Cart");
         System.out.println("\t(2) Back");
         String input = scanner.nextLine();

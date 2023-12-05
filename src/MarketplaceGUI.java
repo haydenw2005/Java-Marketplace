@@ -15,6 +15,7 @@ public class MarketplaceGUI extends JComponent implements Runnable {
     private Item selectedProduct;
     private JList storeInfoList = new JList();
     private JList purchaseHistoryList = new JList();
+    private JList cartList = new JList();
 
     public MarketplaceGUI (Marketplace marketplace, Person user, ObjectMapper objectMapper) {
         this.marketplace = marketplace;
@@ -174,7 +175,7 @@ public class MarketplaceGUI extends JComponent implements Runnable {
             JPanel purchaseHistoryPanel = new JPanel();
             purchaseHistoryPanel.setLayout(new FlowLayout());
 
-            JLabel purchaseHistoryLabel = new JLabel("Your purchase history:");
+            JLabel purchaseHistoryLabel = new JLabel("Products you've purchased:");
             JButton refreshPurchaseHistoryButton = new JButton("Refresh");
             updatePurchaseHistoryList();
 
@@ -183,7 +184,24 @@ public class MarketplaceGUI extends JComponent implements Runnable {
             purchaseHistoryPanel.add(refreshPurchaseHistoryButton);
 
             purchaseHistoryFrame.add(purchaseHistoryPanel);
+/////////////////////////////////////////////////////////////////////
+            JFrame cartFrame = new JFrame();
+            cartFrame.setTitle("zBay Marketplace");
+            cartFrame.setSize(600, 400);
+            cartFrame.setLocationRelativeTo(null);
+            cartFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            cartFrame.setVisible(false);
 
+            JPanel cartPanel = new JPanel();
+            cartPanel.setLayout(new FlowLayout());
+
+            updateCartList();
+            JButton buyCartButton = new JButton("Buy cart");
+
+            cartPanel.add(cartList);
+            cartPanel.add(buyCartButton);
+
+            cartFrame.add(cartPanel);
 
 
             ActionListener actionListener = new ActionListener() {
@@ -212,7 +230,12 @@ public class MarketplaceGUI extends JComponent implements Runnable {
                         homeFrame.setVisible(false);
                         marketplaceFrame.setVisible(true);
                     } else if (e.getSource() == cartButton) {
-
+                        updateCartList();
+                        cartPanel.add(backToHomeButton);
+                        homeFrame.setVisible(false);
+                        cartFrame.setVisible(true);
+                    } else if (e.getSource() == buyCartButton) {
+                        ((Buyer) user).buyCart(marketplace, objectMapper);
                     } else if (e.getSource() == purchaseHistoryButton) {
                         purchaseHistoryPanel.add(backToHomeButton);
                         homeFrame.setVisible(false);
@@ -227,7 +250,7 @@ public class MarketplaceGUI extends JComponent implements Runnable {
                         marketplace.deleteUser(user, objectMapper);
                         homeFrame.dispose();
                     } else if (e.getSource() == signOutButton) {
-
+                        homeFrame.dispose();
                     } else if (e.getSource() == searchButton) {
                         productsComboBox.removeAllItems();
                         for (Item item : marketplace.searchProducts(searchText.getText(), itemsList))
@@ -244,6 +267,7 @@ public class MarketplaceGUI extends JComponent implements Runnable {
                         marketplaceFrame.setVisible(false);
                         storeInfoFrame.setVisible(false);
                         purchaseHistoryFrame.setVisible(false);
+                        cartFrame.setVisible(false);
                         homeFrame.setVisible(true);
                     } else if (e.getSource() == refreshMarketplaceButton) {
                         searchText.setText("");
@@ -299,6 +323,8 @@ public class MarketplaceGUI extends JComponent implements Runnable {
             refreshStoreInfoButton.addActionListener(actionListener);
 
             refreshPurchaseHistoryButton.addActionListener(actionListener);
+
+            buyCartButton.addActionListener(actionListener);
 
         } else {
 
@@ -362,5 +388,14 @@ public class MarketplaceGUI extends JComponent implements Runnable {
             listModel.addElement(item);
 
         purchaseHistoryList.setModel(listModel);
+    }
+
+    private void updateCartList() {
+        DefaultListModel listModel = new DefaultListModel();
+        ArrayList<String> cart = ((Buyer) user).cartToStringList(marketplace);
+        for (String item : cart)
+            listModel.addElement(item);
+
+        cartList.setModel(listModel);
     }
 }
