@@ -3,6 +3,9 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Random;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,12 +17,16 @@ public class MarketplaceGUI extends JComponent implements Runnable {
     private ArrayList<Item> itemsList;
     private Item selectedProduct;
     private JList storeInfoList = new JList();
+    private ObjectInputStream ois;
+    private ObjectOutputStream oos;
 
-    public MarketplaceGUI (Marketplace marketplace, Person user, ObjectMapper objectMapper) {
+    public MarketplaceGUI (Marketplace marketplace, Person user, ObjectMapper objectMapper, ObjectInputStream ois, ObjectOutputStream oos) {
         this.marketplace = marketplace;
         this.user = user;
         this.objectMapper = objectMapper;
         itemsList = marketplace.getAllMarketPlaceItems();
+        this.ois = ois;
+        this.oos = oos;
     }
 
 
@@ -166,6 +173,7 @@ public class MarketplaceGUI extends JComponent implements Runnable {
             storeInfoFrame.add(storeInfoBottomPanel, BorderLayout.SOUTH);
 
             ActionListener actionListener = new ActionListener() {
+
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (e.getSource() == storeInfoButton) {
@@ -220,6 +228,13 @@ public class MarketplaceGUI extends JComponent implements Runnable {
                         searchText.setText("");
                         productsComboBox.removeAllItems();
                         itemsList = marketplace.getAllMarketPlaceItems();
+                        try {
+                            oos.writeObject("updateMarketplace");
+                            oos.flush();
+                            marketplace = (Marketplace) ois.readObject();
+                        } catch (IOException | ClassNotFoundException e1) {
+                            e1.printStackTrace();
+                        }
                         for (Item item : itemsList)
                             productsComboBox.addItem(item.toString(marketplace));
                     } else if (e.getSource() == selectButton) {
@@ -232,7 +247,18 @@ public class MarketplaceGUI extends JComponent implements Runnable {
                     } else if (e.getSource() == purchaseButton) {
                         String numProducts = JOptionPane.showInputDialog(null, "How many items would you like to purchase",
                                 "zBay Marketplace", JOptionPane.QUESTION_MESSAGE);
-                        ((Buyer) user).buyItem(selectedProduct, marketplace, objectMapper, numProducts);
+                        // ((Buyer) user).buyItem(selectedProduct, marketplace, objectMapper, numProducts);
+                        try {
+                            oos.writeObject("buyItem");
+                            oos.writeObject(selectedProduct);
+                            oos.writeObject(numProducts);
+                            oos.flush();
+
+                            // fetch updates
+                            marketplace.updateMarketPlace((Marketplace) ois.readObject());
+                        } catch (IOException | ClassNotFoundException except) {
+                            except.printStackTrace();
+                        }
                     } else if (e.getSource() == addToCartButton) {
                         ((Buyer) user).addItemToCart(selectedProduct, objectMapper);
                     } else if (e.getSource() == backToMarketplaceButton) {

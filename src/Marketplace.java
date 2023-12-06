@@ -3,6 +3,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.awt.*;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.*;
 import javax.swing.*;
 
@@ -19,7 +20,7 @@ import javax.swing.*;
  * @author Hayden, Soham, and Ryan
  * @version November 13, 2023
  */
-public class Marketplace {
+public class Marketplace implements Serializable {
     @JsonProperty("buyers")
     private Map<String, Buyer> buyers;
     @JsonProperty("sellers")
@@ -31,7 +32,11 @@ public class Marketplace {
         this.buyers = buyers;
         this.sellers = sellers;
     }
-
+    
+    public void updateMarketPlace(Marketplace marketplace) {
+        this.buyers = marketplace.buyers;
+        this.sellers = marketplace.sellers;
+    }
     public Map<String, Buyer> getBuyers() {
         return buyers;
     }

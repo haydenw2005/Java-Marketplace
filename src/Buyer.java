@@ -3,6 +3,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -142,10 +143,11 @@ public class Buyer extends Person {
                 }
                 JsonUtils.addObjectToJson(sellerSoldDir, item.getName(), item, objectMapper);
 
-                updateStock(item); // Changes the stock after buying
+                updateStock(item, Integer.parseInt(numItems)); // Changes the stock after buying
                 item.setCount(item.getCount());
                 addToPurchaseHistory(item, objectMapper);
-                item.setCount(-1); // set count to -1 after adding to purchase history
+                item = new Item(item.getName(), item.getDescription(), item.getStock(), -1,
+                        item.getPrice(), item.getBuyersObject(), item.getSellersObject());; // set count to -1 after adding to purchase history
 
                 // Update Stock JSON
                 String sellerStockDir = "/sellers/" + item.findSeller() + "/stores/"
@@ -156,6 +158,7 @@ public class Buyer extends Person {
                     // Remove from stockItems if stock is over
                     JsonUtils.removeObjectFromJson(sellerStockDir, item.getName(), objectMapper);
                 }
+                
 
                 JOptionPane.showMessageDialog(null, "Item bought", "Success!",
                         JOptionPane.INFORMATION_MESSAGE);
@@ -196,13 +199,13 @@ public class Buyer extends Person {
             String dir = "/buyers/" + this.getUsername() + "/purchaseHistory";
             JsonUtils.addObjectToJson(dir, purchasedItem.getName(), purchasedItem, objectMapper);
         } catch (IOException e) {
-            System.out.println("Error adding item to cart.");
+            System.out.println("Error adding item to purchase history.");
             e.printStackTrace();
         }
     }
 
-    public void updateStock(Item item) {
-        item.setStock(item.getStock() - item.getCount());
+    public void updateStock(Item item, int numItems) {
+        item.setStock(item.getStock() - numItems);
     }
 
     /**

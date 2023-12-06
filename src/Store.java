@@ -1,6 +1,7 @@
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Map;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -14,7 +15,7 @@ import java.util.ArrayList;
  * @author Soham, Ryan
  * @version November 13, 2023
  */
-public class Store {
+public class Store implements Serializable {
     private String name;
     private Map<String, Item> stockItems;
     private Map<String, Item> soldItems;

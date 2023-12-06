@@ -1,4 +1,6 @@
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.io.Serializable;
 import java.util.Map;
 
 /**
@@ -11,7 +13,7 @@ import java.util.Map;
  * @author Hayden and Soham
  * @version November 13, 2023
  */
-public class Item {
+public class Item implements Serializable {
     private String name;
     private String description;
     private int stock;

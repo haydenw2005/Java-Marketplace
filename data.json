@@ -13,40 +13,31 @@
             "bread" : {
               "name" : "bread",
               "description" : "tastes good",
-              "stock" : 234,
+              "stock" : 108,
               "count" : -1,
               "price" : 10.0,
-              "buyersObject" : null,
+              "buyersObject" : {
+                "test_buyer" : 38
+              },
               "sellersObject" : {
-                "seller_1_username" : 2
+                "seller_1_username" : 40
               }
             },
-            "spring" : {
-              "name" : "spring",
-              "description" : "boing boing boing",
-              "stock" : 3,
+            "microwaves" : {
+              "name" : "microwaves",
+              "description" : "makes waves",
+              "stock" : 1998,
               "count" : -1,
-              "price" : 44.0,
-              "buyersObject" : null,
+              "price" : 1000.0,
+              "buyersObject" : {
+                "test_buyer" : 3
+              },
               "sellersObject" : {
-                "seller_1_username" : 3
+                "seller_1_username" : 5
               }
             }
           },
           "soldItems" : {
-            "microwaves" : {
-              "name" : "microwaves",
-              "description" : "makes waves",
-              "stock" : 2,
-              "count" : 3,
-              "price" : 1000.0,
-              "buyersObject" : {
-                "test_buyer" : 1
-              },
-              "sellersObject" : {
-                "seller_1_username" : 3
-              }
-            },
             "cheese" : {
               "name" : "cheese",
               "description" : "yummy",
@@ -98,25 +89,66 @@
               "sellersObject" : {
                 "seller_1_username" : 4
               }
+            },
+            "bread" : {
+              "name" : "bread",
+              "description" : "tastes good",
+              "stock" : 110,
+              "count" : 19,
+              "price" : 10.0,
+              "buyersObject" : {
+                "test_buyer" : 38
+              },
+              "sellersObject" : {
+                "seller_1_username" : 40
+              }
+            },
+            "spring" : {
+              "name" : "spring",
+              "description" : "boing boing boing",
+              "stock" : 2,
+              "count" : 2,
+              "price" : 44.0,
+              "buyersObject" : {
+                "test_buyer" : 3
+              },
+              "sellersObject" : {
+                "seller_1_username" : 6
+              }
+            },
+            "microwaves" : {
+              "name" : "microwaves",
+              "description" : "makes waves",
+              "stock" : 2000,
+              "count" : 2,
+              "price" : 1000.0,
+              "buyersObject" : {
+                "test_buyer" : 3
+              },
+              "sellersObject" : {
+                "seller_1_username" : 5
+              }
             }
           }
         },
         "my store" : {
           "name" : "my store",
-          "stockItems" : {
+          "stockItems" : { },
+          "soldItems" : {
             "dr pepper" : {
               "name" : "dr pepper",
               "description" : "bubbly",
-              "stock" : 3,
-              "count" : -1,
+              "stock" : 2,
+              "count" : 2,
               "price" : 12.0,
-              "buyersObject" : null,
+              "buyersObject" : {
+                "test_buyer" : 2
+              },
               "sellersObject" : {
-                "seller_1_username" : 3
+                "seller_1_username" : 5
               }
             }
-          },
-          "soldItems" : { }
+          }
         },
         "my_store_2" : {
           "name" : "my_store_2",
@@ -144,19 +176,7 @@
       "stores" : {
         "store_1_name_edited" : {
           "name" : "store_1_name_edited",
-          "stockItems" : {
-            "bread" : {
-              "name" : "bread",
-              "description" : "tastes good",
-              "stock" : 2147483647,
-              "count" : -1,
-              "price" : 10.0,
-              "buyersObject" : null,
-              "sellersObject" : {
-                "testseller" : 2147483647
-              }
-            }
-          },
+          "stockItems" : { },
           "soldItems" : {
             "bread 2" : {
               "name" : "bread 2",
@@ -175,34 +195,12 @@
         },
         "store_2_name_edited" : {
           "name" : "store_2_name_edited",
-          "stockItems" : {
-            "soccer ball" : {
-              "name" : "soccer ball",
-              "description" : "kick it",
-              "stock" : 2,
-              "count" : -1,
-              "price" : 20.0,
-              "buyersObject" : null,
-              "sellersObject" : {
-                "testseller" : 2
-              }
-            }
-          },
+          "stockItems" : { },
           "soldItems" : { }
         },
         "TestStore" : {
           "name" : "TestStore",
-          "stockItems" : {
-            "TestItem" : {
-              "name" : "TestItem",
-              "description" : "Description",
-              "stock" : 10,
-              "count" : 5,
-              "price" : 20.0,
-              "buyersObject" : null,
-              "sellersObject" : { }
-            }
-          },
+          "stockItems" : { },
           "soldItems" : { }
         },
         "TestStore2" : {
@@ -342,6 +340,58 @@
           },
           "sellersObject" : {
             "seller_1_username" : 4
+          }
+        },
+        "bread" : {
+          "name" : "bread",
+          "description" : "tastes good",
+          "stock" : -1,
+          "count" : 19,
+          "price" : 10.0,
+          "buyersObject" : {
+            "test_buyer" : 38
+          },
+          "sellersObject" : {
+            "seller_1_username" : 40
+          }
+        },
+        "spring" : {
+          "name" : "spring",
+          "description" : "boing boing boing",
+          "stock" : -1,
+          "count" : 2,
+          "price" : 44.0,
+          "buyersObject" : {
+            "test_buyer" : 3
+          },
+          "sellersObject" : {
+            "seller_1_username" : 6
+          }
+        },
+        "dr pepper" : {
+          "name" : "dr pepper",
+          "description" : "bubbly",
+          "stock" : -1,
+          "count" : 2,
+          "price" : 12.0,
+          "buyersObject" : {
+            "test_buyer" : 2
+          },
+          "sellersObject" : {
+            "seller_1_username" : 5
+          }
+        },
+        "microwaves" : {
+          "name" : "microwaves",
+          "description" : "makes waves",
+          "stock" : -1,
+          "count" : 2,
+          "price" : 1000.0,
+          "buyersObject" : {
+            "test_buyer" : 3
+          },
+          "sellersObject" : {
+            "seller_1_username" : 5
           }
         }
       },
