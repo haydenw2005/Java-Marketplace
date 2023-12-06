@@ -181,25 +181,27 @@ public class Buyer extends Person {
                 for (int i = 0; i < items.length; i++) {
                     buyItem(items[i], marketplace, objectMapper, "1");
                 }
-                System.out.println("Successfully purchased all items in cart!");
+                JOptionPane.showMessageDialog(null, "Cart bought", "Success!",
+                        JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {
-                System.out.println("Error buying cart.");
+                JOptionPane.showMessageDialog(null, "Error buying cart",
+                        "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            System.out.println("Cart is empty!");
+            JOptionPane.showMessageDialog(null, "Cart is empty",
+                    "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     public void addToPurchaseHistory(Item item, ObjectMapper objectMapper) {
-        Item purchasedItem = new Item(item.getName(), item.getDescription(), item.getStock(), item.getCount(),
-                item.getPrice(), item.getBuyersObject(), item.getSellersObject());;
+        Item purchasedItem = item;
         purchasedItem.setStock(-1);
         this.purchaseHistory.put(purchasedItem.getName(), purchasedItem);
         try {
             String dir = "/buyers/" + this.getUsername() + "/purchaseHistory";
             JsonUtils.addObjectToJson(dir, purchasedItem.getName(), purchasedItem, objectMapper);
         } catch (IOException e) {
-            System.out.println("Error adding item to purchase history.");
+            System.out.println("Error adding item to cart.");
             e.printStackTrace();
         }
     }
@@ -208,30 +210,29 @@ public class Buyer extends Person {
         item.setStock(item.getStock() - numItems);
     }
 
-    /**
-     * Prints out String of all cart items for current buyer.
-     */
-    public void showAllCartItems() {
+    public ArrayList<String> cartToStringList(Marketplace marketplace) {
+        ArrayList<String> cartList = new ArrayList<String>();
         if (!(cart.isEmpty())) {
             for (Map.Entry<String, Item> cartEntry : cart.entrySet()) {
                 Item item = cartEntry.getValue();
-                System.out.println(item.toString());
+                cartList.add(item.toString(marketplace));
             }
         } else {
-            System.out.println("Cart is empty! Add items to cart from the Marketplace.");
+            cartList.add("Cart is empty! Add items to cart from the Marketplace");
         }
-
+        return cartList;
     }
 
-    public void showPurchaseHistory() {
+    public ArrayList<String> getPurchaseHistory(Marketplace marketplace) {
+        ArrayList<String> purchaseHistoryList = new ArrayList<String>();
         if (!(purchaseHistory.isEmpty())) {
-            System.out.println("\nPurchase history:");
-            for (Map.Entry<String, Item> purchaseEntry : this.purchaseHistory.entrySet()) {
-                Item purchasedItem = purchaseEntry.getValue();
-                System.out.println(purchasedItem.toString());
+            for (Map.Entry<String, Item> purchaseEntry : purchaseHistory.entrySet()) {
+                Item item = purchaseEntry.getValue();
+                purchaseHistoryList.add(item.toString(marketplace));
             }
         } else {
-            System.out.println("No items purchased yet.");
+            purchaseHistoryList.add("No items purchased yet");
         }
+        return purchaseHistoryList;
     }
 }

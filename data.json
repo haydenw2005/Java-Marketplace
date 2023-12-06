@@ -236,97 +236,12 @@
     }
   },
   "buyers" : {
-    "buyer_1_username" : {
-      "username" : "buyer_1_username",
-      "password" : "password123!",
-      "firstName" : "John",
-      "lastName" : "Doe",
-      "email" : "sasd@123",
-      "cart" : {
-        "cheese" : {
-          "name" : "cheese",
-          "description" : "yummy",
-          "stock" : 3,
-          "count" : 1,
-          "price" : 123,
-          "buyersObject" : {
-            "buyer_1_username" : 3
-          },
-          "sellersObject" : null
-        },
-        "microwaves" : {
-          "name" : "microwaves",
-          "description" : "makes waves",
-          "stock" : 6,
-          "count" : 1,
-          "price" : 1000,
-          "buyersObject" : {
-            "buyer_1_username" : 2
-          },
-          "sellersObject" : null
-        }
-      },
-      "purchaseHistory" : {
-        "cheese" : {
-          "name" : "cheese",
-          "description" : "yummy",
-          "stock" : 12,
-          "count" : 2,
-          "price" : 123,
-          "buyersObject" : {
-            "buyer_1_username" : 2
-          },
-          "sellersObject" : {
-            "seller_1_username" : 2
-          }
-        },
-        "microwaves" : {
-          "name" : "microwaves",
-          "description" : "makes waves",
-          "stock" : 10,
-          "count" : 4,
-          "price" : 1000,
-          "buyersObject" : {
-            "buyer_1_username" : 4
-          },
-          "sellersObject" : {
-            "seller_1_username" : 4
-          }
-        },
-        "soccer ball" : {
-          "name" : "soccer ball",
-          "description" : "kick it",
-          "stock" : -1,
-          "count" : 2,
-          "price" : 20.0,
-          "buyersObject" : {
-            "buyer_1_username" : 2
-          },
-          "sellersObject" : {
-            "seller_1_username" : 4
-          }
-        },
-        "bread 2" : {
-          "name" : "bread 2",
-          "description" : "tastes better",
-          "stock" : -1,
-          "count" : 3456,
-          "price" : 0.0,
-          "buyersObject" : {
-            "buyer_1_username" : 3456
-          },
-          "sellersObject" : {
-            "testseller" : -2147480193
-          }
-        }
-      }
-    },
     "test_buyer" : {
       "username" : "test_buyer",
-      "password" : "password123",
+      "password" : "password",
       "firstName" : "Test",
       "lastName" : "Buyer",
-      "email" : "test.buyer@example.com",
+      "email" : "TestBuyer@email.com",
       "cart" : { },
       "purchaseHistory" : {
         "t" : {
@@ -395,7 +310,19 @@
           }
         }
       },
-      "purchasedItems" : [ ]
+      "purchasedItems" : [ {
+        "name" : "t",
+        "description" : "t",
+        "stock" : -1,
+        "count" : 1,
+        "price" : 3.0,
+        "buyersObject" : {
+          "test_buyer" : 1
+        },
+        "sellersObject" : {
+          "seller_1_username" : 4
+        }
+      } ]
     },
     "testingbuyer" : {
       "username" : "testingbuyer",
