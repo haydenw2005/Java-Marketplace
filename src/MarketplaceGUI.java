@@ -243,7 +243,14 @@ public class MarketplaceGUI extends JComponent implements Runnable {
                         homeFrame.setVisible(false);
                         cartFrame.setVisible(true);
                     } else if (e.getSource() == buyCartButton) {
-                        ((Buyer) user).buyCart(marketplace, objectMapper); // TODO: link to network
+                        try {
+                            oos.writeObject("buyCart");
+                            oos.flush();
+                            marketplace = (Marketplace) ois.readObject();
+                            user = (Buyer) ois.readObject();
+                        } catch (IOException | ClassNotFoundException e1) {
+                            e1.printStackTrace();
+                        }
                     } else if (e.getSource() == purchaseHistoryButton) {
                         purchaseHistoryPanel.add(backToHomeButton);
                         homeFrame.setVisible(false);
@@ -430,6 +437,13 @@ public class MarketplaceGUI extends JComponent implements Runnable {
 
     private void updateCartList() {
         DefaultListModel listModel = new DefaultListModel();
+        try {
+            oos.writeObject("updateBuyer");
+            oos.flush();
+            user = (Buyer) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         ArrayList<String> cart = ((Buyer) user).cartToStringList(marketplace); // TODO: Link to network
         for (String item : cart)
             listModel.addElement(item);

@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -52,12 +53,31 @@ public class Server {
                     oos.writeObject(marketplace);
                     oos.flush();
                 }
-                 if (command.equals("addToCart")) {
+                if (command.equals("updateBuyer")) {
+                    user = server.getUpdatedBuyer(user.getUsername(), objectMapper);
+                    oos.writeObject((Buyer) user);
+                    oos.flush();
+                }
+                if (command.equals("addToCart")) {
                     Item selectedItem = (Item) ois.readObject();  // get parameters required from addtocart from user
                     ((Buyer) user).addItemToCart(selectedItem, objectMapper);
                     marketplace = server.getUpdatedMarketPlace(objectMapper);
                     oos.writeObject(marketplace);
                     oos.flush();
+                }
+                if (command.equals("buyCart")) {
+                    ((Buyer) user).buyCart(marketplace, objectMapper);
+                    marketplace = server.getUpdatedMarketPlace(objectMapper);
+                    user = server.getUpdatedBuyer(user.getUsername(), objectMapper);
+                    oos.writeObject(marketplace);
+                    oos.writeObject((Buyer) user);
+                    oos.flush();
+                }
+                if (command.equals("editUser")) {
+
+                }
+                if (command.equals("deleteUser")) {
+
                 }
             }
 
@@ -71,5 +91,8 @@ public class Server {
 
     public Marketplace getUpdatedMarketPlace(ObjectMapper objectMapper) throws IOException {
         return JsonUtils.objectByKey(objectMapper, "", Marketplace.class);
+    }
+    public Buyer getUpdatedBuyer(String username, ObjectMapper objectMapper) throws IOException {
+        return JsonUtils.objectByKey(objectMapper, "/buyers/" + username, Buyer.class);
     }
 }

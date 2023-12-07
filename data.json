@@ -13,27 +13,27 @@
             "bread" : {
               "name" : "bread",
               "description" : "tastes good",
-              "stock" : 231,
+              "stock" : 227,
               "count" : -1,
               "price" : 10.0,
               "buyersObject" : {
-                "buyer2" : 1
+                "test_buyer" : 4
               },
               "sellersObject" : {
-                "seller_1_username" : 5
+                "seller_1_username" : 9
               }
             },
             "spring" : {
               "name" : "spring",
               "description" : "boing boing boing",
-              "stock" : 1,
+              "stock" : 2,
               "count" : -1,
               "price" : 44.0,
               "buyersObject" : {
-                "buyer2" : 2
+                "test_buyer" : 1
               },
               "sellersObject" : {
-                "seller_1_username" : 5
+                "seller_1_username" : 4
               }
             }
           },
@@ -106,27 +106,27 @@
             "bread" : {
               "name" : "bread",
               "description" : "tastes good",
-              "stock" : 232,
-              "count" : 4,
+              "stock" : 228,
+              "count" : 9,
               "price" : 10.0,
               "buyersObject" : {
-                "buyer2" : 1
+                "test_buyer" : 4
               },
               "sellersObject" : {
-                "seller_1_username" : 5
+                "seller_1_username" : 9
               }
             },
             "spring" : {
               "name" : "spring",
               "description" : "boing boing boing",
               "stock" : 3,
-              "count" : 2,
+              "count" : 3,
               "price" : 44.0,
               "buyersObject" : {
-                "buyer2" : 2
+                "test_buyer" : 1
               },
               "sellersObject" : {
-                "seller_1_username" : 5
+                "seller_1_username" : 4
               }
             }
           }
@@ -294,25 +294,14 @@
         "bread" : {
           "name" : "bread",
           "description" : "tastes good",
-          "stock" : 232,
-          "count" : 3,
+          "stock" : 228,
+          "count" : 1,
           "price" : 10.0,
           "buyersObject" : {
-            "test_buyer" : 2
+            "test_buyer" : 3
           },
           "sellersObject" : {
-            "seller_1_username" : 4
-          }
-        },
-        "spring" : {
-          "name" : "spring",
-          "description" : "boing boing boing",
-          "stock" : 3,
-          "count" : 1,
-          "price" : 44.0,
-          "buyersObject" : null,
-          "sellersObject" : {
-            "seller_1_username" : 3
+            "seller_1_username" : 8
           }
         }
       },
@@ -334,13 +323,13 @@
           "name" : "bread",
           "description" : "tastes good",
           "stock" : -1,
-          "count" : 3,
+          "count" : 9,
           "price" : 10.0,
           "buyersObject" : {
-            "test_buyer" : 2
+            "test_buyer" : 4
           },
           "sellersObject" : {
-            "seller_1_username" : 4
+            "seller_1_username" : 9
           }
         },
         "dr pepper" : {
@@ -349,6 +338,19 @@
           "stock" : -1,
           "count" : 1,
           "price" : 12.0,
+          "buyersObject" : {
+            "test_buyer" : 1
+          },
+          "sellersObject" : {
+            "seller_1_username" : 4
+          }
+        },
+        "spring" : {
+          "name" : "spring",
+          "description" : "boing boing boing",
+          "stock" : -1,
+          "count" : 3,
+          "price" : 44.0,
           "buyersObject" : {
             "test_buyer" : 1
           },
