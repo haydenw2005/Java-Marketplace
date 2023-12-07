@@ -90,6 +90,9 @@ public class Buyer extends Person {
     // other functions
     public void addItemToCart(Item item, ObjectMapper objectMapper) {
         try {
+            if(item.getCount() <= 0) {
+                item.setCount(1);
+            }
             String cartDir = "/buyers/" + this.getUsername() + "/cart";
             String itemDir = cartDir + "/" + item.getName();
             if (JsonUtils.hasKey(cartDir, item.getName(), objectMapper)) {
@@ -146,8 +149,7 @@ public class Buyer extends Person {
                 updateStock(item, Integer.parseInt(numItems)); // Changes the stock after buying
                 item.setCount(item.getCount());
                 addToPurchaseHistory(item, objectMapper);
-                item = new Item(item.getName(), item.getDescription(), item.getStock(), -1,
-                        item.getPrice(), item.getBuyersObject(), item.getSellersObject());; // set count to -1 after adding to purchase history
+                item.setCount(-1); // set count to -1 after adding to purchase history
 
                 // Update Stock JSON
                 String sellerStockDir = "/sellers/" + item.findSeller() + "/stores/"
@@ -194,8 +196,8 @@ public class Buyer extends Person {
     }
 
     public void addToPurchaseHistory(Item item, ObjectMapper objectMapper) {
-        Item purchasedItem = item;
-        purchasedItem.setStock(-1);
+        Item purchasedItem = new Item(item.getName(), item.getDescription(), -1, item.getCount(), 
+                item.getPrice(), item.getBuyersObject(), item.getSellersObject());
         this.purchaseHistory.put(purchasedItem.getName(), purchasedItem);
         try {
             String dir = "/buyers/" + this.getUsername() + "/purchaseHistory";

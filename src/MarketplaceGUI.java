@@ -243,7 +243,7 @@ public class MarketplaceGUI extends JComponent implements Runnable {
                         homeFrame.setVisible(false);
                         cartFrame.setVisible(true);
                     } else if (e.getSource() == buyCartButton) {
-                        ((Buyer) user).buyCart(marketplace, objectMapper);
+                        ((Buyer) user).buyCart(marketplace, objectMapper); // TODO: link to network
                     } else if (e.getSource() == purchaseHistoryButton) {
                         purchaseHistoryPanel.add(backToHomeButton);
                         homeFrame.setVisible(false);
@@ -253,12 +253,14 @@ public class MarketplaceGUI extends JComponent implements Runnable {
                     } else if (e.getSource() == exportButton) {
 
                     } else if (e.getSource() == editAccountButton) {
-                        marketplace.editUser(user, objectMapper);
+                        marketplace.editUser(user, objectMapper); // TODO: network
                     } else if (e.getSource() == deleteAccountButton) {
-                        marketplace.deleteUser(user, objectMapper);
+                        marketplace.deleteUser(user, objectMapper); // TODO: network
                         homeFrame.dispose();
+                        System.exit(0);
                     } else if (e.getSource() == signOutButton) {
                         homeFrame.dispose();
+                        System.exit(0);
                     } else if (e.getSource() == searchButton) {
                         productsComboBox.removeAllItems();
                         for (Item item : marketplace.searchProducts(searchText.getText(), itemsList))
@@ -313,7 +315,17 @@ public class MarketplaceGUI extends JComponent implements Runnable {
                             except.printStackTrace();
                         }
                     } else if (e.getSource() == addToCartButton) {
-                        ((Buyer) user).addItemToCart(selectedProduct, objectMapper);
+                        // ((Buyer) user).addItemToCart(selectedProduct, objectMapper);
+                        try {
+                            oos.writeObject("addToCart");
+                            oos.writeObject(selectedProduct);
+                            oos.flush();
+
+                            // fetch updates
+                            marketplace.updateMarketPlace((Marketplace) ois.readObject());
+                        } catch (IOException | ClassNotFoundException except) {
+                            except.printStackTrace();
+                        }
                     } else if (e.getSource() == backToMarketplaceButton) {
                         productPageFrame.setVisible(false);
                         marketplaceFrame.setVisible(true);
@@ -418,7 +430,7 @@ public class MarketplaceGUI extends JComponent implements Runnable {
 
     private void updateCartList() {
         DefaultListModel listModel = new DefaultListModel();
-        ArrayList<String> cart = ((Buyer) user).cartToStringList(marketplace);
+        ArrayList<String> cart = ((Buyer) user).cartToStringList(marketplace); // TODO: Link to network
         for (String item : cart)
             listModel.addElement(item);
 

@@ -52,6 +52,13 @@ public class Server {
                     oos.writeObject(marketplace);
                     oos.flush();
                 }
+                 if (command.equals("addToCart")) {
+                    Item selectedItem = (Item) ois.readObject();  // get parameters required from addtocart from user
+                    ((Buyer) user).addItemToCart(selectedItem, objectMapper);
+                    marketplace = server.getUpdatedMarketPlace(objectMapper);
+                    oos.writeObject(marketplace);
+                    oos.flush();
+                }
             }
 
         } catch (ClassNotFoundException e){
