@@ -89,6 +89,9 @@ public class Buyer extends Person {
     // other functions
     public void addItemToCart(Item item, ObjectMapper objectMapper) {
         try {
+            if(item.getCount() <= 0) {
+                item.setCount(1);
+            }
             String cartDir = "/buyers/" + this.getUsername() + "/cart";
             String itemDir = cartDir + "/" + item.getName();
             if (JsonUtils.hasKey(cartDir, item.getName(), objectMapper)) {
@@ -142,8 +145,10 @@ public class Buyer extends Person {
                 }
                 JsonUtils.addObjectToJson(sellerSoldDir, item.getName(), item, objectMapper);
 
+                updateStock(item, Integer.parseInt(numItems)); // Changes the stock after buying
+                item.setCount(item.getCount());
                 addToPurchaseHistory(item, objectMapper);
-                updateStock(item); // Changes the stock after buying
+                item.setCount(-1); // set count to -1 after adding to purchase history
 
                 // Update Stock JSON
                 String sellerStockDir = "/sellers/" + item.findSeller() + "/stores/"
@@ -154,6 +159,7 @@ public class Buyer extends Person {
                     // Remove from stockItems if stock is over
                     JsonUtils.removeObjectFromJson(sellerStockDir, item.getName(), objectMapper);
                 }
+                
 
                 JOptionPane.showMessageDialog(null, "Item bought", "Success!",
                         JOptionPane.INFORMATION_MESSAGE);
@@ -189,21 +195,20 @@ public class Buyer extends Person {
     }
 
     public void addToPurchaseHistory(Item item, ObjectMapper objectMapper) {
-        Item purchasedItem = item;
-        purchasedItem.setStock(-1);
+        Item purchasedItem = new Item(item.getName(), item.getDescription(), -1, item.getCount(), 
+                item.getPrice(), item.getBuyersObject(), item.getSellersObject());
         this.purchaseHistory.put(purchasedItem.getName(), purchasedItem);
         try {
             String dir = "/buyers/" + this.getUsername() + "/purchaseHistory";
             JsonUtils.addObjectToJson(dir, purchasedItem.getName(), purchasedItem, objectMapper);
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Error adding item to purchase history",
-                    "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error adding item to cart.");
+            e.printStackTrace();
         }
     }
 
-    public void updateStock(Item item) {
-        item.setStock(item.getStock() - item.getCount());
-        item.setCount(-1);
+    public void updateStock(Item item, int numItems) {
+        item.setStock(item.getStock() - numItems);
     }
 
     public ArrayList<String> cartToStringList(Marketplace marketplace) {

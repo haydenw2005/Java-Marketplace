@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -12,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author Soham, Hayden
  * @version November 13, 2023
  */
-public class Person {
+public class Person implements Serializable {
     private String username;
     private String password;
     private String firstName;

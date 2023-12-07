@@ -1,4 +1,9 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.net.Socket;
 import java.util.Scanner;
 import javax.swing.*;
 
@@ -15,13 +20,20 @@ import javax.swing.*;
 public class Main {
     public static void main(String[] args) {
 
-        Scanner scanner = new Scanner(System.in);
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
-            Marketplace marketplace = JsonUtils.objectByKey(objectMapper, "", Marketplace.class);
+            Socket socket = new Socket("localhost", 4242);
+            
+            ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+            ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+            oos.flush();
+            
+            Marketplace marketplace = (Marketplace) ois.readObject();
             Person user = marketplace.enterCredentials(objectMapper);
-            SwingUtilities.invokeLater(new MarketplaceGUI(marketplace, user, objectMapper));
+            oos.writeObject(user);
+            oos.flush();
+            SwingUtilities.invokeLater(new MarketplaceGUI(marketplace, user, objectMapper, ois, oos));
 
         } catch (Exception e) {
             e.printStackTrace();

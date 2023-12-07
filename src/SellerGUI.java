@@ -50,7 +50,7 @@ public class SellerGUI extends JFrame implements ActionListener {
                 String itemName = JOptionPane.showInputDialog(frame, "Enter the item name:");
                 if (itemName != null && !itemName.isEmpty()) {
                     // Here, add logic to gather details for the new item (price, quantity, etc.)
-                    Item newItem = new Item(itemName, 10, 100.0); // Example: Item creation
+                    Item newItem = new Item(); // Example: Item creation
 
                     // Adding the item to the store
                     store.addToStockItems(newItem, seller.getUsername(), objectMapper);
@@ -86,11 +86,11 @@ public class SellerGUI extends JFrame implements ActionListener {
             JOptionPane.showMessageDialog(frame, "Invalid store name!");
         }
     }
-    public static void main(String[] args) {
-        // Assuming you have the necessary objects instantiated (like ObjectMapper and Seller)
-        Seller seller = new Seller(); // Replace with your Seller object creation logic
-        ObjectMapper objectMapper = new ObjectMapper(); // Replace with your ObjectMapper creation logic
+    // public static void main(String[] args) {
+    //     // Assuming you have the necessary objects instantiated (like ObjectMapper and Seller)
+    //     Seller seller = new Seller(); // Replace with your Seller object creation logic
+    //     ObjectMapper objectMapper = new ObjectMapper(); // Replace with your ObjectMapper creation logic
 
-        SwingUtilities.invokeLater(() -> new SellerGUI(seller, objectMapper));
-    }
+    //     SwingUtilities.invokeLater(() -> new SellerGUI(seller, objectMapper));
+    // }
 }

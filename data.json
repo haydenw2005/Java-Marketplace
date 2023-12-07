@@ -13,23 +13,27 @@
             "bread" : {
               "name" : "bread",
               "description" : "tastes good",
-              "stock" : 234,
+              "stock" : 227,
               "count" : -1,
               "price" : 10.0,
-              "buyersObject" : null,
+              "buyersObject" : {
+                "test_buyer" : 4
+              },
               "sellersObject" : {
-                "seller_1_username" : 2
+                "seller_1_username" : 9
               }
             },
             "spring" : {
               "name" : "spring",
               "description" : "boing boing boing",
-              "stock" : 3,
+              "stock" : 2,
               "count" : -1,
               "price" : 44.0,
-              "buyersObject" : null,
+              "buyersObject" : {
+                "test_buyer" : 1
+              },
               "sellersObject" : {
-                "seller_1_username" : 3
+                "seller_1_username" : 4
               }
             }
           },
@@ -98,6 +102,32 @@
               "sellersObject" : {
                 "seller_1_username" : 4
               }
+            },
+            "bread" : {
+              "name" : "bread",
+              "description" : "tastes good",
+              "stock" : 228,
+              "count" : 9,
+              "price" : 10.0,
+              "buyersObject" : {
+                "test_buyer" : 4
+              },
+              "sellersObject" : {
+                "seller_1_username" : 9
+              }
+            },
+            "spring" : {
+              "name" : "spring",
+              "description" : "boing boing boing",
+              "stock" : 3,
+              "count" : 3,
+              "price" : 44.0,
+              "buyersObject" : {
+                "test_buyer" : 1
+              },
+              "sellersObject" : {
+                "seller_1_username" : 4
+              }
             }
           }
         },
@@ -107,16 +137,32 @@
             "dr pepper" : {
               "name" : "dr pepper",
               "description" : "bubbly",
-              "stock" : 3,
+              "stock" : 1,
               "count" : -1,
               "price" : 12.0,
-              "buyersObject" : null,
+              "buyersObject" : {
+                "buyer2" : 1
+              },
               "sellersObject" : {
-                "seller_1_username" : 3
+                "seller_1_username" : 5
               }
             }
           },
-          "soldItems" : { }
+          "soldItems" : {
+            "dr pepper" : {
+              "name" : "dr pepper",
+              "description" : "bubbly",
+              "stock" : 2,
+              "count" : 2,
+              "price" : 12.0,
+              "buyersObject" : {
+                "buyer2" : 1
+              },
+              "sellersObject" : {
+                "seller_1_username" : 5
+              }
+            }
+          }
         },
         "my_store_2" : {
           "name" : "my_store_2",
@@ -244,7 +290,21 @@
       "firstName" : "Test",
       "lastName" : "Buyer",
       "email" : "TestBuyer@email.com",
-      "cart" : { },
+      "cart" : {
+        "bread" : {
+          "name" : "bread",
+          "description" : "tastes good",
+          "stock" : 228,
+          "count" : 1,
+          "price" : 10.0,
+          "buyersObject" : {
+            "test_buyer" : 3
+          },
+          "sellersObject" : {
+            "seller_1_username" : 8
+          }
+        }
+      },
       "purchaseHistory" : {
         "t" : {
           "name" : "t",
@@ -252,6 +312,45 @@
           "stock" : -1,
           "count" : 1,
           "price" : 3.0,
+          "buyersObject" : {
+            "test_buyer" : 1
+          },
+          "sellersObject" : {
+            "seller_1_username" : 4
+          }
+        },
+        "bread" : {
+          "name" : "bread",
+          "description" : "tastes good",
+          "stock" : -1,
+          "count" : 9,
+          "price" : 10.0,
+          "buyersObject" : {
+            "test_buyer" : 4
+          },
+          "sellersObject" : {
+            "seller_1_username" : 9
+          }
+        },
+        "dr pepper" : {
+          "name" : "dr pepper",
+          "description" : "bubbly",
+          "stock" : -1,
+          "count" : 1,
+          "price" : 12.0,
+          "buyersObject" : {
+            "test_buyer" : 1
+          },
+          "sellersObject" : {
+            "seller_1_username" : 4
+          }
+        },
+        "spring" : {
+          "name" : "spring",
+          "description" : "boing boing boing",
+          "stock" : -1,
+          "count" : 3,
+          "price" : 44.0,
           "buyersObject" : {
             "test_buyer" : 1
           },
