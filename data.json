@@ -303,6 +303,17 @@
           "sellersObject" : {
             "seller_1_username" : 8
           }
+        },
+        "soccer ball" : {
+          "name" : "soccer ball",
+          "description" : "kick it",
+          "stock" : 2,
+          "count" : 1,
+          "price" : 20.0,
+          "buyersObject" : null,
+          "sellersObject" : {
+            "testseller" : 2
+          }
         }
       },
       "purchaseHistory" : {
