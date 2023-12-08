@@ -260,9 +260,9 @@ public class MarketplaceGUI extends JComponent implements Runnable {
                     } else if (e.getSource() == exportButton) {
 
                     } else if (e.getSource() == editAccountButton) {
-                        marketplace.editUser(user, objectMapper); // TODO: network
+                        marketplace.editUser(user, objectMapper, oos, ois);
                     } else if (e.getSource() == deleteAccountButton) {
-                        marketplace.deleteUser(user, objectMapper); // TODO: network
+                        marketplace.deleteUser(user, objectMapper, oos, ois); 
                         homeFrame.dispose();
                         System.exit(0);
                     } else if (e.getSource() == signOutButton) {
