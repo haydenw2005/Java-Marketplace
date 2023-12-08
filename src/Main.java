@@ -36,7 +36,8 @@ public class Main {
             SwingUtilities.invokeLater(new MarketplaceGUI(marketplace, user, objectMapper, ois, oos));
 
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Please make sure to run the server and try again.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

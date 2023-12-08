@@ -249,7 +249,9 @@ public class MarketplaceGUI extends JComponent implements Runnable {
                             marketplace = (Marketplace) ois.readObject();
                             user = (Buyer) ois.readObject();
                         } catch (IOException | ClassNotFoundException e1) {
-                            e1.printStackTrace();
+                            JOptionPane.showMessageDialog(null,
+                                    "There was an error buying cart.",
+                                    "Error", JOptionPane.ERROR_MESSAGE);
                         }
                     } else if (e.getSource() == purchaseHistoryButton) {
                         purchaseHistoryPanel.add(backToHomeButton);
@@ -258,6 +260,20 @@ public class MarketplaceGUI extends JComponent implements Runnable {
                     } else if (e.getSource() == refreshPurchaseHistoryButton) {
                         updatePurchaseHistoryList();
                     } else if (e.getSource() == exportButton) {
+                        String file = JOptionPane.showInputDialog(null, 
+                                "Enter filename to export to (excluding .csv extension)",
+                                "zBay Marketplace", JOptionPane.QUESTION_MESSAGE);
+                        // get latest buyer object from server
+                        try {
+                            oos.writeObject("updateBuyer");
+                            oos.flush();
+                            user = (Person) ois.readObject();
+                            CsvUtils.writePurchaseHistoryToCSV(file, (Buyer) user);
+                        } catch (IOException | ClassNotFoundException e1) {
+                            JOptionPane.showMessageDialog(null,
+                                    "There was an error writing to csv.",
+                                    "Error", JOptionPane.ERROR_MESSAGE);
+                        }
 
                     } else if (e.getSource() == editAccountButton) {
                         marketplace.editUser(user, objectMapper, oos, ois);
@@ -295,7 +311,9 @@ public class MarketplaceGUI extends JComponent implements Runnable {
                             oos.flush();
                             marketplace = (Marketplace) ois.readObject();
                         } catch (IOException | ClassNotFoundException e1) {
-                            e1.printStackTrace();
+                            JOptionPane.showMessageDialog(null,
+                                    "There was an error.",
+                                    "Error", JOptionPane.ERROR_MESSAGE);
                         }
                         for (Item item : itemsList)
                             productsComboBox.addItem(item.toString(marketplace));
@@ -319,7 +337,9 @@ public class MarketplaceGUI extends JComponent implements Runnable {
                             // fetch updates
                             marketplace.updateMarketPlace((Marketplace) ois.readObject());
                         } catch (IOException | ClassNotFoundException except) {
-                            except.printStackTrace();
+                            JOptionPane.showMessageDialog(null,
+                                    "There was an error pruchasing item.",
+                                    "Error", JOptionPane.ERROR_MESSAGE);
                         }
                     } else if (e.getSource() == addToCartButton) {
                         // ((Buyer) user).addItemToCart(selectedProduct, objectMapper);
@@ -331,7 +351,9 @@ public class MarketplaceGUI extends JComponent implements Runnable {
                             // fetch updates
                             marketplace.updateMarketPlace((Marketplace) ois.readObject());
                         } catch (IOException | ClassNotFoundException except) {
-                            except.printStackTrace();
+                            JOptionPane.showMessageDialog(null,
+                                    "There was an error adding to cart.",
+                                    "Error", JOptionPane.ERROR_MESSAGE);
                         }
                     } else if (e.getSource() == backToMarketplaceButton) {
                         productPageFrame.setVisible(false);
