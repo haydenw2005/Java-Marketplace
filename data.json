@@ -26,14 +26,14 @@
             "spring" : {
               "name" : "spring",
               "description" : "boing boing boing",
-              "stock" : 2,
+              "stock" : 1,
               "count" : -1,
               "price" : 44.0,
               "buyersObject" : {
-                "test_buyer" : 1
+                "test_buyer" : 2
               },
               "sellersObject" : {
-                "seller_1_username" : 4
+                "seller_1_username" : 5
               }
             }
           },
@@ -107,7 +107,7 @@
               "name" : "bread",
               "description" : "tastes good",
               "stock" : 228,
-              "count" : 9,
+              "count" : 10,
               "price" : 10.0,
               "buyersObject" : {
                 "test_buyer" : 4
@@ -119,14 +119,14 @@
             "spring" : {
               "name" : "spring",
               "description" : "boing boing boing",
-              "stock" : 3,
-              "count" : 3,
+              "stock" : 2,
+              "count" : 4,
               "price" : 44.0,
               "buyersObject" : {
-                "test_buyer" : 1
+                "test_buyer" : 2
               },
               "sellersObject" : {
-                "seller_1_username" : 4
+                "seller_1_username" : 5
               }
             }
           }
@@ -290,21 +290,7 @@
       "firstName" : "Test",
       "lastName" : "Buyer",
       "email" : "TestBuyer@email.com",
-      "cart" : {
-        "bread" : {
-          "name" : "bread",
-          "description" : "tastes good",
-          "stock" : 228,
-          "count" : 1,
-          "price" : 10.0,
-          "buyersObject" : {
-            "test_buyer" : 3
-          },
-          "sellersObject" : {
-            "seller_1_username" : 8
-          }
-        }
-      },
+      "cart" : { },
       "purchaseHistory" : {
         "t" : {
           "name" : "t",
@@ -323,7 +309,7 @@
           "name" : "bread",
           "description" : "tastes good",
           "stock" : -1,
-          "count" : 9,
+          "count" : 10,
           "price" : 10.0,
           "buyersObject" : {
             "test_buyer" : 4
@@ -349,13 +335,13 @@
           "name" : "spring",
           "description" : "boing boing boing",
           "stock" : -1,
-          "count" : 3,
+          "count" : 4,
           "price" : 44.0,
           "buyersObject" : {
-            "test_buyer" : 1
+            "test_buyer" : 2
           },
           "sellersObject" : {
-            "seller_1_username" : 4
+            "seller_1_username" : 5
           }
         }
       },

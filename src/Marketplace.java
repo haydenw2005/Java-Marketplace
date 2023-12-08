@@ -3,6 +3,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.awt.*;
 import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.*;
 import javax.swing.*;
@@ -210,56 +213,56 @@ public class Marketplace implements Serializable {
         }
     }
 
-    public void startBuyerFlow(Buyer user, Scanner scanner, ObjectMapper objectMapper) {
-        System.out.println("Welcome " + user.getFirstName() + " " + user.getLastName() + "!");
-        while (true) {
-            System.out.println("What would you like to do?");
-            System.out.println("\t(1) View store information");
-            System.out.println("\t(2) View marketplace");
-            System.out.println("\t(3) View cart");
-            System.out.println("\t(4) View purchase history");
-            System.out.println("\t(5) Export purchase history to CSV");
-            System.out.println("\t(6) Edit account");
-            System.out.println("\t(7) Delete account");
-            System.out.println("\t(8) Signout");
+    // public void startBuyerFlow(Buyer user, Scanner scanner, ObjectMapper objectMapper) {
+    //     System.out.println("Welcome " + user.getFirstName() + " " + user.getLastName() + "!");
+    //     while (true) {
+    //         System.out.println("What would you like to do?");
+    //         System.out.println("\t(1) View store information");
+    //         System.out.println("\t(2) View marketplace");
+    //         System.out.println("\t(3) View cart");
+    //         System.out.println("\t(4) View purchase history");
+    //         System.out.println("\t(5) Export purchase history to CSV");
+    //         System.out.println("\t(6) Edit account");
+    //         System.out.println("\t(7) Delete account");
+    //         System.out.println("\t(8) Signout");
 
-            String input = scanner.nextLine();
-            while (!(input.equals("1") || input.equals("2") || input.equals("3")
-                    || input.equals("4") || input.equals("5") || input.equals("6")
-                    || input.equals("7") || input.equals("8"))) {
-                System.out.println("Invalid input");
-                input = scanner.nextLine();
-            }
-            if (input.equals("1")) {
-                viewStoreInfo(scanner, (Buyer) user, objectMapper);
-            } else if (input.equals("2")) {
-                showMarketplace(scanner, (Buyer) user, objectMapper);
-            } else if (input.equals("3")) {
-                cartFlow(scanner, (Buyer) user, objectMapper);
-            } else if (input.equals("4")) {
-                //user.showPurchaseHistory();
-            } else if (input.equals("5")) {
-                try {
-                    System.out.println("Enter filename to export to (excluding .csv extension)");
-                    String file = scanner.nextLine();
-                    CsvUtils.writePurchaseHistoryToCSV(file, (Buyer) user);
-                } catch (Exception e) {
-                    System.out.println("An error occurred while writing to file.");
-                }
-            } else if (input.equals("6")) {
-                System.out.println("Edit account ~");
-                //editUser(scanner, user, objectMapper);
-                System.out.println();
-            } else if (input.equals("7")) {
-                System.out.println("Deleting account...");
-                deleteUser(user, objectMapper);
-                break;
-            } else if (input.equals("8")) {
-                System.out.println("Signing out...");
-                break;
-            }
-        }
-    }
+    //         String input = scanner.nextLine();
+    //         while (!(input.equals("1") || input.equals("2") || input.equals("3")
+    //                 || input.equals("4") || input.equals("5") || input.equals("6")
+    //                 || input.equals("7") || input.equals("8"))) {
+    //             System.out.println("Invalid input");
+    //             input = scanner.nextLine();
+    //         }
+    //         if (input.equals("1")) {
+    //             viewStoreInfo(scanner, (Buyer) user, objectMapper);
+    //         } else if (input.equals("2")) {
+    //             showMarketplace(scanner, (Buyer) user, objectMapper);
+    //         } else if (input.equals("3")) {
+    //             cartFlow(scanner, (Buyer) user, objectMapper);
+    //         } else if (input.equals("4")) {
+    //             //user.showPurchaseHistory();
+    //         } else if (input.equals("5")) {
+    //             try {
+    //                 System.out.println("Enter filename to export to (excluding .csv extension)");
+    //                 String file = scanner.nextLine();
+    //                 CsvUtils.writePurchaseHistoryToCSV(file, (Buyer) user);
+    //             } catch (Exception e) {
+    //                 System.out.println("An error occurred while writing to file.");
+    //             }
+    //         } else if (input.equals("6")) {
+    //             System.out.println("Edit account ~");
+    //             //editUser(scanner, user, objectMapper);
+    //             System.out.println();
+    //         } else if (input.equals("7")) {
+    //             System.out.println("Deleting account...");
+    //             deleteUser(user, objectMapper);
+    //             break;
+    //         } else if (input.equals("8")) {
+    //             System.out.println("Signing out...");
+    //             break;
+    //         }
+    //     }
+    // }
 
 
     public ArrayList<Item> getAllMarketPlaceItems() {
@@ -604,7 +607,7 @@ public class Marketplace implements Serializable {
 
     }
 
-    public void editUser(Person user, ObjectMapper objectMapper) {
+    public void editUser(Person user, ObjectMapper objectMapper, ObjectOutputStream oos, ObjectInput ois) {
         String password = JOptionPane.showInputDialog(null,
                 "Please enter your new password:",
                 "zBay Marketplace", JOptionPane.QUESTION_MESSAGE);
@@ -631,35 +634,27 @@ public class Marketplace implements Serializable {
             JOptionPane.showMessageDialog(null,
                     "One or more fields were empty",
                     "Error", JOptionPane.ERROR_MESSAGE);
-            this.editUser(user, objectMapper);
+            this.editUser(user, objectMapper, oos, ois);
         }
-        user.setPassword(password);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setEmail(email);
         try {
-            if (user instanceof Buyer) {
-                addBuyerAccount(user.getUsername(), (Buyer) user, objectMapper);
-            } else {
-                addSellerAccount(user.getUsername(), (Seller) user, objectMapper);
-            }
-        } catch (Exception e) {
+            // request network to edit user
+            oos.writeObject("editUser");
+            oos.writeObject(new Object[]{password, firstName, lastName, email});
+            oos.flush();
+            user = (Person) ois.readObject();
+        } catch ( Exception e) {
             JOptionPane.showMessageDialog(null,
                     "There was an error updating your account",
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    public void deleteUser(Person user, ObjectMapper objectMapper) {
+    public void deleteUser(Person user, ObjectMapper objectMapper, ObjectOutputStream oos, ObjectInputStream ois) {
         try {
-            if (user instanceof Buyer) {
-                String dir = "/buyers";
-                JsonUtils.removeObjectFromJson(dir, user.getUsername(), objectMapper);
-            } else {
-                String dir = "/sellers";
-                JsonUtils.removeObjectFromJson(dir, user.getUsername(), objectMapper);
-            }
-
+            // request network to delete user
+            oos.writeObject("deleteUser");
+            oos.flush();
+            user = (Person) ois.readObject();
             JOptionPane.showMessageDialog(null, "Account deleted",
                     "Success!", JOptionPane.INFORMATION_MESSAGE);
 
@@ -671,100 +666,100 @@ public class Marketplace implements Serializable {
         }
     }
 
-    public void startSellerFlow(Seller user, Scanner scanner, ObjectMapper objectMapper) {
-        System.out.println("Welcome " + user.getFirstName() + " " + user.getLastName() + "!");
-        while (true) {
-            printSellerMenu();
-            String option = getMenuInput(1, 10, scanner);
-            switch (option) {
-                case "1":
-                    boolean inItemMenu = true;
-                    while (inItemMenu) {
-                        printSellerItemMenu();
-                        try {
-                            inItemMenu = getItemMenuInput(scanner, user, objectMapper);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        user = updatedSeller(objectMapper, user.getUsername());
-                    }
-                    System.out.println();
-                    break;
-                case "2":
-                    boolean inStoreMenu = true;
-                    while (inStoreMenu) {
-                        printSellerStoreMenu();
-                        try {
-                            inStoreMenu = getStoreMenuInput(scanner, user, objectMapper);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        user = updatedSeller(objectMapper, user.getUsername());
-                    }
-                    System.out.println();
-                    break;
-                case "3":
-                    System.out.println("All listed products");
-                    ArrayList<Item> stockItems = user.getAllStoreItems("stock");
-                    for (Item item : stockItems) {
-                        System.out.println(item.toString());
-                    }
-                    System.out.println();
-                    break;
-                case "4":
-                    System.out.println("All sold products");
-                    ArrayList<Item> soldItems = user.getAllStoreItems("sold");
-                    for (Item item : soldItems) {
-                        System.out.println(item.toString());
-                    }
-                    System.out.println();
-                    break;
-                case "5":
-                    System.out.println("All product buyers");
-                    HashMap<String, Integer> buyers = user.allBuyers();
-                    for (Map.Entry<String, Integer> entry : buyers.entrySet()) {
-                        String key = entry.getKey();
-                        Integer value = entry.getValue();
-                        System.out.println("\tUser " + key + " has bought " + value + " products ~");
-                    }
-                    System.out.println();
-                    break;
-                case "6":
-                    System.out.println("Enter filename to write to (excluding .csv extension)");
-                    String file = scanner.nextLine();
-                    try {
-                        CsvUtils.writeProductsToCSV(file, (Seller) user);
-                    } catch (Exception e) {
-                        System.out.println("Error writing to file.");
-                        ;
-                    }
-                    break;
-                case "7":
-                    System.out.println("Enter filename to read from (excluding .csv extension)");
-                    String filename = scanner.nextLine();
-                    try {
-                        CsvUtils.importFromCSV(filename, (Seller) user, objectMapper);
-                    } catch (Exception e) {
-                        System.out.println("Error reading from file.");
-                        e.printStackTrace();
-                    }
-                    break;
-                case "8":
-                    System.out.println("Edit account");
-                    //editUser(scanner, user, objectMapper);
-                    System.out.println();
-                    user = updatedSeller(objectMapper, user.getUsername());
-                    break;
-                case "9":
-                    System.out.println("Deleting account...");
-                    deleteUser(user, objectMapper);
-                    return;
-                case "10":
-                    System.out.println("Signing out...");
-                    return;
-            }
-        }
-    }
+    // public void startSellerFlow(Seller user, Scanner scanner, ObjectMapper objectMapper) {
+    //     System.out.println("Welcome " + user.getFirstName() + " " + user.getLastName() + "!");
+    //     while (true) {
+    //         printSellerMenu();
+    //         String option = getMenuInput(1, 10, scanner);
+    //         switch (option) {
+    //             case "1":
+    //                 boolean inItemMenu = true;
+    //                 while (inItemMenu) {
+    //                     printSellerItemMenu();
+    //                     try {
+    //                         inItemMenu = getItemMenuInput(scanner, user, objectMapper);
+    //                     } catch (Exception e) {
+    //                         e.printStackTrace();
+    //                     }
+    //                     user = updatedSeller(objectMapper, user.getUsername());
+    //                 }
+    //                 System.out.println();
+    //                 break;
+    //             case "2":
+    //                 boolean inStoreMenu = true;
+    //                 while (inStoreMenu) {
+    //                     printSellerStoreMenu();
+    //                     try {
+    //                         inStoreMenu = getStoreMenuInput(scanner, user, objectMapper);
+    //                     } catch (Exception e) {
+    //                         e.printStackTrace();
+    //                     }
+    //                     user = updatedSeller(objectMapper, user.getUsername());
+    //                 }
+    //                 System.out.println();
+    //                 break;
+    //             case "3":
+    //                 System.out.println("All listed products");
+    //                 ArrayList<Item> stockItems = user.getAllStoreItems("stock");
+    //                 for (Item item : stockItems) {
+    //                     System.out.println(item.toString());
+    //                 }
+    //                 System.out.println();
+    //                 break;
+    //             case "4":
+    //                 System.out.println("All sold products");
+    //                 ArrayList<Item> soldItems = user.getAllStoreItems("sold");
+    //                 for (Item item : soldItems) {
+    //                     System.out.println(item.toString());
+    //                 }
+    //                 System.out.println();
+    //                 break;
+    //             case "5":
+    //                 System.out.println("All product buyers");
+    //                 HashMap<String, Integer> buyers = user.allBuyers();
+    //                 for (Map.Entry<String, Integer> entry : buyers.entrySet()) {
+    //                     String key = entry.getKey();
+    //                     Integer value = entry.getValue();
+    //                     System.out.println("\tUser " + key + " has bought " + value + " products ~");
+    //                 }
+    //                 System.out.println();
+    //                 break;
+    //             case "6":
+    //                 System.out.println("Enter filename to write to (excluding .csv extension)");
+    //                 String file = scanner.nextLine();
+    //                 try {
+    //                     CsvUtils.writeProductsToCSV(file, (Seller) user);
+    //                 } catch (Exception e) {
+    //                     System.out.println("Error writing to file.");
+    //                     ;
+    //                 }
+    //                 break;
+    //             case "7":
+    //                 System.out.println("Enter filename to read from (excluding .csv extension)");
+    //                 String filename = scanner.nextLine();
+    //                 try {
+    //                     CsvUtils.importFromCSV(filename, (Seller) user, objectMapper);
+    //                 } catch (Exception e) {
+    //                     System.out.println("Error reading from file.");
+    //                     e.printStackTrace();
+    //                 }
+    //                 break;
+    //             case "8":
+    //                 System.out.println("Edit account");
+    //                 //editUser(scanner, user, objectMapper);
+    //                 System.out.println();
+    //                 user = updatedSeller(objectMapper, user.getUsername());
+    //                 break;
+    //             case "9":
+    //                 System.out.println("Deleting account...");
+    //                 deleteUser(user, objectMapper);
+    //                 return;
+    //             case "10":
+    //                 System.out.println("Signing out...");
+    //                 return;
+    //         }
+    //     }
+    // }
 
     public String getMenuInput(int start, int end, Scanner scanner) {
         System.out.println("What would you like to do next? Please enter a number " + start + " through " + end + ":");

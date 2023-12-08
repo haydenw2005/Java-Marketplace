@@ -74,10 +74,31 @@ public class Server {
                     oos.flush();
                 }
                 if (command.equals("editUser")) {
-
+                    Object[] editUserObjects = (Object[]) ois.readObject();
+                    user.setPassword((String) editUserObjects[0]);
+                    user.setFirstName((String) editUserObjects[1]);
+                    user.setLastName((String) editUserObjects[2]);
+                    user.setEmail((String) editUserObjects[3]);
+                    if (user instanceof Buyer) {
+                        marketplace.addBuyerAccount(user.getUsername(), (Buyer) user, objectMapper);
+                    } else {
+                        marketplace.addSellerAccount(user.getUsername(), (Seller) user, objectMapper);
+                    }
+                    user = server.getUpdatedBuyer(user.getUsername(), objectMapper);
+                    oos.writeObject(user);
+                    oos.flush();
                 }
                 if (command.equals("deleteUser")) {
-
+                    if (user instanceof Buyer) {
+                        String dir = "/buyers";
+                        JsonUtils.removeObjectFromJson(dir, user.getUsername(), objectMapper);
+                    } else {
+                        String dir = "/sellers";
+                        JsonUtils.removeObjectFromJson(dir, user.getUsername(), objectMapper);
+                    }
+                    user = server.getUpdatedBuyer(user.getUsername(), objectMapper);
+                    oos.writeObject(user);
+                    oos.flush();
                 }
             }
 
