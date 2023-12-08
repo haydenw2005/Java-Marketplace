@@ -4,7 +4,6 @@ import java.awt.event.ActionListener;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
 public class SellerGUI extends JFrame implements ActionListener {
     private Seller seller;
     private ObjectMapper objectMapper;
@@ -49,10 +48,13 @@ public class SellerGUI extends JFrame implements ActionListener {
             if (store != null) {
                 String itemName = JOptionPane.showInputDialog(frame, "Enter the item name:");
                 if (itemName != null && !itemName.isEmpty()) {
-                    // Here, add logic to gather details for the new item (price, quantity, etc.)
-                    Item newItem = new Item(); // Example: Item creation
+                    // Gather details for the new item (price, quantity, etc.)
+                    double price = Double.parseDouble(JOptionPane.showInputDialog(frame, "Enter the item price:"));
+                    int quantity = Integer.parseInt(JOptionPane.showInputDialog(frame, "Enter the item quantity:"));
 
-                    // Adding the item to the store
+                    Item newItem = new Item(itemName, price, quantity); // Create new Item
+
+                    // Add the item to the store
                     store.addToStockItems(newItem, seller.getUsername(), objectMapper);
                     JOptionPane.showMessageDialog(frame, "Item added to store: " + itemName);
                 } else {
@@ -86,11 +88,12 @@ public class SellerGUI extends JFrame implements ActionListener {
             JOptionPane.showMessageDialog(frame, "Invalid store name!");
         }
     }
-    // public static void main(String[] args) {
-    //     // Assuming you have the necessary objects instantiated (like ObjectMapper and Seller)
-    //     Seller seller = new Seller(); // Replace with your Seller object creation logic
-    //     ObjectMapper objectMapper = new ObjectMapper(); // Replace with your ObjectMapper creation logic
 
-    //     SwingUtilities.invokeLater(() -> new SellerGUI(seller, objectMapper));
-    // }
+    public static void main(String[] args) {
+        // Assuming you have the necessary objects instantiated (like ObjectMapper and Seller)
+        Seller seller = new Seller(); // Replace with your Seller object creation logic
+        ObjectMapper objectMapper = new ObjectMapper(); // Replace with your ObjectMapper creation logic
+
+        SwingUtilities.invokeLater(() -> new SellerGUI(seller, objectMapper));
+    }
 }
