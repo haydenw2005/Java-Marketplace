@@ -79,7 +79,7 @@ public class SellerGUI extends JFrame implements ActionListener {
                     double price = Double.parseDouble(JOptionPane.showInputDialog(frame, "Enter the item price:"));
                     int quantity = Integer.parseInt(JOptionPane.showInputDialog(frame, "Enter the item quantity:"));
 
-                    Item newItem = new Item(itemName, price, quantity); // Create new Item
+                    Item newItem = new Item(); // Create new Item
 
                     // Add the item to the store
                     store.addToStockItems(newItem, seller.getUsername(), objectMapper);
