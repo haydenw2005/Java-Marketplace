@@ -396,6 +396,21 @@ public class MarketplaceGUI extends JComponent implements Runnable {
             buyCartButton.addActionListener(actionListener);
 
         } else {
+
+            //HERE IS THE INCOMPLETE GUI LOGIC. SOME BUTTONS ARE THERE BUT NOT FULL FUNCTIONAL
+
+            //EVERYTHING THAT THE GUI NEEDS TO DO:
+            /*
+            System.out.println("\t(1) List, edit, or delete items ~");
+            System.out.println("\t(2) Create, edit, or delete stores ~");
+            System.out.println("\t(3) View listed products dashboard ~");
+            System.out.println("\t(4) View all sold products dashboard ~");
+            System.out.println("\t(5) View all product buyers dashboard ~");
+            System.out.println("\t(6) Edit account");
+            System.out.println("\t(7) Delete account");
+            System.out.println("\t(8) Sign-out ~");
+            */
+
             JFrame frame = new JFrame("Seller Interface");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -459,9 +474,7 @@ public class MarketplaceGUI extends JComponent implements Runnable {
             if (store != null) {
                 String itemName = JOptionPane.showInputDialog(frame, "Enter the item name:");
                 if (itemName != null && !itemName.isEmpty()) {
-                    // Gather details for the new item (price, quantity, etc.)
-                    double price = Double.parseDouble(JOptionPane.showInputDialog(frame, "Enter the item price:"));
-                    int quantity = Integer.parseInt(JOptionPane.showInputDialog(frame, "Enter the item quantity:"));
+                    //Add ADD ITEM LOGIC
 
                     Item newItem = new Item(); // Create new Item
 
