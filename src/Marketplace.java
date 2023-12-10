@@ -816,12 +816,12 @@ public class Marketplace implements Serializable {
         switch (option) {
 
             case "1":
-                Item newItem = createItem(scanner, user);
+                //Item newItem = createItem(scanner, user);
                 while (true) {
                     System.out.println("What is the name of the store you would like to list it in?");
                     String storeName = scanner.nextLine();
                     if (user.getStores().containsKey(storeName)) {
-                        user.getStoreByName(storeName).addToStockItems(newItem, user.getUsername(), objectMapper);
+             //           user.getStoreByName(storeName).addToStockItems(newItem, user.getUsername(), objectMapper);
                         break;
                     } else
                         System.out.println("Sorry, we can't find a store with this name.");
@@ -885,25 +885,115 @@ public class Marketplace implements Serializable {
 
     }
 
-    public Item createItem(Scanner scanner, Seller user) {
+    public void createItem(Seller user, ObjectMapper objectMapper, ObjectOutputStream oos, ObjectInputStream ois) {
+        boolean error = false;
+        String storeName;
+        do {
+            error = false;
+            storeName = JOptionPane.showInputDialog(null,
+                    "Enter the store name:",
+                    "zBay Marketplace", JOptionPane.QUESTION_MESSAGE);
 
-        String name;
-        while (true) {
-            System.out.println("Please enter a name for the product:");
-            name = scanner.nextLine();
-            boolean doesExist = getItemFromAllStores(name, user) != null;
-            if (!doesExist)
-                break;
-            else
-                System.out.println("Sorry, this item already exists. Try another name.");
+            if (user.getStoreByName(storeName) == null) {
+                JOptionPane.showMessageDialog(null, "Store not found",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                error = true;
+            }
+
+            if (storeName == null || storeName.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Invalid store name",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                error = true;
+            }
         }
-        System.out.println("Please enter a description for the product:");
-        String description = scanner.nextLine();
-        int stock = (int) getValidDouble(scanner, "Please enter how many of these items you would like to list:");
-        double price = getValidDouble(scanner, "Please enter the price of the item:");
-        HashMap<String, Integer> sellerHashmap = new HashMap<String, Integer>();
-        sellerHashmap.put(user.getUsername(), stock);
-        return new Item(name, description, stock, -1, price, null, sellerHashmap);
+        while (error);
+
+        String itemName;
+        do {
+            error = false;
+            itemName = JOptionPane.showInputDialog(null,
+                    "Enter the item name:",
+                    "zBay Marketplace", JOptionPane.QUESTION_MESSAGE);
+
+            if (itemName == null || itemName.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Invalid item name",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                error = true;
+            }
+        }
+        while (error);
+
+        String description;
+        do {
+            error = false;
+            description = JOptionPane.showInputDialog(null,
+                    "Enter the item's description:",
+                    "zBay Marketplace", JOptionPane.QUESTION_MESSAGE);
+
+            if (description == null || description.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Invalid description",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                error = true;
+            }
+        }
+        while (error);
+
+        String stockString;
+        do {
+            error = false;
+            stockString = JOptionPane.showInputDialog(null,
+                    "Enter the number of items you would like to list:",
+                    "zBay Marketplace", JOptionPane.QUESTION_MESSAGE);
+
+            if (stockString == null || stockString.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Invalid entry",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                error = true;
+            }
+        }
+        while (error);
+
+        String priceString;
+        do {
+            error = false;
+            priceString = JOptionPane.showInputDialog(null,
+                    "Enter the price of this item:",
+                    "zBay Marketplace", JOptionPane.QUESTION_MESSAGE);
+
+            if (priceString == null || priceString.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Invalid entry",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                error = true;
+            }
+        }
+        while (error);
+
+        try {
+            int stock = Integer.parseInt(stockString);
+            double price = Double.parseDouble(priceString);
+
+            HashMap<String, Integer> sellerHashmap = new HashMap<String, Integer>();
+            sellerHashmap.put(user.getUsername(), stock);
+            Item newItem = new Item(itemName, description, stock, -1, price, null, sellerHashmap);
+            user.getStoreByName(storeName).addToStockItems(newItem, user.getUsername(), objectMapper);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "One of your entries was invalid",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        /*
+        try {
+            oos.writeObject("createItem");
+            oos.flush();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,
+                    "There was an error listing this item",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+         */
     }
 
     public void printSellerItemMenu() {

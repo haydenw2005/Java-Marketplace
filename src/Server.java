@@ -123,6 +123,9 @@ public class Server {
                             JsonUtils.removeObjectFromJson(dir, user.getUsername(), objectMapper);
                         }
                     }
+                    if (command.equals("createItem")) {
+
+                    }
                 }
             } catch (ClassNotFoundException e){
                 e.printStackTrace();

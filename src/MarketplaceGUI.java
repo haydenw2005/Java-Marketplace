@@ -411,8 +411,10 @@ public class MarketplaceGUI extends JComponent implements Runnable {
             System.out.println("\t(8) Sign-out ~");
             */
 
-            JFrame frame = new JFrame("Seller Interface");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            JFrame sellerFrame = new JFrame("Seller Interface");
+            sellerFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            sellerFrame.setSize(600, 400);
+            sellerFrame.setLocationRelativeTo(null);
 
             JButton addItemButton = new JButton("Add Item to Store");
 
@@ -427,24 +429,41 @@ public class MarketplaceGUI extends JComponent implements Runnable {
 
             JButton viewStoreSalesButton = new JButton("View Store Sales"); // Initialize the new button
 
+            JButton editAccountButton = new JButton("Edit account");
+            JButton deleteAccountButton = new JButton("Delete Account");
+            JButton signOutButton = new JButton("Sign out");
+
+            sellerFrame.add(editAccountButton);
+            sellerFrame.add(deleteAccountButton);
+            sellerFrame.add(signOutButton);
+
             ActionListener actionListener = new ActionListener() {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     // Existing functionality remains the same
                     if (e.getSource() == addItemButton) {
-                        addItemToStore((Seller) user, frame);
+                        marketplace.createItem((Seller) user, objectMapper, oos, ois);
                     } else if (e.getSource() == deleteItemButton) {
-                        deleteItemFromStore((Seller) user, frame);
+                        deleteItemFromStore((Seller) user, sellerFrame);
                     } else if (e.getSource() == createNewStoreButton) {
-                        createNewStore((Seller) user, frame);
+                        createNewStore((Seller) user, sellerFrame);
                     } else if (e.getSource() == editStoreButton) {
-                        editStore((Seller) user, frame);
+                        editStore((Seller) user, sellerFrame);
+                    } else if (e.getSource() == editAccountButton) {
+                        marketplace.editUser(user, objectMapper, oos, ois);
+                    } else if (e.getSource() == deleteAccountButton) {
+                        marketplace.deleteUser(user, objectMapper, oos, ois);
+                        sellerFrame.dispose();
+                        System.exit(0);
+                    } else if (e.getSource() == signOutButton) {
+                        sellerFrame.dispose();
+                        System.exit(0);
                     }
 
                     // Adding functionality for the new button
                     else if (e.getSource() == viewStoreSalesButton) {
-                        viewStoreSales((Seller) user, frame); // Call the method to view store sales
+                        viewStoreSales((Seller) user, sellerFrame); // Call the method to view store sales
                     }
                 }
             };
@@ -453,6 +472,9 @@ public class MarketplaceGUI extends JComponent implements Runnable {
             createNewStoreButton.addActionListener(actionListener);
             editStoreButton.addActionListener(actionListener);
             viewStoreSalesButton.addActionListener(actionListener); // Add action listener for the new button
+            editAccountButton.addActionListener(actionListener);
+            deleteAccountButton.addActionListener(actionListener);
+            signOutButton.addActionListener(actionListener);
 
             JPanel panel = new JPanel();
             panel.add(addItemButton);
@@ -460,35 +482,12 @@ public class MarketplaceGUI extends JComponent implements Runnable {
             panel.add(createNewStoreButton);
             panel.add(editStoreButton);
             panel.add(viewStoreSalesButton); // Add the new button to the panel
+            panel.add(editAccountButton);
+            panel.add(deleteAccountButton);
+            panel.add(signOutButton);
 
-            frame.add(panel);
-            frame.setSize(400, 300);
-            frame.setVisible(true);
-        }
-    }
-
-    private void addItemToStore(Seller seller, JFrame frame) {
-        String storeName = JOptionPane.showInputDialog(frame, "Enter the store name:");
-        if (storeName != null && !storeName.isEmpty()) {
-            Store store = seller.getStoreByName(storeName);
-            if (store != null) {
-                String itemName = JOptionPane.showInputDialog(frame, "Enter the item name:");
-                if (itemName != null && !itemName.isEmpty()) {
-                    //Add ADD ITEM LOGIC
-
-                    Item newItem = new Item(); // Create new Item
-
-                    // Add the item to the store
-                    store.addToStockItems(newItem, seller.getUsername(), objectMapper);
-                    JOptionPane.showMessageDialog(frame, "Item added to store: " + itemName);
-                } else {
-                    JOptionPane.showMessageDialog(frame, "Invalid item name!");
-                }
-            } else {
-                JOptionPane.showMessageDialog(frame, "Store not found!");
-            }
-        } else {
-            JOptionPane.showMessageDialog(frame, "Invalid store name!");
+            sellerFrame.add(panel);
+            sellerFrame.setVisible(true);
         }
     }
 
