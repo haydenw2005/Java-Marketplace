@@ -28,17 +28,20 @@ public class Marketplace implements Serializable {
     @JsonProperty("sellers")
     private Map<String, Seller> sellers;
 
-    public Marketplace() { }
-    public Marketplace(@JsonProperty("buyers") Map<String, Buyer> buyers, 
+    public Marketplace() {
+    }
+
+    public Marketplace(@JsonProperty("buyers") Map<String, Buyer> buyers,
             @JsonProperty("sellers") Map<String, Seller> sellers) {
         this.buyers = buyers;
         this.sellers = sellers;
     }
-    
+
     public void updateMarketPlace(Marketplace marketplace) {
         this.buyers = marketplace.buyers;
         this.sellers = marketplace.sellers;
     }
+
     public Map<String, Buyer> getBuyers() {
         return buyers;
     }
@@ -62,8 +65,7 @@ public class Marketplace implements Serializable {
                         "Error", JOptionPane.ERROR_MESSAGE);
                 error = true;
             }
-        }
-        while (error);
+        } while (error);
 
         Person user;
         if (response == 0) {
@@ -73,7 +75,7 @@ public class Marketplace implements Serializable {
         }
 
         JOptionPane.showMessageDialog(null, "Welcome " + user.getFirstName() +
-                " " + user.getLastName() + "!" , "Welcome", JOptionPane.INFORMATION_MESSAGE);
+                " " + user.getLastName() + "!", "Welcome", JOptionPane.INFORMATION_MESSAGE);
 
         return user;
     }
@@ -126,8 +128,7 @@ public class Marketplace implements Serializable {
                         "Error", JOptionPane.ERROR_MESSAGE);
                 error = true;
             }
-        }
-        while (error);
+        } while (error);
 
         String password;
         do {
@@ -140,8 +141,7 @@ public class Marketplace implements Serializable {
                         "Error", JOptionPane.ERROR_MESSAGE);
                 error = true;
             }
-        }
-        while (error);
+        } while (error);
 
         String firstName;
         do {
@@ -154,8 +154,7 @@ public class Marketplace implements Serializable {
                         "Error", JOptionPane.ERROR_MESSAGE);
                 error = true;
             }
-        }
-        while (error);
+        } while (error);
 
         String lastName;
         do {
@@ -168,8 +167,7 @@ public class Marketplace implements Serializable {
                         "Error", JOptionPane.ERROR_MESSAGE);
                 error = true;
             }
-        }
-        while (error);
+        } while (error);
 
         String email;
         do {
@@ -182,8 +180,7 @@ public class Marketplace implements Serializable {
                         "Error", JOptionPane.ERROR_MESSAGE);
                 error = true;
             }
-        }
-        while (error);
+        } while (error);
 
         String[] options = { "Buyer", "Seller" };
         int accountType;
@@ -198,8 +195,7 @@ public class Marketplace implements Serializable {
                         "Error", JOptionPane.ERROR_MESSAGE);
                 error = true;
             }
-        }
-        while (error);
+        } while (error);
 
         if (accountType == 0) {
             Buyer buyer = new Buyer(username, password, firstName, lastName, email, new HashMap<>(), new HashMap<>());
@@ -211,58 +207,6 @@ public class Marketplace implements Serializable {
             return seller;
         }
     }
-
-    // public void startBuyerFlow(Buyer user, Scanner scanner, ObjectMapper objectMapper) {
-    //     System.out.println("Welcome " + user.getFirstName() + " " + user.getLastName() + "!");
-    //     while (true) {
-    //         System.out.println("What would you like to do?");
-    //         System.out.println("\t(1) View store information");
-    //         System.out.println("\t(2) View marketplace");
-    //         System.out.println("\t(3) View cart");
-    //         System.out.println("\t(4) View purchase history");
-    //         System.out.println("\t(5) Export purchase history to CSV");
-    //         System.out.println("\t(6) Edit account");
-    //         System.out.println("\t(7) Delete account");
-    //         System.out.println("\t(8) Signout");
-
-    //         String input = scanner.nextLine();
-    //         while (!(input.equals("1") || input.equals("2") || input.equals("3")
-    //                 || input.equals("4") || input.equals("5") || input.equals("6")
-    //                 || input.equals("7") || input.equals("8"))) {
-    //             System.out.println("Invalid input");
-    //             input = scanner.nextLine();
-    //         }
-    //         if (input.equals("1")) {
-    //             viewStoreInfo(scanner, (Buyer) user, objectMapper);
-    //         } else if (input.equals("2")) {
-    //             showMarketplace(scanner, (Buyer) user, objectMapper);
-    //         } else if (input.equals("3")) {
-    //             cartFlow(scanner, (Buyer) user, objectMapper);
-    //         } else if (input.equals("4")) {
-    //             //user.showPurchaseHistory();
-    //         } else if (input.equals("5")) {
-    //             try {
-    //                 System.out.println("Enter filename to export to (excluding .csv extension)");
-    //                 String file = scanner.nextLine();
-    //                 CsvUtils.writePurchaseHistoryToCSV(file, (Buyer) user);
-    //             } catch (Exception e) {
-    //                 System.out.println("An error occurred while writing to file.");
-    //             }
-    //         } else if (input.equals("6")) {
-    //             System.out.println("Edit account ~");
-    //             //editUser(scanner, user, objectMapper);
-    //             System.out.println();
-    //         } else if (input.equals("7")) {
-    //             System.out.println("Deleting account...");
-    //             deleteUser(user, objectMapper);
-    //             break;
-    //         } else if (input.equals("8")) {
-    //             System.out.println("Signing out...");
-    //             break;
-    //         }
-    //     }
-    // }
-
 
     public ArrayList<Item> getAllMarketPlaceItems() {
         ArrayList<Item> itemsArray = new ArrayList<>();
@@ -402,7 +346,7 @@ public class Marketplace implements Serializable {
         String input = scanner.nextLine();
 
         if (input.toLowerCase().equals("a")) {
-   //         itemsList = this.searchProducts(scanner, itemsList);
+            // itemsList = this.searchProducts(scanner, itemsList);
             if (itemsList.size() == 0) {
                 System.out.println("No matches");
                 this.showMarketplace(scanner, buyer, objectMapper);
@@ -411,14 +355,14 @@ public class Marketplace implements Serializable {
                 input = scanner.nextLine();
             }
         } else if (input.toLowerCase().equals("b")) {
-  //          this.listProducts(this.sortByPrice(itemsList));
+            // this.listProducts(this.sortByPrice(itemsList));
             System.out.println("Go back: enter 'back'");
             input = scanner.nextLine();
             if (input.equals("back")) {
                 this.showMarketplace(scanner, buyer, objectMapper);
             }
         } else if (input.toLowerCase().equals("c")) {
-  //          this.listProducts(this.sortByQuantity(itemsList));
+            // this.listProducts(this.sortByQuantity(itemsList));
             System.out.println("Go back: enter 'back'");
             input = scanner.nextLine();
             if (input.equals("back")) {
@@ -497,7 +441,8 @@ public class Marketplace implements Serializable {
             else
                 System.out.println(numItems + " items purchased!");
 
-      //      buyer.buyItem(item, this, objectMapper); // handles stock updating/cart removing etc.
+            // buyer.buyItem(item, this, objectMapper); // handles stock updating/cart
+            // removing etc.
             return item;
         } else if (input.equals("2")) {
             buyer.addItemToCart(item, objectMapper);
@@ -588,7 +533,7 @@ public class Marketplace implements Serializable {
     }
 
     public void cartFlow(Scanner scanner, Buyer buyer, ObjectMapper objectMapper) {
-        //buyer.showAllCartItems();
+        // buyer.showAllCartItems();
         System.out.println("\n\t(1) Buy Cart");
         System.out.println("\t(2) Back");
         String input = scanner.nextLine();
@@ -637,7 +582,7 @@ public class Marketplace implements Serializable {
         }
         try {
             oos.writeObject("editUser");
-            oos.writeObject(new Object[]{password, firstName, lastName, email});
+            oos.writeObject(new Object[] { password, firstName, lastName, email });
             oos.flush();
             user = (Person) ois.readObject();
         } catch (Exception e) {
@@ -655,7 +600,6 @@ public class Marketplace implements Serializable {
             JOptionPane.showMessageDialog(null, "Account deleted",
                     "Success!", JOptionPane.INFORMATION_MESSAGE);
 
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,
                     "Error deleting account",
@@ -663,99 +607,101 @@ public class Marketplace implements Serializable {
         }
     }
 
-    // public void startSellerFlow(Seller user, Scanner scanner, ObjectMapper objectMapper) {
-    //     System.out.println("Welcome " + user.getFirstName() + " " + user.getLastName() + "!");
-    //     while (true) {
-    //         printSellerMenu();
-    //         String option = getMenuInput(1, 10, scanner);
-    //         switch (option) {
-    //             case "1":
-    //                 boolean inItemMenu = true;
-    //                 while (inItemMenu) {
-    //                     printSellerItemMenu();
-    //                     try {
-    //                         inItemMenu = getItemMenuInput(scanner, user, objectMapper);
-    //                     } catch (Exception e) {
-    //                         e.printStackTrace();
-    //                     }
-    //                     user = updatedSeller(objectMapper, user.getUsername());
-    //                 }
-    //                 System.out.println();
-    //                 break;
-    //             case "2":
-    //                 boolean inStoreMenu = true;
-    //                 while (inStoreMenu) {
-    //                     printSellerStoreMenu();
-    //                     try {
-    //                         inStoreMenu = getStoreMenuInput(scanner, user, objectMapper);
-    //                     } catch (Exception e) {
-    //                         e.printStackTrace();
-    //                     }
-    //                     user = updatedSeller(objectMapper, user.getUsername());
-    //                 }
-    //                 System.out.println();
-    //                 break;
-    //             case "3":
-    //                 System.out.println("All listed products");
-    //                 ArrayList<Item> stockItems = user.getAllStoreItems("stock");
-    //                 for (Item item : stockItems) {
-    //                     System.out.println(item.toString());
-    //                 }
-    //                 System.out.println();
-    //                 break;
-    //             case "4":
-    //                 System.out.println("All sold products");
-    //                 ArrayList<Item> soldItems = user.getAllStoreItems("sold");
-    //                 for (Item item : soldItems) {
-    //                     System.out.println(item.toString());
-    //                 }
-    //                 System.out.println();
-    //                 break;
-    //             case "5":
-    //                 System.out.println("All product buyers");
-    //                 HashMap<String, Integer> buyers = user.allBuyers();
-    //                 for (Map.Entry<String, Integer> entry : buyers.entrySet()) {
-    //                     String key = entry.getKey();
-    //                     Integer value = entry.getValue();
-    //                     System.out.println("\tUser " + key + " has bought " + value + " products ~");
-    //                 }
-    //                 System.out.println();
-    //                 break;
-    //             case "6":
-    //                 System.out.println("Enter filename to write to (excluding .csv extension)");
-    //                 String file = scanner.nextLine();
-    //                 try {
-    //                     CsvUtils.writeProductsToCSV(file, (Seller) user);
-    //                 } catch (Exception e) {
-    //                     System.out.println("Error writing to file.");
-    //                     ;
-    //                 }
-    //                 break;
-    //             case "7":
-    //                 System.out.println("Enter filename to read from (excluding .csv extension)");
-    //                 String filename = scanner.nextLine();
-    //                 try {
-    //                     CsvUtils.importFromCSV(filename, (Seller) user, objectMapper);
-    //                 } catch (Exception e) {
-    //                     System.out.println("Error reading from file.");
-    //                     e.printStackTrace();
-    //                 }
-    //                 break;
-    //             case "8":
-    //                 System.out.println("Edit account");
-    //                 //editUser(scanner, user, objectMapper);
-    //                 System.out.println();
-    //                 user = updatedSeller(objectMapper, user.getUsername());
-    //                 break;
-    //             case "9":
-    //                 System.out.println("Deleting account...");
-    //                 deleteUser(user, objectMapper);
-    //                 return;
-    //             case "10":
-    //                 System.out.println("Signing out...");
-    //                 return;
-    //         }
-    //     }
+    // public void startSellerFlow(Seller user, Scanner scanner, ObjectMapper
+    // objectMapper) {
+    // System.out.println("Welcome " + user.getFirstName() + " " +
+    // user.getLastName() + "!");
+    // while (true) {
+    // printSellerMenu();
+    // String option = getMenuInput(1, 10, scanner);
+    // switch (option) {
+    // case "1":
+    // boolean inItemMenu = true;
+    // while (inItemMenu) {
+    // printSellerItemMenu();
+    // try {
+    // inItemMenu = getItemMenuInput(scanner, user, objectMapper);
+    // } catch (Exception e) {
+    // e.printStackTrace();
+    // }
+    // user = updatedSeller(objectMapper, user.getUsername());
+    // }
+    // System.out.println();
+    // break;
+    // case "2":
+    // boolean inStoreMenu = true;
+    // while (inStoreMenu) {
+    // printSellerStoreMenu();
+    // try {
+    // inStoreMenu = getStoreMenuInput(scanner, user, objectMapper);
+    // } catch (Exception e) {
+    // e.printStackTrace();
+    // }
+    // user = updatedSeller(objectMapper, user.getUsername());
+    // }
+    // System.out.println();
+    // break;
+    // case "3":
+    // System.out.println("All listed products");
+    // ArrayList<Item> stockItems = user.getAllStoreItems("stock");
+    // for (Item item : stockItems) {
+    // System.out.println(item.toString());
+    // }
+    // System.out.println();
+    // break;
+    // case "4":
+    // System.out.println("All sold products");
+    // ArrayList<Item> soldItems = user.getAllStoreItems("sold");
+    // for (Item item : soldItems) {
+    // System.out.println(item.toString());
+    // }
+    // System.out.println();
+    // break;
+    // case "5":
+    // System.out.println("All product buyers");
+    // HashMap<String, Integer> buyers = user.allBuyers();
+    // for (Map.Entry<String, Integer> entry : buyers.entrySet()) {
+    // String key = entry.getKey();
+    // Integer value = entry.getValue();
+    // System.out.println("\tUser " + key + " has bought " + value + " products ~");
+    // }
+    // System.out.println();
+    // break;
+    // case "6":
+    // System.out.println("Enter filename to write to (excluding .csv extension)");
+    // String file = scanner.nextLine();
+    // try {
+    // CsvUtils.writeProductsToCSV(file, (Seller) user);
+    // } catch (Exception e) {
+    // System.out.println("Error writing to file.");
+    // ;
+    // }
+    // break;
+    // case "7":
+    // System.out.println("Enter filename to read from (excluding .csv extension)");
+    // String filename = scanner.nextLine();
+    // try {
+    // CsvUtils.importFromCSV(filename, (Seller) user, objectMapper);
+    // } catch (Exception e) {
+    // System.out.println("Error reading from file.");
+    // e.printStackTrace();
+    // }
+    // break;
+    // case "8":
+    // System.out.println("Edit account");
+    // //editUser(scanner, user, objectMapper);
+    // System.out.println();
+    // user = updatedSeller(objectMapper, user.getUsername());
+    // break;
+    // case "9":
+    // System.out.println("Deleting account...");
+    // deleteUser(user, objectMapper);
+    // return;
+    // case "10":
+    // System.out.println("Signing out...");
+    // return;
+    // }
+    // }
     // }
 
     public String getMenuInput(int start, int end, Scanner scanner) {
@@ -816,12 +762,13 @@ public class Marketplace implements Serializable {
         switch (option) {
 
             case "1":
-                //Item newItem = createItem(scanner, user);
+                // Item newItem = createItem(scanner, user);
                 while (true) {
                     System.out.println("What is the name of the store you would like to list it in?");
                     String storeName = scanner.nextLine();
                     if (user.getStores().containsKey(storeName)) {
-             //           user.getStoreByName(storeName).addToStockItems(newItem, user.getUsername(), objectMapper);
+                        // user.getStoreByName(storeName).addToStockItems(newItem, user.getUsername(),
+                        // objectMapper);
                         break;
                     } else
                         System.out.println("Sorry, we can't find a store with this name.");
@@ -887,26 +834,10 @@ public class Marketplace implements Serializable {
 
     public void createItem(Seller user, ObjectMapper objectMapper, ObjectOutputStream oos, ObjectInputStream ois) {
         boolean error = false;
-        String storeName;
-        do {
-            error = false;
-            storeName = JOptionPane.showInputDialog(null,
-                    "Enter the store name:",
-                    "zBay Marketplace", JOptionPane.QUESTION_MESSAGE);
-
-            if (user.getStoreByName(storeName) == null) {
-                JOptionPane.showMessageDialog(null, "Store not found",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                error = true;
-            }
-
-            if (storeName == null || storeName.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Invalid store name",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                error = true;
-            }
+        String storeName = storePicker(user, null).getName();
+        if (storeName == null) {
+            return;
         }
-        while (error);
 
         String itemName;
         do {
@@ -919,9 +850,9 @@ public class Marketplace implements Serializable {
                 JOptionPane.showMessageDialog(null, "Invalid item name",
                         "Error", JOptionPane.ERROR_MESSAGE);
                 error = true;
+                return;
             }
-        }
-        while (error);
+        } while (error);
 
         String description;
         do {
@@ -934,9 +865,9 @@ public class Marketplace implements Serializable {
                 JOptionPane.showMessageDialog(null, "Invalid description",
                         "Error", JOptionPane.ERROR_MESSAGE);
                 error = true;
+                return;
             }
-        }
-        while (error);
+        } while (error);
 
         String stockString;
         do {
@@ -945,13 +876,13 @@ public class Marketplace implements Serializable {
                     "Enter the number of items you would like to list:",
                     "zBay Marketplace", JOptionPane.QUESTION_MESSAGE);
 
-            if (stockString == null || stockString.isEmpty()) {
+            if (stockString == null || stockString.isEmpty() || !stockString.chars().allMatch(Character::isDigit)) {
                 JOptionPane.showMessageDialog(null, "Invalid entry",
                         "Error", JOptionPane.ERROR_MESSAGE);
                 error = true;
+                return;
             }
-        }
-        while (error);
+        } while (error);
 
         String priceString;
         do {
@@ -960,18 +891,18 @@ public class Marketplace implements Serializable {
                     "Enter the price of this item:",
                     "zBay Marketplace", JOptionPane.QUESTION_MESSAGE);
 
-            if (priceString == null || priceString.isEmpty()) {
+            if (priceString == null || priceString.isEmpty() || !priceString.chars().allMatch(Character::isDigit)) {
                 JOptionPane.showMessageDialog(null, "Invalid entry",
                         "Error", JOptionPane.ERROR_MESSAGE);
                 error = true;
             }
-        }
-        while (error);
+        } while (error);
 
         try {
             int stock = Integer.parseInt(stockString);
             double price = Double.parseDouble(priceString);
 
+            // TODO: Network
             HashMap<String, Integer> sellerHashmap = new HashMap<String, Integer>();
             sellerHashmap.put(user.getUsername(), stock);
             Item newItem = new Item(itemName, description, stock, -1, price, null, sellerHashmap);
@@ -983,16 +914,16 @@ public class Marketplace implements Serializable {
         }
 
         /*
-        try {
-            oos.writeObject("createItem");
-            oos.flush();
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,
-                    "There was an error listing this item",
-                    "Error", JOptionPane.ERROR_MESSAGE);
-        }
-
+         * try {
+         * oos.writeObject("createItem");
+         * oos.flush();
+         * 
+         * } catch (Exception e) {
+         * JOptionPane.showMessageDialog(null,
+         * "There was an error listing this item",
+         * "Error", JOptionPane.ERROR_MESSAGE);
+         * }
+         * 
          */
     }
 
@@ -1034,5 +965,24 @@ public class Marketplace implements Serializable {
             System.out.println("Sorry, could not update user.");
             return null;
         }
+    }
+
+    private Store storePicker(Seller seller, JFrame frame) {
+        ArrayList<String> storeNames = new ArrayList<String>();
+        ArrayList<Store> stores = new ArrayList<Store>();
+
+        for (Map.Entry<String, Store> store : seller.getStores().entrySet()) {
+            storeNames.add(store.getValue().getName());
+            stores.add(store.getValue());
+        }
+        JComboBox<String> storeComboBox = new JComboBox<String>(storeNames.toArray(new String[0]));
+        int result = JOptionPane.showConfirmDialog(frame, storeComboBox, "Select a Store", JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+
+        if (result == JOptionPane.OK_OPTION) {
+            Store selectedStore = stores.get(storeComboBox.getSelectedIndex());
+            return selectedStore;
+        }
+        return new Store();
     }
 }

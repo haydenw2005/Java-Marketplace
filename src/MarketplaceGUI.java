@@ -12,6 +12,17 @@ import java.util.Map;
 import java.util.Random;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * GUI for the buyer and seller marketplace.
+ *
+ * <p>
+ * Purdue University -- CS18000 -- Fall 2023
+ * </p>
+ *
+ * @author Ryan, Soham
+ * @version December 8, 2023
+ */
+
 public class MarketplaceGUI extends JComponent implements Runnable {
     private Marketplace marketplace;
     private Person user;
@@ -24,7 +35,8 @@ public class MarketplaceGUI extends JComponent implements Runnable {
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
 
-    public MarketplaceGUI (Marketplace marketplace, Person user, ObjectMapper objectMapper, ObjectInputStream ois, ObjectOutputStream oos) {
+    public MarketplaceGUI(Marketplace marketplace, Person user, ObjectMapper objectMapper, ObjectInputStream ois,
+            ObjectOutputStream oos) {
         this.marketplace = marketplace;
         this.user = user;
         this.objectMapper = objectMapper;
@@ -32,8 +44,6 @@ public class MarketplaceGUI extends JComponent implements Runnable {
         this.ois = ois;
         this.oos = oos;
     }
-
-
 
     public void run() {
         if (user instanceof Buyer) {
@@ -66,7 +76,7 @@ public class MarketplaceGUI extends JComponent implements Runnable {
             homePanel.add(signOutButton);
 
             homeFrame.add(homePanel, BorderLayout.CENTER);
-/////////////////////////////////////////////////////////////////////
+            /////////////////////////////////////////////////////////////////////
             JFrame marketplaceFrame = new JFrame();
             marketplaceFrame.setTitle("zBay Marketplace");
             marketplaceFrame.setSize(600, 400);
@@ -84,14 +94,12 @@ public class MarketplaceGUI extends JComponent implements Runnable {
             marketplaceTopPanel.setSize(600, 200);
             marketplaceTopPanel.setLocation(0, 0);
 
-
             JButton searchButton = new JButton("Search");
             JTextField searchText = new JTextField("", 10);
             JButton sortPriceButton = new JButton("Sort by price");
             JButton sortQuantityButton = new JButton("Sort by quantity");
             JButton backToHomeButton = new JButton("Back");
             JButton refreshMarketplaceButton = new JButton("Refresh");
-
 
             JComboBox productsComboBox = new JComboBox();
             for (Item item : itemsList)
@@ -113,7 +121,7 @@ public class MarketplaceGUI extends JComponent implements Runnable {
 
             marketplaceFrame.add(marketplaceBottomPanel);
             marketplaceFrame.add(marketplaceTopPanel);
-/////////////////////////////////////////////////////////////////////
+            /////////////////////////////////////////////////////////////////////
             JFrame productPageFrame = new JFrame();
             productPageFrame.setTitle("zBay Marketplace");
             productPageFrame.setSize(600, 400);
@@ -139,7 +147,7 @@ public class MarketplaceGUI extends JComponent implements Runnable {
             productPagePanel.add(backToMarketplaceButton);
 
             productPageFrame.add(productPagePanel, BorderLayout.CENTER);
-/////////////////////////////////////////////////////////////////////
+            /////////////////////////////////////////////////////////////////////
             JFrame storeInfoFrame = new JFrame();
             storeInfoFrame.setTitle("zBay Marketplace");
             storeInfoFrame.setSize(600, 400);
@@ -173,7 +181,7 @@ public class MarketplaceGUI extends JComponent implements Runnable {
 
             storeInfoFrame.add(storeInfoTopPanel);
             storeInfoFrame.add(storeInfoBottomPanel, BorderLayout.SOUTH);
-/////////////////////////////////////////////////////////////////////
+            /////////////////////////////////////////////////////////////////////
             JFrame purchaseHistoryFrame = new JFrame();
             purchaseHistoryFrame.setTitle("zBay Marketplace");
             purchaseHistoryFrame.setSize(600, 400);
@@ -193,7 +201,7 @@ public class MarketplaceGUI extends JComponent implements Runnable {
             purchaseHistoryPanel.add(refreshPurchaseHistoryButton);
 
             purchaseHistoryFrame.add(purchaseHistoryPanel);
-/////////////////////////////////////////////////////////////////////
+            /////////////////////////////////////////////////////////////////////
             JFrame cartFrame = new JFrame();
             cartFrame.setTitle("zBay Marketplace");
             cartFrame.setSize(600, 400);
@@ -211,7 +219,6 @@ public class MarketplaceGUI extends JComponent implements Runnable {
             cartPanel.add(buyCartButton);
 
             cartFrame.add(cartPanel);
-
 
             ActionListener actionListener = new ActionListener() {
 
@@ -262,7 +269,7 @@ public class MarketplaceGUI extends JComponent implements Runnable {
                     } else if (e.getSource() == refreshPurchaseHistoryButton) {
                         updatePurchaseHistoryList();
                     } else if (e.getSource() == exportButton) {
-                        String file = JOptionPane.showInputDialog(null, 
+                        String file = JOptionPane.showInputDialog(null,
                                 "Enter filename to export to (excluding .csv extension)",
                                 "zBay Marketplace", JOptionPane.QUESTION_MESSAGE);
                         // get latest buyer object from server
@@ -280,7 +287,7 @@ public class MarketplaceGUI extends JComponent implements Runnable {
                     } else if (e.getSource() == editAccountButton) {
                         marketplace.editUser(user, objectMapper, oos, ois);
                     } else if (e.getSource() == deleteAccountButton) {
-                        marketplace.deleteUser(user, objectMapper, oos, ois); 
+                        marketplace.deleteUser(user, objectMapper, oos, ois);
                         homeFrame.dispose();
                         System.exit(0);
                     } else if (e.getSource() == signOutButton) {
@@ -327,9 +334,11 @@ public class MarketplaceGUI extends JComponent implements Runnable {
                         quantityLabel.setText("Quantity available: " + selectedProduct.getStock());
                         productPageFrame.setVisible(true);
                     } else if (e.getSource() == purchaseButton) {
-                        String numProducts = JOptionPane.showInputDialog(null, "How many items would you like to purchase",
+                        String numProducts = JOptionPane.showInputDialog(null,
+                                "How many items would you like to purchase",
                                 "zBay Marketplace", JOptionPane.QUESTION_MESSAGE);
-                        // ((Buyer) user).buyItem(selectedProduct, marketplace, objectMapper, numProducts);
+                        // ((Buyer) user).buyItem(selectedProduct, marketplace, objectMapper,
+                        // numProducts);
                         try {
                             oos.writeObject("buyItem");
                             oos.writeObject(selectedProduct);
@@ -396,42 +405,52 @@ public class MarketplaceGUI extends JComponent implements Runnable {
             buyCartButton.addActionListener(actionListener);
 
         } else {
+            // SELLER GUI
 
-            //HERE IS THE INCOMPLETE GUI LOGIC. SOME BUTTONS ARE THERE BUT NOT FULL FUNCTIONAL
-
-            //EVERYTHING THAT THE GUI NEEDS TO DO:
+            // EVERYTHING THAT THE GUI NEEDS TO DO:
             /*
-            System.out.println("\t(1) List, edit, or delete items ~");
-            System.out.println("\t(2) Create, edit, or delete stores ~");
-            System.out.println("\t(3) View listed products dashboard ~");
-            System.out.println("\t(4) View all sold products dashboard ~");
-            System.out.println("\t(5) View all product buyers dashboard ~");
-            System.out.println("\t(6) Edit account");
-            System.out.println("\t(7) Delete account");
-            System.out.println("\t(8) Sign-out ~");
-            */
+             * System.out.println("\t(1) List, edit, or delete items ~");
+             * System.out.println("\t(2) Create, edit, or delete stores ~");
+             * System.out.println("\t(3) View listed products dashboard ~");
+             * System.out.println("\t(4) View all sold products dashboard ~");
+             * System.out.println("\t(5) View all product buyers dashboard ~");
+             * System.out.println("\t(6) Export store items to CSV ~");
+             * System.out.println("\t(7) Import store items from CSV ~");
+             * System.out.println("\t(8) Edit account");
+             * System.out.println("\t(9) Delete account");
+             * System.out.println("\t(10) Sign-out ~");
+             */
 
             JFrame sellerFrame = new JFrame("Seller Interface");
             sellerFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             sellerFrame.setSize(600, 400);
             sellerFrame.setLocationRelativeTo(null);
 
+            JPanel sellerBottomPanel = new JPanel();
+            sellerBottomPanel.setLayout(new FlowLayout());
+            sellerBottomPanel.setSize(600, 300);
+            sellerBottomPanel.setLocation(0, 300);
+
+            JPanel panel = new JPanel();
+            panel.setLayout(new FlowLayout());
+            panel.setSize(600, 200);
+            panel.setLocation(0, 0);
+
             JButton addItemButton = new JButton("Add Item to Store");
-
-
             JButton deleteItemButton = new JButton("Delete Item from Store");
-
-
+            JButton restockItemButton = new JButton("Restock an Item");
             JButton createNewStoreButton = new JButton("Create New Store");
-
-
             JButton editStoreButton = new JButton("Edit Store");
-
-            JButton viewStoreSalesButton = new JButton("View Store Sales"); // Initialize the new button
-
+            JButton viewStoreSalesButton = new JButton("View Store Sales");
+            JButton viewListedProductsButton = new JButton("View Listed Products");
+            JButton viewSoldProductsButton = new JButton("View Sold Products");
+            JButton viewProductBuyersButton = new JButton("View Product Buyers");
+            JButton exportToCSVButton = new JButton("Export Store Items to CSV");
+            JButton importFromCSVButton = new JButton("Import Store Items from CSV");
             JButton editAccountButton = new JButton("Edit account");
             JButton deleteAccountButton = new JButton("Delete Account");
             JButton signOutButton = new JButton("Sign out");
+            JButton refreshButton = new JButton("Refresh");
 
             sellerFrame.add(editAccountButton);
             sellerFrame.add(deleteAccountButton);
@@ -441,11 +460,12 @@ public class MarketplaceGUI extends JComponent implements Runnable {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    // Existing functionality remains the same
                     if (e.getSource() == addItemButton) {
                         marketplace.createItem((Seller) user, objectMapper, oos, ois);
                     } else if (e.getSource() == deleteItemButton) {
                         deleteItemFromStore((Seller) user, sellerFrame);
+                    } else if (e.getSource() == restockItemButton) {
+                        restockItem((Seller) user, sellerFrame);
                     } else if (e.getSource() == createNewStoreButton) {
                         createNewStore((Seller) user, sellerFrame);
                     } else if (e.getSource() == editStoreButton) {
@@ -459,42 +479,67 @@ public class MarketplaceGUI extends JComponent implements Runnable {
                     } else if (e.getSource() == signOutButton) {
                         sellerFrame.dispose();
                         System.exit(0);
+                    } else if (e.getSource() == viewStoreSalesButton) {
+                        viewStoreSales((Seller) user, sellerFrame);
+                    } else if (e.getSource() == viewListedProductsButton) {
+                        // TODO: get updated seller object from network
+                        viewListedProducts((Seller) user, sellerFrame);
+                    } else if (e.getSource() == viewSoldProductsButton) {
+                        // TODO: get updated seller object from network
+                        viewSoldProducts((Seller) user, sellerFrame);
+                    } else if (e.getSource() == viewProductBuyersButton) {
+                        // TODO: get updated seller object from network
+                        viewProductBuyers((Seller) user, sellerFrame);
                     }
-
-                    // Adding functionality for the new button
-                    else if (e.getSource() == viewStoreSalesButton) {
-                        viewStoreSales((Seller) user, sellerFrame); // Call the method to view store sales
+                    // TODO: REFRESH BUTTON
+                    else if (e.getSource() == refreshButton) {
+                        // TODO: get updated seller object from network
                     }
                 }
             };
+
             addItemButton.addActionListener(actionListener);
             deleteItemButton.addActionListener(actionListener);
+            restockItemButton.addActionListener(actionListener);
             createNewStoreButton.addActionListener(actionListener);
             editStoreButton.addActionListener(actionListener);
-            viewStoreSalesButton.addActionListener(actionListener); // Add action listener for the new button
+            viewStoreSalesButton.addActionListener(actionListener);
+            viewSoldProductsButton.addActionListener(actionListener);
+            viewListedProductsButton.addActionListener(actionListener);
+            viewProductBuyersButton.addActionListener(actionListener);
+            exportToCSVButton.addActionListener(actionListener);
+            importFromCSVButton.addActionListener(actionListener);
             editAccountButton.addActionListener(actionListener);
             deleteAccountButton.addActionListener(actionListener);
             signOutButton.addActionListener(actionListener);
+            refreshButton.addActionListener(actionListener);
 
-            JPanel panel = new JPanel();
             panel.add(addItemButton);
             panel.add(deleteItemButton);
+            panel.add(restockItemButton);
             panel.add(createNewStoreButton);
             panel.add(editStoreButton);
-            panel.add(viewStoreSalesButton); // Add the new button to the panel
+            panel.add(viewStoreSalesButton);
+            panel.add(viewListedProductsButton);
+            panel.add(viewSoldProductsButton);
+            panel.add(viewProductBuyersButton);
+            panel.add(exportToCSVButton);
+            panel.add(importFromCSVButton);
             panel.add(editAccountButton);
             panel.add(deleteAccountButton);
             panel.add(signOutButton);
 
+            sellerBottomPanel.add(refreshButton);
+
+            sellerFrame.add(sellerBottomPanel);
             sellerFrame.add(panel);
             sellerFrame.setVisible(true);
         }
     }
 
     private void deleteItemFromStore(Seller seller, JFrame frame) {
-        String storeName = JOptionPane.showInputDialog(frame, "Enter the store name:");
-        if (storeName != null && !storeName.isEmpty()) {
-            Store store = seller.getStoreByName(storeName);
+        Store store = storePicker(seller, frame);
+        if (store.getName() != null && !store.getName().isEmpty()) {
             if (store != null) {
                 String itemName = JOptionPane.showInputDialog(frame, "Enter the item name:");
                 if (itemName != null && !itemName.isEmpty()) {
@@ -504,11 +549,36 @@ public class MarketplaceGUI extends JComponent implements Runnable {
                 } else {
                     JOptionPane.showMessageDialog(frame, "Invalid item name!");
                 }
-            } else {
-                JOptionPane.showMessageDialog(frame, "Store not found!");
             }
         } else {
             JOptionPane.showMessageDialog(frame, "Invalid store name!");
+        }
+    }
+
+    private void restockItem(Seller seller, JFrame frame) {
+        String itemName = JOptionPane.showInputDialog(frame, "Enter the item name:");
+        if (itemName != null && !itemName.isEmpty()) {
+            Item itemToChange = marketplace.getItemFromAllStores(itemName, seller);
+            Store store = seller.getStoreByItem(itemToChange);
+            if (itemToChange != null) {
+                int stock;
+                String stockString = JOptionPane.showInputDialog(frame, "What would you like the item stock to be?");
+                if (stockString != null && stockString.chars().allMatch(Character::isDigit)) {
+                    stock = Integer.parseInt(stockString);
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Invalid stock!");
+                    return;
+                }
+                itemToChange.setStock(stock);
+                String dir = "/sellers/" + seller.getUsername() + "/stores/" + store.getName() + "/stockItems";
+                // JsonUtils.addObjectToJson(dir, itemName, itemToChange, objectMapper); //
+                // TODO: JSON STUFF AND NETWORK IO
+                JOptionPane.showMessageDialog(frame, itemName + " restocked to " + stock + " items.");
+            } else {
+                JOptionPane.showMessageDialog(frame, "Sorry, we can't find an item with this name.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(frame, "Invalid item name!");
         }
     }
 
@@ -519,7 +589,7 @@ public class MarketplaceGUI extends JComponent implements Runnable {
             Store newStore = new Store(storeName, new HashMap<>(), new HashMap<>());
             seller.getStores().put(storeName, newStore); // Add the new store to the seller's stores
 
-            // Perform any additional operations if needed, like updating the database
+            // TODO: Network
 
             JOptionPane.showMessageDialog(frame, "New store created: " + storeName);
         } else {
@@ -528,9 +598,8 @@ public class MarketplaceGUI extends JComponent implements Runnable {
     }
 
     private void editStore(Seller seller, JFrame frame) {
-        String storeName = JOptionPane.showInputDialog(frame, "Enter the store name to edit:");
-        if (storeName != null && !storeName.isEmpty()) {
-            Store storeToEdit = seller.getStoreByName(storeName);
+        Store storeToEdit = storePicker(seller, frame);
+        if (storeToEdit.getName() != null && !storeToEdit.getName().isEmpty()) {
             if (storeToEdit != null) {
                 String newStoreName = JOptionPane.showInputDialog(frame, "Enter the new store name:");
                 if (newStoreName != null && !newStoreName.isEmpty()) {
@@ -543,8 +612,6 @@ public class MarketplaceGUI extends JComponent implements Runnable {
                 } else {
                     JOptionPane.showMessageDialog(frame, "Invalid store name!");
                 }
-            } else {
-                JOptionPane.showMessageDialog(frame, "Store not found!");
             }
         } else {
             JOptionPane.showMessageDialog(frame, "Invalid store name!");
@@ -552,30 +619,82 @@ public class MarketplaceGUI extends JComponent implements Runnable {
     }
 
     private void viewStoreSales(Seller seller, JFrame frame) {
-        String storeName = JOptionPane.showInputDialog(frame, "Enter the store name to view sales:");
-        if (storeName != null && !storeName.isEmpty()) {
-            Store store = seller.getStoreByName(storeName);
-            if (store != null) {
-                // Assuming you have a method to retrieve sales data for a store
-                String salesData = retrieveSalesDataForStore(store);
+        Store store = storePicker(seller, frame);
 
-                // Display sales data for the selected store
-                JOptionPane.showMessageDialog(frame, "Sales data for " + storeName + ":\n" + salesData);
-            } else {
-                JOptionPane.showMessageDialog(frame, "Store not found!");
+        if (store.getName() != null && !store.getName().isEmpty()) {
+            if (store != null) {
+                String salesData = retrieveSalesDataForStore(store);
+                JOptionPane.showMessageDialog(frame, "Sales data for " + store.getName() + ":\n" + salesData);
             }
         } else {
             JOptionPane.showMessageDialog(frame, "Invalid store name!");
         }
     }
 
+    private Store storePicker(Seller seller, JFrame frame) {
+        ArrayList<String> storeNames = new ArrayList<String>();
+        ArrayList<Store> stores = new ArrayList<Store>();
+
+        for (Map.Entry<String, Store> store : seller.getStores().entrySet()) {
+            storeNames.add(store.getValue().getName());
+            stores.add(store.getValue());
+        }
+        JComboBox<String> storeComboBox = new JComboBox<String>(storeNames.toArray(new String[0]));
+        int result = JOptionPane.showConfirmDialog(frame, storeComboBox, "Select a Store", JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+
+        if (result == JOptionPane.OK_OPTION) {
+            Store selectedStore = stores.get(storeComboBox.getSelectedIndex());
+            return selectedStore;
+        }
+        return new Store();
+    }
+
+    private void viewListedProducts(Seller seller, JFrame frame) {
+        ArrayList<Item> stockItems = seller.getAllStoreItems("stock");
+        ArrayList<String> stockItemStrings = new ArrayList<String>();
+        for (Item item : stockItems) {
+            stockItemStrings.add(item.toString(marketplace));
+        }
+        JList<String> itemList = new JList<>(stockItemStrings.toArray(new String[0]));
+        JScrollPane scrollPane = new JScrollPane(itemList);
+        JOptionPane.showMessageDialog(frame, scrollPane, "All listed products", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void viewSoldProducts(Seller seller, JFrame frame) {
+        ArrayList<Item> soldItems = seller.getAllStoreItems("sold");
+        ArrayList<String> soldItemsStrings = new ArrayList<String>();
+        for (Item item : soldItems) {
+            soldItemsStrings.add(item.toString(marketplace));
+        }
+        JList<String> itemList = new JList<>(soldItemsStrings.toArray(new String[0]));
+        JScrollPane scrollPane = new JScrollPane(itemList);
+        JOptionPane.showMessageDialog(frame, scrollPane, "All sold products", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void viewProductBuyers(Seller seller, JFrame frame) {
+        HashMap<String, Integer> buyers = seller.allBuyers();
+        ArrayList<String> buyerStrings = new ArrayList<String>();
+        for (Map.Entry<String, Integer> entry : buyers.entrySet()) {
+            String key = entry.getKey();
+            Integer value = entry.getValue();
+            buyerStrings.add("User " + key + " has bought " + value + " products from you.");
+        }
+        JList<String> itemList = new JList<>(buyerStrings.toArray(new String[0]));
+        JScrollPane scrollPane = new JScrollPane(itemList);
+        JOptionPane.showMessageDialog(frame, scrollPane, "All product buyers", JOptionPane.INFORMATION_MESSAGE);
+    }
+
     private String retrieveSalesDataForStore(Store store) {
-        // Simulated sales data for demonstration purposes
         StringBuilder sales = new StringBuilder();
         sales.append("Total sales: ").append(store.numProductsSold()).append("\n");
         sales.append("Sold items:\n");
         for (Map.Entry<String, Item> entry : store.getSoldItems().entrySet()) {
-            sales.append(entry.getValue().getName()).append(" - Quantity: ").append(entry.getValue().getStock()).append("\n");
+            sales.append(entry.getValue().getName()).append(" - Quantity: ").append(entry.getValue().getCount())
+                    .append("\n");
+        }
+        if (store.getSoldItems().entrySet().size() == 0) {
+            sales.append("None.");
         }
         return sales.toString();
     }

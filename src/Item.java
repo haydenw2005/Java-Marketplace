@@ -126,7 +126,10 @@ public class Item implements Serializable {
     }
 
     public String toString(Marketplace marketplace) {
-        if (stock >= 0) {
+        if (stock >= 0 || count >= 0) {
+            return "Product: " + this.getName() + " | Store: " + marketplace.getStore(this).getName() +
+                    " | Price: " + this.getPrice() + " | Count: " + this.getCount() + " | Stock: " + this.getStock();
+        } else if (stock >= 0) {
             return "Product: " + this.getName() + " | Store: " + marketplace.getStore(this).getName() +
                     " | Price: " + this.getPrice() + " | Stock: " + this.getStock();
         } else if (count >= 0) {

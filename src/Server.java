@@ -12,14 +12,23 @@ import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * Server that hosts the database for buyers and sellers.
+ *
+ * <p>
+ * Purdue University -- CS18000 -- Fall 2023
+ * </p>
+ *
+ * @author Soham, Hayden
+ * @version December 8, 2023
+ */
 public class Server {
     public static void main(String[] args) {
         int portNumber = 4242;
 
-
         try {
             ServerSocket serverSocket = new ServerSocket(portNumber);
-            System.out.println("Listeing on port: "  + portNumber);
+            System.out.println("Listeing on port: " + portNumber);
             while (true) {
                 Socket socket = serverSocket.accept();
                 System.out.println("Accepted connection from " + socket.getInetAddress());
@@ -28,7 +37,7 @@ public class Server {
 
             }
 
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -36,6 +45,7 @@ public class Server {
     public Marketplace getUpdatedMarketPlace(ObjectMapper objectMapper) throws IOException {
         return JsonUtils.objectByKey(objectMapper, "", Marketplace.class);
     }
+
     public Buyer getUpdatedBuyer(String username, ObjectMapper objectMapper) throws IOException {
         return JsonUtils.objectByKey(objectMapper, "/buyers/" + username, Buyer.class);
     }
@@ -67,8 +77,8 @@ public class Server {
                     String command = (String) ois.readObject();
                     System.out.println("Client Requested " + command);
                     if (command.equals("buyItem")) {
-                        Item selectedItem = (Item) ois.readObject();  // get parameters required from buyitem from user
-                        String numItems = (String) ois.readObject();  // get parameters required from buyitem from user
+                        Item selectedItem = (Item) ois.readObject(); // get parameters required from buyitem from user
+                        String numItems = (String) ois.readObject(); // get parameters required from buyitem from user
                         ((Buyer) user).buyItem(selectedItem, marketplace, objectMapper, numItems);
                         marketplace = server.getUpdatedMarketPlace(objectMapper);
                         oos.writeObject(marketplace);// update client with new marketplace object
@@ -85,7 +95,7 @@ public class Server {
                         oos.flush();
                     }
                     if (command.equals("addToCart")) {
-                        Item selectedItem = (Item) ois.readObject();  // get parameters required from addtocart from user
+                        Item selectedItem = (Item) ois.readObject(); // get parameters required from addtocart from user
                         ((Buyer) user).addItemToCart(selectedItem, objectMapper);
                         marketplace = server.getUpdatedMarketPlace(objectMapper);
                         oos.writeObject(marketplace);
@@ -127,13 +137,11 @@ public class Server {
 
                     }
                 }
-            } catch (ClassNotFoundException e){
+            } catch (ClassNotFoundException e) {
                 e.printStackTrace();
-            }
-            catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 }
-

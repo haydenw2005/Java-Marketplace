@@ -24,11 +24,11 @@ public class Main {
 
         try {
             Socket socket = new Socket("localhost", 4242);
-            
+
             ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
             oos.flush();
-            
+
             Marketplace marketplace = (Marketplace) ois.readObject();
             Person user = marketplace.enterCredentials(objectMapper);
             oos.writeObject(user);
@@ -37,7 +37,7 @@ public class Main {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Please make sure to run the server and try again.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                    "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

@@ -24,7 +24,7 @@ public class JsonUtils {
      * ADDS OBJECT TO ANY PLACE IN JSON
      *
      * @param nodeDir      - String JSON path of object to be removed
-     * @param newObjectKey    - key of the object to be removed
+     * @param newObjectKey - key of the object to be removed
      * @param object       - object being added
      * @param objectMapper - objectMapper utility
      */

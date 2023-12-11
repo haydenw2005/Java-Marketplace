@@ -89,7 +89,7 @@ public class Buyer extends Person {
     // other functions
     public void addItemToCart(Item item, ObjectMapper objectMapper) {
         try {
-            if(item.getCount() <= 0) {
+            if (item.getCount() <= 0) {
                 item.setCount(1);
             }
             String cartDir = "/buyers/" + this.getUsername() + "/cart";
@@ -159,7 +159,6 @@ public class Buyer extends Person {
                     // Remove from stockItems if stock is over
                     JsonUtils.removeObjectFromJson(sellerStockDir, item.getName(), objectMapper);
                 }
-                
 
                 JOptionPane.showMessageDialog(null, "Item bought", "Success!",
                         JOptionPane.INFORMATION_MESSAGE);
@@ -195,7 +194,7 @@ public class Buyer extends Person {
     }
 
     public void addToPurchaseHistory(Item item, ObjectMapper objectMapper) {
-        Item purchasedItem = new Item(item.getName(), item.getDescription(), -1, item.getCount(), 
+        Item purchasedItem = new Item(item.getName(), item.getDescription(), -1, item.getCount(),
                 item.getPrice(), item.getBuyersObject(), item.getSellersObject());
         this.purchaseHistory.put(purchasedItem.getName(), purchasedItem);
         try {
