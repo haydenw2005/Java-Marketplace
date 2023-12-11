@@ -35,8 +35,8 @@ public class CsvUtils {
                 File csvOutputFile = new File(filename + ".csv");
                 if (!csvOutputFile.createNewFile()) {
                     JOptionPane.showMessageDialog(null,
-                        "File already not exist.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                            "File already not exist.",
+                            "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 PrintWriter writer = new PrintWriter(new FileOutputStream(csvOutputFile, false));
@@ -58,8 +58,8 @@ public class CsvUtils {
             }
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null,
-                        "An error occured while exporting.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                    "An error occured while exporting.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -108,8 +108,8 @@ public class CsvUtils {
         File csvOutputFile = new File(filename + ".csv");
         if (!csvOutputFile.exists()) {
             JOptionPane.showMessageDialog(frame,
-                        "File does not exist.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                    "File does not exist.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         BufferedReader buffer = new BufferedReader(new FileReader(csvOutputFile));
@@ -136,14 +136,14 @@ public class CsvUtils {
                         new Item(data[0], data[1], Integer.parseInt(data[3]), -1, Double.parseDouble(data[2]),
                                 null, sellerObject));
                 currentStore.setStockItems(stockItem);
-                
-                // update json on server with new data 
+
+                // update json on server with new data
                 oos.writeObject("importCSVItems");
                 oos.writeObject(currentStore);
                 oos.writeObject(data);
                 oos.writeObject(stockItem);
                 oos.flush();
-                
+
                 Map<String, Store> updatedStores = seller.getStores();
                 updatedStores.put(currentStore.getName(), currentStore);
                 seller.setStores(updatedStores);
@@ -151,8 +151,8 @@ public class CsvUtils {
             buffer.close();
         } catch (IOException e) {
             JOptionPane.showMessageDialog(frame,
-                        "An error ocurred while importing.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                    "An error ocurred while importing.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 

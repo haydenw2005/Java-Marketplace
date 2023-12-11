@@ -50,6 +50,7 @@ public class Server {
     public Buyer getUpdatedBuyer(String username, ObjectMapper objectMapper) throws IOException {
         return JsonUtils.objectByKey(objectMapper, "/buyers/" + username, Buyer.class);
     }
+
     public Seller getUpdatedSeller(String username, ObjectMapper objectMapper) throws IOException {
         return JsonUtils.objectByKey(objectMapper, "/sellers/" + username, Seller.class);
     }
@@ -126,7 +127,7 @@ public class Server {
                             marketplace.addSellerAccount(user.getUsername(), (Seller) user, objectMapper);
                             user = server.getUpdatedSeller(user.getUsername(), objectMapper);
                         }
-                        
+
                         oos.writeObject(user);
                         oos.flush();
                     }
@@ -154,7 +155,8 @@ public class Server {
                         HashMap<String, Integer> sellerHashmap = new HashMap<String, Integer>();
                         sellerHashmap.put(user.getUsername(), stock);
                         Item newItem = new Item(itemName, description, stock, -1, price, null, sellerHashmap);
-                        ((Seller) user).getStoreByName(storeName).addToStockItems(newItem, user.getUsername(), objectMapper);
+                        ((Seller) user).getStoreByName(storeName).addToStockItems(newItem, user.getUsername(),
+                                objectMapper);
                         user = server.getUpdatedSeller(user.getUsername(), objectMapper);
                     }
                     if (command.equals("deleteItem")) {
@@ -169,9 +171,10 @@ public class Server {
                         String itemName = (String) ois.readObject();
                         Store store = (Store) ois.readObject();
                         itemToChange.setStock(stock);
-                        String dir = "/sellers/" + ((Seller) user).getUsername() + "/stores/" + store.getName() + "/stockItems";
+                        String dir = "/sellers/" + ((Seller) user).getUsername() + "/stores/" + store.getName()
+                                + "/stockItems";
                         JsonUtils.addObjectToJson(dir, itemName, itemToChange, objectMapper);
-                        user = server.getUpdatedSeller(user.getUsername(), objectMapper);      
+                        user = server.getUpdatedSeller(user.getUsername(), objectMapper);
                     }
                     if (command.equals("createNewStore")) {
                         String storeName = (String) ois.readObject();

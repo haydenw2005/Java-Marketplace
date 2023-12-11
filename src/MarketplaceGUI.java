@@ -725,21 +725,21 @@ public class MarketplaceGUI extends JComponent implements Runnable {
 
     private void exportItemsToCSV(Seller seller, JFrame frame) {
         String file = JOptionPane.showInputDialog(frame,
-                                "Enter filename to export to (excluding .csv extension)",
-                                "zBay Marketplace", JOptionPane.QUESTION_MESSAGE);
+                "Enter filename to export to (excluding .csv extension)",
+                "zBay Marketplace", JOptionPane.QUESTION_MESSAGE);
         CsvUtils.writeProductsToCSV(file, seller, frame);
     }
 
     private void importItemsFromCSV(Seller seller, JFrame frame) {
         String file = JOptionPane.showInputDialog(frame,
-                                "Enter filename to import from (excluding .csv extension)",
-                                "zBay Marketplace", JOptionPane.QUESTION_MESSAGE);
+                "Enter filename to import from (excluding .csv extension)",
+                "zBay Marketplace", JOptionPane.QUESTION_MESSAGE);
         try {
             CsvUtils.importFromCSV(file, seller, objectMapper, oos, frame);
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(frame,
-                        "File not found.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                    "File not found.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -835,7 +835,7 @@ public class MarketplaceGUI extends JComponent implements Runnable {
             user = (Buyer) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
         }
-        ArrayList<String> cart = ((Buyer) user).cartToStringList(marketplace); // TODO: Link to network
+        ArrayList<String> cart = ((Buyer) user).cartToStringList(marketplace);
         for (String item : cart)
             listModel.addElement(item);
 
