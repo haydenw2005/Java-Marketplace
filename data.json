@@ -171,7 +171,19 @@
         },
         "store_123" : {
           "name" : "store_123",
-          "stockItems" : { },
+          "stockItems" : {
+            "new_prod" : {
+              "name" : "new_prod",
+              "description" : "super fun to use",
+              "stock" : 44,
+              "count" : -1,
+              "price" : 123.0,
+              "buyersObject" : null,
+              "sellersObject" : {
+                "seller_1_username" : 44
+              }
+            }
+          },
           "soldItems" : { }
         },
         "awesome store " : {

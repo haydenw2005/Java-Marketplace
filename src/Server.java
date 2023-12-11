@@ -55,6 +55,17 @@ public class Server {
         return JsonUtils.objectByKey(objectMapper, "/sellers/" + username, Seller.class);
     }
 
+    /**
+     * Client thread that is used by server.
+     *
+     * <p>
+     * Purdue University -- CS18000 -- Fall 2023
+     * </p>
+     *
+     * @author Soham, Hayden
+     * @version December 8, 2023
+     */
+
     private static class ClientThread extends Thread {
         private final Socket clientSocket;
 
@@ -78,7 +89,7 @@ public class Server {
                 Person user = (Person) ois.readObject(); // receive person object from client
                 Server server = new Server();
 
-                while (true) {
+                while (ois.available() > 0) {
                     String command = (String) ois.readObject();
                     System.out.println("Client Requested " + command);
                     if (command.equals("buyItem")) {
@@ -86,7 +97,7 @@ public class Server {
                         String numItems = (String) ois.readObject(); // get parameters required from buyitem from user
                         ((Buyer) user).buyItem(selectedItem, marketplace, objectMapper, numItems);
                         marketplace = server.getUpdatedMarketPlace(objectMapper);
-                        oos.writeObject(marketplace);// update client with new marketplace object
+                        oos.writeObject(marketplace); // update client with new marketplace object
                         oos.flush();
                     }
                     if (command.equals("updateMarketplace")) {

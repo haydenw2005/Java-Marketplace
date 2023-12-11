@@ -834,6 +834,7 @@ public class MarketplaceGUI extends JComponent implements Runnable {
             oos.flush();
             user = (Buyer) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
         }
         ArrayList<String> cart = ((Buyer) user).cartToStringList(marketplace);
         for (String item : cart)
