@@ -9,29 +9,15 @@ The Marketplace project is a Java implementation of an online marketplace system
    - While in root directory, run the following command `javac -d bin -cp "jar_files/*" *.java`
 
 2. Execution:
-   - Run the now compiled Main.java with the command `java -cp bin:"jar_files/*" Main`
+   - First run the now compiled Server.java with the command `java -cp bin:"jar_files/*" Server`
+   - Then run the compiled Main.java with the command `java -cp bin:"jar_files/*" Main`
 
 ## Submissions
-Suhani Rana - Submitted Report on Brightspace. 
+Hayden White - Submitted Report on Brightspace. 
 Hayden White - Submitted Vocareum workspace.
 
 ## Testing
-
-All classes have test cases, in the format <Class_Name>Test.java. The JUnit test cases check all functional methods, and check invalid inputs where an invalid input may be possible.
-
-1. Compilation
-   - Make sure you have already compiled all the classes with the command listed above: `javac -d bin -cp "jar_files/*" *.java`
-2. Execution:
-   - Run this command for each test case you want to run: `java -cp "bin:jar_files/*" org.junit.runner.JUnitCore <YourClassHere>`
-   - Replace `<YourClassHere>` with any of the following Test Classes:
-      - BuyerTest
-      - CsvUtilsTest
-      - ItemTest
-      - JsonUtilsTest
-      - MarketplaceTest
-      - PersonTest
-      - SellerTest
-      - StoreTest  
+Detailed testing is listed in the `Tests.md` file.
  
 ## Classes
 
