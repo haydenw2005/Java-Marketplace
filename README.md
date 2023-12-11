@@ -6,7 +6,7 @@ The Marketplace project is a Java implementation of an online marketplace system
 
 ## How to run
 1. Compilation:
-   - While in root directory, run the following command `javac -d bin -cp "jar_files/*" *.java`
+   - While in root directory, run the following command `javac -d bin -cp "jar_files/*" src/*.java`
 
 2. Execution:
    - First run the now compiled Server.java with the command `java -cp bin:"jar_files/*" Server`
