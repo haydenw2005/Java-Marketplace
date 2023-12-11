@@ -6,10 +6,12 @@
 The Marketplace project is a Java implementation of an online marketplace system. It consists of several classes representing different entities such as buyers, sellers, stores, items, and utilities for handling JSON operations.
 
 ## How to run
-1. Compilation:
+1. Download CS5_PROJECT dir
+2. CD into CS5_PROJECT root dir
+3. Compilation:
    - While in root directory, run the following command `javac -d bin -cp "jar_files/*" src/*.java`
 
-2. Execution:
+4. Execution:
    - First run the now compiled Server.java with the command `java -cp bin:"jar_files/*" Server`
    - Then run the compiled Main.java with the command `java -cp bin:"jar_files/*" Main`
 
@@ -18,6 +20,8 @@ The Marketplace project is a Java implementation of an online marketplace system
 Hayden White - Submitted Report on Brightspace.
 
 Hayden White - Submitted Vocareum workspace.
+
+Hayden White - Submitted Presentation on Brightspace
 
 ## Testing
 Detailed testing is listed in the `Tests.md` file.
