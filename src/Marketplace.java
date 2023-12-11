@@ -902,29 +902,14 @@ public class Marketplace implements Serializable {
             int stock = Integer.parseInt(stockString);
             double price = Double.parseDouble(priceString);
 
-            // TODO: Network
-            HashMap<String, Integer> sellerHashmap = new HashMap<String, Integer>();
-            sellerHashmap.put(user.getUsername(), stock);
-            Item newItem = new Item(itemName, description, stock, -1, price, null, sellerHashmap);
-            user.getStoreByName(storeName).addToStockItems(newItem, user.getUsername(), objectMapper);
+            oos.writeObject("createItem");
+            oos.writeObject(new Object[]{itemName, description, stock, price, storeName});
+            oos.flush();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "One of your entries was invalid",
                     "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
-        /*
-         * try {
-         * oos.writeObject("createItem");
-         * oos.flush();
-         * 
-         * } catch (Exception e) {
-         * JOptionPane.showMessageDialog(null,
-         * "There was an error listing this item",
-         * "Error", JOptionPane.ERROR_MESSAGE);
-         * }
-         * 
-         */
     }
 
     public void printSellerItemMenu() {

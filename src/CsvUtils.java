@@ -5,10 +5,15 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -29,7 +34,9 @@ public class CsvUtils {
             if (!(purchasedItems.isEmpty())) {
                 File csvOutputFile = new File(filename + ".csv");
                 if (!csvOutputFile.createNewFile()) {
-                    System.out.println("File already exists.");
+                    JOptionPane.showMessageDialog(null,
+                        "File already not exist.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 PrintWriter writer = new PrintWriter(new FileOutputStream(csvOutputFile, false));
@@ -41,19 +48,28 @@ public class CsvUtils {
                 }
 
                 writer.close();
+                JOptionPane.showMessageDialog(null,
+                        "Successfully wrote to CSV file.",
+                        "Success", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                System.out.println("No purchased items found.");
+                JOptionPane.showMessageDialog(null,
+                        "No purchased items found.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (IOException e) {
-            System.out.println("An error occured while importing.");
+            JOptionPane.showMessageDialog(null,
+                        "An error occured while exporting.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    public static void writeProductsToCSV(String filename, Seller seller) {
+    public static void writeProductsToCSV(String filename, Seller seller, JFrame frame) {
         try {
             File csvOutputFile = new File(filename + ".csv");
             if (!csvOutputFile.createNewFile()) {
-                System.out.println("File already exists.");
+                JOptionPane.showMessageDialog(frame,
+                        "File already not exist.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             PrintWriter writer = new PrintWriter(new FileOutputStream(csvOutputFile, false));
@@ -86,11 +102,14 @@ public class CsvUtils {
         }
     }
 
-    public static void importFromCSV(String filename, Seller seller, ObjectMapper objectMapper)
+    public static void importFromCSV(String filename, Seller seller, ObjectMapper objectMapper,
+            ObjectOutputStream oos, JFrame frame)
             throws FileNotFoundException {
         File csvOutputFile = new File(filename + ".csv");
         if (!csvOutputFile.exists()) {
-            System.out.println("File does not exist.");
+            JOptionPane.showMessageDialog(frame,
+                        "File does not exist.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         BufferedReader buffer = new BufferedReader(new FileReader(csvOutputFile));
@@ -117,21 +136,23 @@ public class CsvUtils {
                         new Item(data[0], data[1], Integer.parseInt(data[3]), -1, Double.parseDouble(data[2]),
                                 null, sellerObject));
                 currentStore.setStockItems(stockItem);
-                String dir = "/sellers/" + seller.getUsername() + "/stores";
-                if (JsonUtils.hasKey(dir, currentStore.getName(), objectMapper)) {
-                    String stockDir = dir + "/" + currentStore.getName() + "/stockItems";
-                    JsonUtils.addObjectToJson(stockDir, data[0], stockItem.get(data[0]), objectMapper);
-                } else {
-                    JsonUtils.addObjectToJson(dir, currentStore.getName(), currentStore, objectMapper);
-                }
+                
+                // update json on server with new data 
+                oos.writeObject("importCSVItems");
+                oos.writeObject(currentStore);
+                oos.writeObject(data);
+                oos.writeObject(stockItem);
+                oos.flush();
+                
                 Map<String, Store> updatedStores = seller.getStores();
                 updatedStores.put(currentStore.getName(), currentStore);
                 seller.setStores(updatedStores);
-
             }
             buffer.close();
         } catch (IOException e) {
-            System.out.println("An error occured while importing.");
+            JOptionPane.showMessageDialog(frame,
+                        "An error ocurred while importing.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 

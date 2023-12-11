@@ -1,8 +1,12 @@
 import javax.swing.*;
 import javax.swing.border.Border;
+
+import static org.junit.Assert.fail;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -462,16 +466,22 @@ public class MarketplaceGUI extends JComponent implements Runnable {
                 public void actionPerformed(ActionEvent e) {
                     if (e.getSource() == addItemButton) {
                         marketplace.createItem((Seller) user, objectMapper, oos, ois);
+                        updateSellerFromNetwork(sellerFrame);
                     } else if (e.getSource() == deleteItemButton) {
                         deleteItemFromStore((Seller) user, sellerFrame);
+                        updateSellerFromNetwork(sellerFrame);
                     } else if (e.getSource() == restockItemButton) {
                         restockItem((Seller) user, sellerFrame);
+                        updateSellerFromNetwork(sellerFrame);
                     } else if (e.getSource() == createNewStoreButton) {
                         createNewStore((Seller) user, sellerFrame);
+                        updateSellerFromNetwork(sellerFrame);
                     } else if (e.getSource() == editStoreButton) {
                         editStore((Seller) user, sellerFrame);
+                        updateSellerFromNetwork(sellerFrame);
                     } else if (e.getSource() == editAccountButton) {
                         marketplace.editUser(user, objectMapper, oos, ois);
+                        updateSellerFromNetwork(sellerFrame);
                     } else if (e.getSource() == deleteAccountButton) {
                         marketplace.deleteUser(user, objectMapper, oos, ois);
                         sellerFrame.dispose();
@@ -480,20 +490,27 @@ public class MarketplaceGUI extends JComponent implements Runnable {
                         sellerFrame.dispose();
                         System.exit(0);
                     } else if (e.getSource() == viewStoreSalesButton) {
+                        updateSellerFromNetwork(sellerFrame);
                         viewStoreSales((Seller) user, sellerFrame);
                     } else if (e.getSource() == viewListedProductsButton) {
-                        // TODO: get updated seller object from network
+                        updateSellerFromNetwork(sellerFrame);
                         viewListedProducts((Seller) user, sellerFrame);
                     } else if (e.getSource() == viewSoldProductsButton) {
-                        // TODO: get updated seller object from network
+                        updateSellerFromNetwork(sellerFrame);
                         viewSoldProducts((Seller) user, sellerFrame);
                     } else if (e.getSource() == viewProductBuyersButton) {
-                        // TODO: get updated seller object from network
+                        updateSellerFromNetwork(sellerFrame);
                         viewProductBuyers((Seller) user, sellerFrame);
-                    }
-                    // TODO: REFRESH BUTTON
-                    else if (e.getSource() == refreshButton) {
-                        // TODO: get updated seller object from network
+                    } else if (e.getSource() == exportToCSVButton) {
+                        updateSellerFromNetwork(sellerFrame);
+                        exportItemsToCSV((Seller) user, sellerFrame);
+                        updateSellerFromNetwork(sellerFrame);
+                    } else if (e.getSource() == importFromCSVButton) {
+                        updateSellerFromNetwork(sellerFrame);
+                        importItemsFromCSV((Seller) user, sellerFrame);
+                        updateSellerFromNetwork(sellerFrame);
+                    } else if (e.getSource() == refreshButton) {
+                        updateSellerFromNetwork(sellerFrame);
                     }
                 }
             };
@@ -543,8 +560,15 @@ public class MarketplaceGUI extends JComponent implements Runnable {
             if (store != null) {
                 String itemName = JOptionPane.showInputDialog(frame, "Enter the item name:");
                 if (itemName != null && !itemName.isEmpty()) {
-                    // Deleting the item from the store
-                    store.deleteItem(seller.getUsername(), itemName, objectMapper);
+                    try {
+                        oos.writeObject("deleteItem");
+                        oos.writeObject(store);
+                        oos.writeObject(itemName);
+                        oos.flush();
+                    } catch (IOException e) {
+                        JOptionPane.showMessageDialog(frame, "Could not refresh.",
+                                "Error", JOptionPane.ERROR_MESSAGE);
+                    }
                     JOptionPane.showMessageDialog(frame, "Item deleted from store: " + itemName);
                 } else {
                     JOptionPane.showMessageDialog(frame, "Invalid item name!");
@@ -569,10 +593,17 @@ public class MarketplaceGUI extends JComponent implements Runnable {
                     JOptionPane.showMessageDialog(frame, "Invalid stock!");
                     return;
                 }
-                itemToChange.setStock(stock);
-                String dir = "/sellers/" + seller.getUsername() + "/stores/" + store.getName() + "/stockItems";
-                // JsonUtils.addObjectToJson(dir, itemName, itemToChange, objectMapper); //
-                // TODO: JSON STUFF AND NETWORK IO
+                try {
+                    oos.writeObject("restockItem");
+                    oos.writeObject(itemToChange);
+                    oos.writeObject(stock);
+                    oos.writeObject(itemName);
+                    oos.writeObject(store);
+                    oos.flush();
+                } catch (IOException e) {
+                    JOptionPane.showMessageDialog(frame, "Could not refresh.",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                }
                 JOptionPane.showMessageDialog(frame, itemName + " restocked to " + stock + " items.");
             } else {
                 JOptionPane.showMessageDialog(frame, "Sorry, we can't find an item with this name.");
@@ -585,11 +616,14 @@ public class MarketplaceGUI extends JComponent implements Runnable {
     private void createNewStore(Seller seller, JFrame frame) {
         String storeName = JOptionPane.showInputDialog(frame, "Enter the new store name:");
         if (storeName != null && !storeName.isEmpty()) {
-            // Create a new store object
-            Store newStore = new Store(storeName, new HashMap<>(), new HashMap<>());
-            seller.getStores().put(storeName, newStore); // Add the new store to the seller's stores
-
-            // TODO: Network
+            try {
+                oos.writeObject("createNewStore");
+                oos.writeObject(storeName);
+                oos.flush();
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(frame, "Could not refresh.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+            }
 
             JOptionPane.showMessageDialog(frame, "New store created: " + storeName);
         } else {
@@ -603,11 +637,15 @@ public class MarketplaceGUI extends JComponent implements Runnable {
             if (storeToEdit != null) {
                 String newStoreName = JOptionPane.showInputDialog(frame, "Enter the new store name:");
                 if (newStoreName != null && !newStoreName.isEmpty()) {
-                    storeToEdit.setName(newStoreName); // Update the store name
-                    seller.getStores().put(newStoreName, storeToEdit); // Update the store in the seller's stores
-
-                    // Perform any additional operations if needed, like updating the database
-
+                    try {
+                        oos.writeObject("editStore");
+                        oos.writeObject(storeToEdit.getName());
+                        oos.writeObject(newStoreName);
+                        oos.flush();
+                    } catch (IOException e) {
+                        JOptionPane.showMessageDialog(frame, "Could not refresh.",
+                                "Error", JOptionPane.ERROR_MESSAGE);
+                    }
                     JOptionPane.showMessageDialog(frame, "Store updated: " + newStoreName);
                 } else {
                     JOptionPane.showMessageDialog(frame, "Invalid store name!");
@@ -685,6 +723,26 @@ public class MarketplaceGUI extends JComponent implements Runnable {
         JOptionPane.showMessageDialog(frame, scrollPane, "All product buyers", JOptionPane.INFORMATION_MESSAGE);
     }
 
+    private void exportItemsToCSV(Seller seller, JFrame frame) {
+        String file = JOptionPane.showInputDialog(frame,
+                                "Enter filename to export to (excluding .csv extension)",
+                                "zBay Marketplace", JOptionPane.QUESTION_MESSAGE);
+        CsvUtils.writeProductsToCSV(file, seller, frame);
+    }
+
+    private void importItemsFromCSV(Seller seller, JFrame frame) {
+        String file = JOptionPane.showInputDialog(frame,
+                                "Enter filename to import from (excluding .csv extension)",
+                                "zBay Marketplace", JOptionPane.QUESTION_MESSAGE);
+        try {
+            CsvUtils.importFromCSV(file, seller, objectMapper, oos, frame);
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(frame,
+                        "File not found.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     private String retrieveSalesDataForStore(Store store) {
         StringBuilder sales = new StringBuilder();
         sales.append("Total sales: ").append(store.numProductsSold()).append("\n");
@@ -758,6 +816,17 @@ public class MarketplaceGUI extends JComponent implements Runnable {
         purchaseHistoryList.setModel(listModel);
     }
 
+    private void updateSellerFromNetwork(JFrame frame) {
+        try {
+            oos.writeObject("updateSeller");
+            oos.flush();
+            user = (Seller) ois.readObject();
+        } catch (IOException | ClassNotFoundException e1) {
+            JOptionPane.showMessageDialog(frame, "Could not refresh.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     private void updateCartList() {
         DefaultListModel listModel = new DefaultListModel();
         try {
@@ -765,7 +834,6 @@ public class MarketplaceGUI extends JComponent implements Runnable {
             oos.flush();
             user = (Buyer) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
         }
         ArrayList<String> cart = ((Buyer) user).cartToStringList(marketplace); // TODO: Link to network
         for (String item : cart)

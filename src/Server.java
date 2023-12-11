@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,7 +29,7 @@ public class Server {
 
         try {
             ServerSocket serverSocket = new ServerSocket(portNumber);
-            System.out.println("Listeing on port: " + portNumber);
+            System.out.println("Listening on port: " + portNumber);
             while (true) {
                 Socket socket = serverSocket.accept();
                 System.out.println("Accepted connection from " + socket.getInetAddress());
@@ -48,6 +49,9 @@ public class Server {
 
     public Buyer getUpdatedBuyer(String username, ObjectMapper objectMapper) throws IOException {
         return JsonUtils.objectByKey(objectMapper, "/buyers/" + username, Buyer.class);
+    }
+    public Seller getUpdatedSeller(String username, ObjectMapper objectMapper) throws IOException {
+        return JsonUtils.objectByKey(objectMapper, "/sellers/" + username, Seller.class);
     }
 
     private static class ClientThread extends Thread {
@@ -117,10 +121,12 @@ public class Server {
                         user.setEmail((String) editUserObjects[3]);
                         if (user instanceof Buyer) {
                             marketplace.addBuyerAccount(user.getUsername(), (Buyer) user, objectMapper);
+                            user = server.getUpdatedBuyer(user.getUsername(), objectMapper);
                         } else {
                             marketplace.addSellerAccount(user.getUsername(), (Seller) user, objectMapper);
+                            user = server.getUpdatedSeller(user.getUsername(), objectMapper);
                         }
-                        user = server.getUpdatedBuyer(user.getUsername(), objectMapper);
+                        
                         oos.writeObject(user);
                         oos.flush();
                     }
@@ -133,8 +139,62 @@ public class Server {
                             JsonUtils.removeObjectFromJson(dir, user.getUsername(), objectMapper);
                         }
                     }
+                    if (command.equals("updateSeller")) {
+                        user = server.getUpdatedSeller(user.getUsername(), objectMapper);
+                        oos.writeObject((Seller) user);
+                        oos.flush();
+                    }
                     if (command.equals("createItem")) {
-
+                        Object[] receivedObjects = (Object[]) ois.readObject();
+                        String itemName = (String) receivedObjects[0];
+                        String description = (String) receivedObjects[1];
+                        int stock = (int) receivedObjects[2];
+                        double price = (double) receivedObjects[3];
+                        String storeName = (String) receivedObjects[4];
+                        HashMap<String, Integer> sellerHashmap = new HashMap<String, Integer>();
+                        sellerHashmap.put(user.getUsername(), stock);
+                        Item newItem = new Item(itemName, description, stock, -1, price, null, sellerHashmap);
+                        ((Seller) user).getStoreByName(storeName).addToStockItems(newItem, user.getUsername(), objectMapper);
+                        user = server.getUpdatedSeller(user.getUsername(), objectMapper);
+                    }
+                    if (command.equals("deleteItem")) {
+                        Store store = (Store) ois.readObject();
+                        String itemName = (String) ois.readObject();
+                        store.deleteItem(((Seller) user).getUsername(), itemName, objectMapper);
+                        user = server.getUpdatedSeller(user.getUsername(), objectMapper);
+                    }
+                    if (command.equals("restockItem")) {
+                        Item itemToChange = (Item) ois.readObject();
+                        int stock = (int) ois.readObject();
+                        String itemName = (String) ois.readObject();
+                        Store store = (Store) ois.readObject();
+                        itemToChange.setStock(stock);
+                        String dir = "/sellers/" + ((Seller) user).getUsername() + "/stores/" + store.getName() + "/stockItems";
+                        JsonUtils.addObjectToJson(dir, itemName, itemToChange, objectMapper);
+                        user = server.getUpdatedSeller(user.getUsername(), objectMapper);      
+                    }
+                    if (command.equals("createNewStore")) {
+                        String storeName = (String) ois.readObject();
+                        ((Seller) user).createNewStore(storeName, objectMapper);
+                        user = server.getUpdatedSeller(user.getUsername(), objectMapper);
+                    }
+                    if (command.equals("editStore")) {
+                        String storeToEditName = (String) ois.readObject();
+                        String newStoreName = (String) ois.readObject();
+                        ((Seller) user).editStore(storeToEditName, newStoreName, objectMapper);
+                        user = server.getUpdatedSeller(user.getUsername(), objectMapper);
+                    }
+                    if (command.equals("importCSVItems")) {
+                        String dir = "/sellers/" + ((Seller) user).getUsername() + "/stores";
+                        Store currentStore = (Store) ois.readObject();
+                        String[] data = (String[]) ois.readObject();
+                        Map<String, Item> stockItem = (Map<String, Item>) ois.readObject();
+                        if (JsonUtils.hasKey(dir, currentStore.getName(), objectMapper)) {
+                            String stockDir = dir + "/" + currentStore.getName() + "/stockItems";
+                            JsonUtils.addObjectToJson(stockDir, data[0], stockItem.get(data[0]), objectMapper);
+                        } else {
+                            JsonUtils.addObjectToJson(dir, currentStore.getName(), currentStore, objectMapper);
+                        }
                     }
                 }
             } catch (ClassNotFoundException e) {

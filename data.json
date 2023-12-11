@@ -191,15 +191,26 @@
         "store_1_name_edited" : {
           "name" : "store_1_name_edited",
           "stockItems" : {
-            "bread" : {
-              "name" : "bread",
-              "description" : "tastes good",
-              "stock" : 2147483647,
+            "iphone 21" : {
+              "name" : "iphone 21",
+              "description" : "new",
+              "stock" : 10,
               "count" : -1,
-              "price" : 10.0,
+              "price" : 20000.0,
               "buyersObject" : null,
               "sellersObject" : {
-                "testseller" : 2147483647
+                "testseller" : 10
+              }
+            },
+            "android phone" : {
+              "name" : "android phone",
+              "description" : "new",
+              "stock" : 10,
+              "count" : -1,
+              "price" : 1000.0,
+              "buyersObject" : null,
+              "sellersObject" : {
+                "testseller" : 10
               }
             }
           },
@@ -222,38 +233,29 @@
         "store_2_name_edited" : {
           "name" : "store_2_name_edited",
           "stockItems" : {
-            "soccer ball" : {
-              "name" : "soccer ball",
-              "description" : "kick it",
-              "stock" : 2,
+            "purdue basketball" : {
+              "name" : "purdue basketball",
+              "description" : "dribble",
+              "stock" : 10,
               "count" : -1,
-              "price" : 20.0,
+              "price" : 40.0,
               "buyersObject" : null,
               "sellersObject" : {
-                "testseller" : 2
+                "testseller" : 10
+              }
+            },
+            "ipad" : {
+              "name" : "ipad",
+              "description" : "new",
+              "stock" : 30,
+              "count" : -1,
+              "price" : 1200.0,
+              "buyersObject" : null,
+              "sellersObject" : {
+                "testseller" : 20
               }
             }
           },
-          "soldItems" : { }
-        },
-        "TestStore" : {
-          "name" : "TestStore",
-          "stockItems" : {
-            "TestItem" : {
-              "name" : "TestItem",
-              "description" : "Description",
-              "stock" : 10,
-              "count" : 5,
-              "price" : 20.0,
-              "buyersObject" : null,
-              "sellersObject" : { }
-            }
-          },
-          "soldItems" : { }
-        },
-        "TestStore2" : {
-          "name" : "TestStore2",
-          "stockItems" : { },
           "soldItems" : { }
         }
       }
